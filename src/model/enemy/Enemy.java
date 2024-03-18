@@ -1,4 +1,4 @@
-package enemy;
+package model.enemy;
 
 import java.awt.image.BufferedImage;
 
@@ -39,6 +39,7 @@ public abstract class Enemy {
     /** Hit method **/
     public abstract void hit();
 
+    /*** Getters and setters ***/
     /** LifePoints getter **/
     public short getLifePoints() {
         return this.lifePoints;
