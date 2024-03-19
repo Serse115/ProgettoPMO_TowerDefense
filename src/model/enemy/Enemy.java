@@ -7,7 +7,6 @@ public abstract class Enemy {
 
     /**** Fields ****/
     private short lifePoints;                   // Enemy's health
-    private boolean aliveStatus = false;        // Enemy's current alive/dead status
     private byte speed;                         // Enemy's speed
     private short hitPower;                     // Enemy's attack potency
     private BufferedImage[] walkingImgs;        // Enemy's walking frames
@@ -19,14 +18,13 @@ public abstract class Enemy {
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(short lifePoints, byte speed, short hitPower, BufferedImage[] walkingImgs, BufferedImage[] attackingImgs, final BufferedImage[] deathImgs) {
+    public Enemy(short lifePoints, byte speed, short hitPower) {
         this.lifePoints = lifePoints;
-        this.aliveStatus = true;
         this.speed = speed;
         this.hitPower = hitPower;
-        this.walkingImgs = walkingImgs;
-        this.attackingImgs = attackingImgs;
-        this.deathImgs = deathImgs;
+        this.walkingImgs = null;
+        this.attackingImgs = null;
+        this.deathImgs = null;
     }
 
 
@@ -47,7 +45,7 @@ public abstract class Enemy {
 
     /** IsAlive getter **/
     public boolean isAlive() {
-        return this.aliveStatus;
+        return this.lifePoints > 0;
     }
 
     /** Speed getter **/
@@ -78,11 +76,6 @@ public abstract class Enemy {
     /** LifePoints setter **/
     public void setLifePoints(short lifePoints) {
         this.lifePoints = lifePoints;
-    }
-
-    /** IsAlive setter **/
-    public void isAlive(boolean aliveStatus) {
-        this.aliveStatus = aliveStatus;
     }
 
     /** Speed setter **/
