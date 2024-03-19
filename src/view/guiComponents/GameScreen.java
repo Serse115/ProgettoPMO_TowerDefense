@@ -2,7 +2,6 @@ package view.guiComponents;
 
 import model.enemy.Enemy;
 import model.enemy.Reaper;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,8 +10,6 @@ import java.awt.image.BufferedImage;
 public class GameScreen extends JPanel {
 
     /**** Fields ****/
-    private Dimension size;             // Size for the JPanel
-
     /* */
     private BufferedImage img;          // Img to paint try
     private Enemy reaper;               // Enemy try
@@ -22,14 +19,14 @@ public class GameScreen extends JPanel {
     /**** Constructors ****/
     /** Main constructor **/
     public GameScreen() {
-        this.size = new Dimension(640, 775);        // Setting the size for the panel
-        super.setMinimumSize(this.size);                        // Setting the minimum size for the panel
-        super.setPreferredSize(this.size);                      // Setting the preferred size for the panel
-        super.setMaximumSize(this.size);                        // Setting the maximum size for the panel
+        final Dimension size = new Dimension(640, 775);         // Setting the size for the panel
+        super.setMinimumSize(size);                                         // Setting the minimum size for the panel
+        super.setPreferredSize(size);                                       // Setting the preferred size for the panel
+        super.setMaximumSize(size);                                         // Setting the maximum size for the panel
 
         /* */
         this.reaper = new Reaper((short) 100, (byte) 1, (short) 50);
-        this.img = this.reaper.getWalkingImgs()[0];
+        this.img = this.reaper.getWalkingImages()[0];
     }
 
 

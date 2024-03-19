@@ -1,6 +1,5 @@
 package view.imageUtilities;
 
-import model.enemy.Enemy;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,10 +9,10 @@ import java.io.InputStream;
 public class SpriteUtilities {
 
     /**** Methods ****/
-    /** Get the requested sprite atlas from the resources folder and return it **/
+    /** Get the whole requested sprite atlas from the resources folder and return it **/
     public static BufferedImage getSpriteAtlas(String neededAtlasPath) {                           // Uses a string to identify the requested atlas path to return
         BufferedImage img = null;
-        InputStream is = Enemy.class.getClassLoader().getResourceAsStream(neededAtlasPath);         // Getting the requested atlas as an input stream of bytes
+        InputStream is = SpriteUtilities.class.getClassLoader().getResourceAsStream(neededAtlasPath);         // Getting the requested atlas as an input stream of bytes
 
         try {
             assert is != null;
@@ -34,10 +33,10 @@ public class SpriteUtilities {
     /** Get the sprites for the animated frames as an array of images **/
     public static BufferedImage[] getAniSprites(int xCord, int yCord, BufferedImage atlas, int numOfSubImgs) {
 
-        BufferedImage[] arr = new BufferedImage[numOfSubImgs];                                 // Creating the array for the sub images that will act as frames
+        BufferedImage[] arr = new BufferedImage[numOfSubImgs];                                 // Creating the array of images for the sub images that will act as frames
 
         for (int i = 0; i < numOfSubImgs; i++) {
-            arr[i] = getSubSprite(xCord + i, yCord, atlas);                              // Using the previous method to assign the frames to the slots of the array
+            arr[i] = getSubSprite(xCord + i, yCord, atlas);                              // Using the previous method to get and assign the frames to the slots of the array
         }
 
         return arr;                                                                            // Return the array

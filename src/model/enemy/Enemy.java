@@ -1,5 +1,6 @@
 package model.enemy;
 
+import view.imageUtilities.SpriteUtilities;
 import java.awt.image.BufferedImage;
 
 /**** Abstract parent class for the enemies ****/
@@ -9,28 +10,39 @@ public abstract class Enemy {
     private short lifePoints;                   // Enemy's health
     private byte speed;                         // Enemy's speed
     private short hitPower;                     // Enemy's attack potency
-    private BufferedImage[] walkingImgs;        // Enemy's walking frames
-    private BufferedImage[] attackingImgs;      // Enemy's attacking frames
-    private BufferedImage[] deathImgs;          // Enemy's death frames
+    private BufferedImage[] walkingImages;        // Enemy's walking frames
+    private BufferedImage[] attackingImages;      // Enemy's attacking frames
+    private BufferedImage[] deathImages;          // Enemy's death frames
 
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(short lifePoints, byte speed, short hitPower) {
+    public Enemy(short lifePoints, byte speed, short hitPower, String movingAtlasPath, String attackAtlasPath, String deathAtlasPath) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
-        this.walkingImgs = null;
-        this.attackingImgs = null;
-        this.deathImgs = null;
+        this.setFramesAnimations(movingAtlasPath, attackAtlasPath, deathAtlasPath);     // Setting the enemy's frames through the paths assigned from the subclasses
     }
 
 
 
 
     /**** Methods ****/
+    /** Set the walking, attacking and death animation frames method **/
+    private void setFramesAnimations(String movingAtlasPath, String attackAtlasPath, String deathAtlasPath) {
+        BufferedImage imageAtlas = null;                                                                       // Image to store the sprites to obtain the animation frames
+        imageAtlas = SpriteUtilities.getSpriteAtlas(movingAtlasPath);                                         // Obtaining the whole walking sprite atlas
+        this.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 8));     // Setting the walking images
+
+        imageAtlas = SpriteUtilities.getSpriteAtlas(attackAtlasPath);                                           // Obtaining the whole attacking sprite atlas
+        this.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 10));  // Setting the attacking images
+
+        imageAtlas = SpriteUtilities.getSpriteAtlas(deathAtlasPath);                                            // Obtaining the whole death sprite atlas
+        this.setDeathImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 10));     // Setting the death images
+    }
+
     /** Move method **/
     public abstract void move();
 
@@ -58,19 +70,19 @@ public abstract class Enemy {
         return this.hitPower;
     }
 
-    /** WalkingImgs getter **/
-    public BufferedImage[] getWalkingImgs() {
-        return this.walkingImgs;
+    /** WalkingImages getter **/
+    public BufferedImage[] getWalkingImages() {
+        return this.walkingImages;
     }
 
-    /** AttackingImgs getter **/
-    public BufferedImage[] getAttackingImgs() {
-        return this.attackingImgs;
+    /** AttackingImages getter **/
+    public BufferedImage[] getAttackingImages() {
+        return this.attackingImages;
     }
 
-    /** DeathImgs getter **/
-    public BufferedImage[] getDeathImgs() {
-        return this.deathImgs;
+    /** DeathImages getter **/
+    public BufferedImage[] getDeathImages() {
+        return this.deathImages;
     }
 
     /** LifePoints setter **/
@@ -88,18 +100,18 @@ public abstract class Enemy {
         this.hitPower = hitPower;
     }
 
-    /** WalkingImgs setter **/
-    public void setWalkingImgs(BufferedImage[] imgs) {
-        this.walkingImgs = imgs;
+    /** WalkingImages setter **/
+    private void setWalkingImages(BufferedImage[] imgs) {
+        this.walkingImages = imgs;
     }
 
-    /** AttackingImgs setter **/
-    public void setAttackingImgs(BufferedImage[] imgs) {
-        this.attackingImgs = imgs;
+    /** AttackingImages setter **/
+    private void setAttackingImages(BufferedImage[] imgs) {
+        this.attackingImages = imgs;
     }
 
-    /** DeathImgs setter **/
-    public void setDeathImgs(BufferedImage[] imgs) {
-        this.deathImgs = imgs;
+    /** DeathImages setter **/
+    private void setDeathImages(BufferedImage[] imgs) {
+        this.deathImages = imgs;
     }
 }
