@@ -14,7 +14,7 @@ public class GameScreen extends JPanel {
     private Dimension size;             // Size for the JPanel
 
     /* */
-    private BufferedImage img;          // Img to pain try
+    private BufferedImage img;          // Img to paint try
     private Enemy reaper;               // Enemy try
 
 
