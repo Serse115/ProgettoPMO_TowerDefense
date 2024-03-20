@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 public abstract class Enemy {
 
     /**** Fields ****/
-    private short lifePoints;                   // Enemy's health
-    private byte speed;                         // Enemy's speed
-    private short hitPower;                     // Enemy's attack potency
+    private short lifePoints;                     // Enemy's health
+    private byte speed;                           // Enemy's speed
+    private short hitPower;                       // Enemy's attack potency
     private BufferedImage[] walkingImages;        // Enemy's walking frames
     private BufferedImage[] attackingImages;      // Enemy's attacking frames
     private BufferedImage[] deathImages;          // Enemy's death frames

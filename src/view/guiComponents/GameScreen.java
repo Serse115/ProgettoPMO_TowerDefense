@@ -2,6 +2,7 @@ package view.guiComponents;
 
 import model.enemy.Reaper;
 import model.enemy.Skeleton;
+import model.enemy.Zombie;
 import view.imageUtilities.SpriteUtilities;
 import javax.swing.*;
 import java.awt.*;
@@ -14,9 +15,12 @@ public class GameScreen extends JPanel {
     /* */
     private BufferedImage img;          // Img to paint try
     private BufferedImage skeletonImg;  // Img to paint try skeleton
+    private BufferedImage zombieImg;    // Img to paint try zombie
     private BufferedImage grassImg;     // Img to paint grass
+    private BufferedImage niet;         // Img to try try
     private Reaper reaper;               // Reaper try
     private Skeleton skeleton;           // Skeleton try
+    private Zombie zombie;               // Zombie try
 
 
 
@@ -29,11 +33,15 @@ public class GameScreen extends JPanel {
         super.setMaximumSize(size);                                         // Setting the maximum size for the panel
 
         /* */
-        this.reaper = new Reaper((short) 100, (byte) 1, (short) 50);
+        this.reaper = new Reaper((short) 150, (byte) 1, (short) 50);
         this.img = this.reaper.getWalkingImages()[0];
 
-        this.skeleton = new Skeleton((short) 75, (byte) 2, (short) 25);
+        this.skeleton = new Skeleton((short) 75, (byte) 2, (short) 35);
         this.skeletonImg = this.skeleton.getWalkingImages()[0];
+
+        this.zombie = new Zombie((short) 100, (byte) 3, (short) 25);
+        this.zombieImg = this.zombie.getWalkingImages()[0];
+        this.niet = this.zombie.getWalkingImages()[3];
 
         this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
 
@@ -55,7 +63,7 @@ public class GameScreen extends JPanel {
             }
         }
 
-        if (this.img != null) {
+        if (this.img != null) {         // Reaper
             g.drawImage(this.img, 350, 0, null);
         }
 
@@ -63,6 +71,13 @@ public class GameScreen extends JPanel {
             g.drawImage(this.skeletonImg, 350, 40, null);
         }
 
+        if (this.zombieImg != null) {
+            g.drawImage(this.zombieImg, 300, 50 , null);
+        }
+
+        if (this.zombieImg != null) {
+            g.drawImage(this.niet, 340, 50 , null);
+        }
 
     }
 }
