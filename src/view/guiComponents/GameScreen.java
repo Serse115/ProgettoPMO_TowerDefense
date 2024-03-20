@@ -1,7 +1,8 @@
 package view.guiComponents;
 
-import model.enemy.Enemy;
 import model.enemy.Reaper;
+import model.enemy.Skeleton;
+import view.imageUtilities.SpriteUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,14 +13,17 @@ public class GameScreen extends JPanel {
     /**** Fields ****/
     /* */
     private BufferedImage img;          // Img to paint try
-    private Enemy reaper;               // Enemy try
+    private BufferedImage skeletonImg;  // Img to paint try skeleton
+    private BufferedImage grassImg;     // Img to paint grass
+    private Reaper reaper;               // Reaper try
+    private Skeleton skeleton;           // Skeleton try
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
     public GameScreen() {
-        final Dimension size = new Dimension(640, 775);         // Setting the size for the panel
+        final Dimension size = new Dimension(750, 775);         // Setting the size for the panel
         super.setMinimumSize(size);                                         // Setting the minimum size for the panel
         super.setPreferredSize(size);                                       // Setting the preferred size for the panel
         super.setMaximumSize(size);                                         // Setting the maximum size for the panel
@@ -27,6 +31,12 @@ public class GameScreen extends JPanel {
         /* */
         this.reaper = new Reaper((short) 100, (byte) 1, (short) 50);
         this.img = this.reaper.getWalkingImages()[0];
+
+        this.skeleton = new Skeleton((short) 75, (byte) 2, (short) 25);
+        this.skeletonImg = this.skeleton.getWalkingImages()[0];
+
+        this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
+
     }
 
 
@@ -36,9 +46,24 @@ public class GameScreen extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        if (this.img != null) {
-            g.drawImage(this.img, 350, 50, null);
+
+        if (this.grassImg != null) {
+            for (int j = 0; j < 20; j++) {
+                for (int i = 0; i < 23; i++) {
+                    g.drawImage(this.grassImg, 32 * i, (32 * j) + 10, null);
+                }
+            }
         }
+
+        if (this.img != null) {
+            g.drawImage(this.img, 350, 0, null);
+        }
+
+        if (this.skeletonImg != null) {
+            g.drawImage(this.skeletonImg, 350, 40, null);
+        }
+
+
     }
 }
 

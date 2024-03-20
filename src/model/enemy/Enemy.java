@@ -19,11 +19,11 @@ public abstract class Enemy {
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(short lifePoints, byte speed, short hitPower, String movingAtlasPath, String attackAtlasPath, String deathAtlasPath) {
+    public Enemy(short lifePoints, byte speed, short hitPower, String movingAtlasPath, String attackAtlasPath, String deathAtlasPath, int[] nOfSubImgs, int[] widths, int[] heights) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
-        this.setFramesAnimations(movingAtlasPath, attackAtlasPath, deathAtlasPath);     // Setting the enemy's frames through the paths assigned from the subclasses
+        this.setFramesAnimations(movingAtlasPath, attackAtlasPath, deathAtlasPath, nOfSubImgs, widths, heights);    // Setting the enemy's frames through the paths assigned from the subclasses
     }
 
 
@@ -31,16 +31,16 @@ public abstract class Enemy {
 
     /**** Methods ****/
     /** Set the walking, attacking and death animation frames method **/
-    private void setFramesAnimations(String movingAtlasPath, String attackAtlasPath, String deathAtlasPath) {
+    private void setFramesAnimations(String movingAtlasPath, String attackAtlasPath, String deathAtlasPath, int[] nOfSubImgs, int[] widths, int[] heights) {
         BufferedImage imageAtlas = null;                                                                       // Image to store the sprites to obtain the animation frames
         imageAtlas = SpriteUtilities.getSpriteAtlas(movingAtlasPath);                                         // Obtaining the whole walking sprite atlas
-        this.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 8));     // Setting the walking images
+        this.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[0], widths[0], heights[0]));// Setting the walking images
 
         imageAtlas = SpriteUtilities.getSpriteAtlas(attackAtlasPath);                                           // Obtaining the whole attacking sprite atlas
-        this.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 10));  // Setting the attacking images
+        this.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[1], widths[1], heights[1]));  // Setting the attacking images
 
         imageAtlas = SpriteUtilities.getSpriteAtlas(deathAtlasPath);                                            // Obtaining the whole death sprite atlas
-        this.setDeathImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, 10));     // Setting the death images
+        this.setDeathImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[2], widths[2], heights[2]));     // Setting the death images
     }
 
     /** Move method **/

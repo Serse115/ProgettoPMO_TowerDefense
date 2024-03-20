@@ -26,19 +26,19 @@ public class SpriteUtilities {
     }
 
     /** Get the required sub image from the atlas **/
-    private static BufferedImage getSubSprite(int xCord, int yCord, BufferedImage atlas) {
-        return atlas.getSubimage(xCord * 32, yCord * 32, 48, 48);                       // Getting the sub image and returning it
+    private static BufferedImage getSubSprite(int xCord, int yCord, BufferedImage atlas, int width, int height) {
+        return atlas.getSubimage(xCord * width, yCord * height, width, height);                       // Getting the sub image and returning it
     }
 
     /** Get the sprites for the animated frames as an array of images **/
-    public static BufferedImage[] getAniSprites(int xCord, int yCord, BufferedImage atlas, int numOfSubImgs) {
+    public static BufferedImage[] getAniSprites(int xCord, int yCord, BufferedImage atlas, int numOfSubImgs, int width, int height) {
 
-        BufferedImage[] arr = new BufferedImage[numOfSubImgs];                                 // Creating the array of images for the sub images that will act as frames
+        BufferedImage[] arr = new BufferedImage[numOfSubImgs];                            // Creating the array of images for the sub images that will act as frames
 
         for (int i = 0; i < numOfSubImgs; i++) {
-            arr[i] = getSubSprite(xCord + i, yCord, atlas);                              // Using the previous method to get and assign the frames to the slots of the array
+            arr[i] = getSubSprite(xCord + i, yCord, atlas, width, height);  // Using the previous method to get and assign the frames to the slots of the array
         }
 
-        return arr;                                                                            // Return the array
+        return arr;                                                                       // Return the array
     }
 }
