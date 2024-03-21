@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**** Class for the main panel that will handle the different statuses of the game (playing, menu... ) ****/
-public class GameScreen extends JPanel {
+public class GameScreen extends JPanel implements Runnable {
 
     /**** Fields ****/
     /* */
@@ -21,6 +21,12 @@ public class GameScreen extends JPanel {
     private Reaper reaper;               // Reaper try
     private Skeleton skeleton;           // Skeleton try
     private Zombie zombie;               // Zombie try
+    private BufferedImage[] zombieWalking;  // Zombie walk array
+    private BufferedImage[] reaperWalking;  // Reaper walk array
+    private BufferedImage[] skeletonWalking;    // Skeleton walk array
+    private int currentFrameIndex;
+    private int frameDelay;
+    private Thread animationThread;
 
 
 
@@ -43,6 +49,17 @@ public class GameScreen extends JPanel {
         this.zombieImg = this.zombie.getWalkingImages()[0];
         this.niet = this.zombie.getWalkingImages()[3];
 
+        this.currentFrameIndex = 0;
+        this.frameDelay = 100; // Milliseconds between frames
+
+        // Start the animation thread
+        this.animationThread = new Thread(this);
+        this.animationThread.start();
+
+        this.zombieWalking = this.zombie.getWalkingImages();
+        this.reaperWalking = this.reaper.getWalkingImages();
+        this.skeletonWalking = this.skeleton.getWalkingImages();
+
         this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
 
     }
@@ -63,6 +80,7 @@ public class GameScreen extends JPanel {
             }
         }
 
+        /*
         if (this.img != null) {         // Reaper
             g.drawImage(this.img, 350, 0, null);
         }
@@ -79,6 +97,32 @@ public class GameScreen extends JPanel {
             g.drawImage(this.niet, 340, 50 , null);
         }
 
+         */
+        // Draw the current frame
+        if (this.zombieWalking[currentFrameIndex] != null) {
+            g.drawImage(this.zombieWalking[currentFrameIndex], 300, 100, null);
+            g.drawImage(this.reaperWalking[currentFrameIndex], 300, 150, null);
+            g.drawImage(this.skeletonWalking[currentFrameIndex], 300, 200, null);
+        }
+
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            // Update the current frame index
+            currentFrameIndex = (currentFrameIndex + 1) % this.zombieWalking.length;
+
+            // Repaint the panel to display the updated frame
+            repaint();
+
+            try {
+                // Delay between frames
+                Thread.sleep(frameDelay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
