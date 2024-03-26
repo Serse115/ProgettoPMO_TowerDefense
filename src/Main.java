@@ -7,6 +7,7 @@ public class Main {
 
         System.out.println("Hello");
 
-        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = new MainFrame();          // Create the MainFrame object to start the game
+        mainFrame.start();                              // Starting the game loop
     }
 }
