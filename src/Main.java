@@ -11,3 +11,6 @@ public class Main {
         mainFrame.start();                              // Starting the game loop
     }
 }
+
+// craftpix.net and itch.io ad sprite-resource.com for enemies and turrets sources
+//

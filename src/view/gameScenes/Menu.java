@@ -1,10 +1,10 @@
-package view.GameScenes;
+package view.gameScenes;
 
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
 import java.awt.*;
-import static view.GameScenes.GameScenes.*;
+import static view.gameScenes.GameScenes.*;
 
 /**** Class for the menu game scene ****/
 public class Menu extends GameSceneBase implements Playable {

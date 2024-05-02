@@ -1,7 +1,6 @@
 package view.guiComponents;
 
-import view.GameScenes.GameScenes;
-
+import view.gameScenes.GameScenes;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -34,6 +33,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 case MENU:                                                                      // If it's menu
                     this.mainFrame.getMenu().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the menu's mouse clicked methods to do things depending on the position of the click
                     break;
+                case PLAY:                                                                      // If it's play
+                    this.mainFrame.getPlay().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the play's mouse clicked methods to do things depending on the position of the click
                 case EDIT_MAP:
                     break;
                 case SAVED_GAME:
@@ -54,6 +55,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case MENU:                                                                   // If it's menu
                 this.mainFrame.getMenu().mouseMoved(e.getX() - 5, e.getY() - 30);  // Call the menu's mouse moved methods to do things depending on the position of the click
                 break;
+            case PLAY:                                                                   // If it's play
+                this.mainFrame.getPlay().mouseMoved(e.getX() - 5, e.getY() - 30);  // Call the play's mouse moved methods to do things depending on the position of the click
             case EDIT_MAP:
                 break;
             case SAVED_GAME:
@@ -61,7 +64,6 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case ENDLESS_WAVES:
                 break;
         }
-
     }
 
     /** Mouse pressed and its consequences method **/
@@ -71,6 +73,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case MENU:                                                                     // If it's menu
                 this.mainFrame.getMenu().mousePressed(e.getX() - 5, e.getY() - 30);  // Call the menu's mouse pressed methods to do things depending on the position of the click
                 break;
+            case PLAY:                                                                     // If it's play
+                this.mainFrame.getPlay().mousePressed(e.getX() - 5, e.getY() - 30);  // Call the menu's mouse pressed methods to do things depending on the position of the click
             case EDIT_MAP:
                 break;
             case SAVED_GAME:
@@ -87,6 +91,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case MENU:                                                                      // If it's menu
                 this.mainFrame.getMenu().mouseReleased(e.getX() - 5, e.getY() - 30);  // Call the menu's mouse released methods to do things depending on the position of the click
                 break;
+            case PLAY:                                                                      // If it's play
+                this.mainFrame.getPlay().mouseReleased(e.getX() - 5, e.getY() - 30);  // Call the play's mouse released methods to do things depending on the position of the click
             case EDIT_MAP:
                 break;
             case SAVED_GAME:

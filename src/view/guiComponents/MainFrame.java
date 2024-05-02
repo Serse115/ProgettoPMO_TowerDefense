@@ -1,7 +1,9 @@
 package view.guiComponents;
 
-import view.GameScenes.Menu;
-import view.GameScenes.Render;
+import view.gameScenes.Menu;
+import view.gameScenes.Play;
+import view.gameScenes.Playable;
+import view.gameScenes.Render;
 import javax.swing.*;
 
 /**** Class for the main game frame ****/
@@ -14,7 +16,8 @@ public class MainFrame extends JFrame implements Runnable {
     private final double UPS_SET = 60.0;                              // Updates counter
     private MouseInputListener mouseInputListener;                    // Object listener for the inputs received from the mouse
     private Render render;                                            // Render object
-    private Menu menu;                                                // Menu game scene
+    private Playable menu;                                                // Menu game scene
+    private Playable play;                                                // Play game scene
 
 
 
@@ -33,6 +36,7 @@ public class MainFrame extends JFrame implements Runnable {
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
         this.menu = new Menu(this);                                   // Initializing the menu game scene obect
+        this.play = new Play(this);                                   // Initializing the play game scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -111,7 +115,12 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     /** Menu getter **/
-    public Menu getMenu() {
+    public Playable getMenu() {
         return this.menu;
+    }
+
+    /** Play getter **/
+    public Playable getPlay() {
+        return this.play;
     }
 }

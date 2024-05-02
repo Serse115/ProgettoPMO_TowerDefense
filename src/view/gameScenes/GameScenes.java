@@ -1,4 +1,4 @@
-package view.GameScenes;
+package view.gameScenes;
 
 /**** Enum class to organize the various types of possible Game scenes ****/
 public enum GameScenes {

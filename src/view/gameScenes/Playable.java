@@ -1,4 +1,4 @@
-package view.GameScenes;
+package view.gameScenes;
 
 import java.awt.*;
 

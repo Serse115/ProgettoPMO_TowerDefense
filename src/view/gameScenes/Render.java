@@ -1,4 +1,4 @@
-package view.GameScenes;
+package view.gameScenes;
 
 import view.guiComponents.MainFrame;
 import view.imageUtilities.SpriteUtilities;
@@ -12,7 +12,7 @@ public class Render {
     private MainFrame mainFrame;
 
     /* */
-    private BufferedImage grassImg;      // Img to paint grass
+    //private BufferedImage grassImg;      // Img to paint grass
 
 
 
@@ -22,7 +22,7 @@ public class Render {
         this.mainFrame = mainFrame;
 
         /* */
-        this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
+        //this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
     }
 
 
@@ -33,16 +33,17 @@ public class Render {
 
         switch (GameScenes.gameScenes) {                    // According to what game scene is needed
             case MENU:
-                this.mainFrame.getMenu().render(g);         // Render and paint the components of every page
+                this.mainFrame.getMenu().render(g);         // Render and paint the components of the menu page
                 break;
             case PLAY:
-                if (this.grassImg != null) {
-                    for (int j = 0; j < 20; j++) {
-                        for (int i = 0; i < 23; i++) {
-                            g.drawImage(this.grassImg, 32 * i, (32 * j) + 10, null);
-                        }
-                    }
-                }
+                this.mainFrame.getPlay().render(g);         // Render and pain the component of the play page
+                //if (this.grassImg != null) {
+                  //  for (int j = 0; j < 20; j++) {
+                    //    for (int i = 0; i < 23; i++) {
+                      //      g.drawImage(this.grassImg, 32 * i, (32 * j) + 10, null);
+                        //}
+                    //}
+                //}
                 break;
             case EDIT_MAP:
                 break;
@@ -53,6 +54,5 @@ public class Render {
             case GAME_OVER:
                 break;
         }
-
     }
 }

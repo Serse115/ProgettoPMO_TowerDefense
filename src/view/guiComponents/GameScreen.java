@@ -3,7 +3,6 @@ package view.guiComponents;
 import model.enemy.Reaper;
 import model.enemy.Skeleton;
 import model.enemy.Zombie;
-import view.imageUtilities.SpriteUtilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

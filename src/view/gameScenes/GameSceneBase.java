@@ -1,4 +1,4 @@
-package view.GameScenes;
+package view.gameScenes;
 
 import view.guiComponents.MainFrame;
 
@@ -33,5 +33,5 @@ public class GameSceneBase {
 
     }
 
-    /** **/
+    /** Get the animation tick variable **/
 }

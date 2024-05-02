@@ -26,7 +26,7 @@ public class Bar {
 
 
     /**** Methods ****/
-    /** Method to draw the buttons feedback **/
+    /** Method to draw the bar's buttons feedback **/
     public void drawButtonFeedback(Graphics g, MyButton b) {
         if (b.isMouseOver()) {                                  // If the mouse is over the button
             g.setColor(Color.WHITE);                            // Set the color to white
