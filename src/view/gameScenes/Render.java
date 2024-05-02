@@ -37,13 +37,6 @@ public class Render {
                 break;
             case PLAY:
                 this.mainFrame.getPlay().render(g);         // Render and pain the component of the play page
-                //if (this.grassImg != null) {
-                  //  for (int j = 0; j < 20; j++) {
-                    //    for (int i = 0; i < 23; i++) {
-                      //      g.drawImage(this.grassImg, 32 * i, (32 * j) + 10, null);
-                        //}
-                    //}
-                //}
                 break;
             case EDIT_MAP:
                 break;
