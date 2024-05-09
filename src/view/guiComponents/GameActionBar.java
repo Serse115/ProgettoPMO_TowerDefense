@@ -18,6 +18,7 @@ public class GameActionBar extends Bar implements Playable {
 
 
     /**** Constructors ****/
+    /** Main constructor **/
     public GameActionBar(int x, int y, int width, int height) {
         super(x, y, width, height);             // Using the superclass constructor
         this.bMenu = new MyButton("Menu", 10, 650, 100, 30);
@@ -33,7 +34,7 @@ public class GameActionBar extends Bar implements Playable {
 
         // Body of the action bar
         g.setColor(new Color(220, 123, 15));
-        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        g.fillRect(super.getX(), super.getY(), super.getWidth()  , super.getHeight());
 
         // Background of the action bar
         g.setColor(Color.BLACK);

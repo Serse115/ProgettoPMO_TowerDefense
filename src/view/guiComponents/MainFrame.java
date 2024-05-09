@@ -1,9 +1,7 @@
 package view.guiComponents;
 
-import view.gameScenes.Menu;
-import view.gameScenes.Play;
-import view.gameScenes.Playable;
-import view.gameScenes.Render;
+import view.gameScenes.*;
+
 import javax.swing.*;
 
 /**** Class for the main game frame ****/
@@ -16,8 +14,8 @@ public class MainFrame extends JFrame implements Runnable {
     private final double UPS_SET = 60.0;                              // Updates counter
     private MouseInputListener mouseInputListener;                    // Object listener for the inputs received from the mouse
     private Render render;                                            // Render object
-    private Playable menu;                                                // Menu game scene
-    private Playable play;                                                // Play game scene
+    private Playable menu;                                            // Menu game scene
+    private Playable play;                                            // Play game scene
 
 
 
@@ -30,7 +28,7 @@ public class MainFrame extends JFrame implements Runnable {
         super.setLocation(300, 0);                                        // JFrame's location on screen
         super.setResizable(false);                                              // JFrame's resizability as false
 
-        this.render = new Render(this);                         // Initializing the render object
+        this.render = new Render(this);                              // Initializing the render object
 
         this.gameScreen = new GameScreen(this);                       // Initializing the game screen
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame

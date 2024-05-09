@@ -17,7 +17,7 @@ public class Play extends GameSceneBase implements Playable {
 
 
     /**** Constructors ****/
-    /** Main constructors **/
+    /** Main constructor **/
     public Play(MainFrame mainFrame) {
         super(mainFrame);
         this.bottomBar = new GameActionBar(0, 640, 736, 160);

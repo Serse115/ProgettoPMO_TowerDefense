@@ -1,9 +1,7 @@
 package view.gameScenes;
 
 import view.guiComponents.MainFrame;
-import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**** Class for the rendering part of the various game scenes (MENU, PLAY...) ****/
 public class Render {
@@ -36,7 +34,7 @@ public class Render {
                 this.mainFrame.getMenu().render(g);         // Render and paint the components of the menu page
                 break;
             case PLAY:
-                this.mainFrame.getPlay().render(g);         // Render and pain the component of the play page
+                this.mainFrame.getPlay().render(g);         // Render and paint the component of the play page
                 break;
             case EDIT_MAP:
                 break;
