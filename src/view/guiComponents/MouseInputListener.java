@@ -35,7 +35,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                     break;
                 case PLAY:                                                                      // If it's play
                     this.mainFrame.getPlay().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the play's mouse clicked methods to do things depending on the position of the click
-                case EDIT_MAP:
+                    break;
+                case EDIT_MAP:                                                                  // If it's edit
+                    this.mainFrame.getEdit().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse clicked methods to do things depending on the position of the click
                     break;
                 case SAVED_GAME:
                     break;
@@ -57,7 +59,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case PLAY:                                                                   // If it's play
                 this.mainFrame.getPlay().mouseMoved(e.getX() - 5, e.getY() - 30);  // Call the play's mouse moved methods to do things depending on the position of the click
-            case EDIT_MAP:
+                break;
+            case EDIT_MAP:                                                                // If it's edit
+                this.mainFrame.getEdit().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the click
                 break;
             case SAVED_GAME:
                 break;
@@ -75,7 +79,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case PLAY:                                                                     // If it's play
                 this.mainFrame.getPlay().mousePressed(e.getX() - 5, e.getY() - 30);  // Call the menu's mouse pressed methods to do things depending on the position of the click
-            case EDIT_MAP:
+                break;
+            case EDIT_MAP:                                                                  // If it's edit
+                this.mainFrame.getEdit().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the click
                 break;
             case SAVED_GAME:
                 break;
@@ -93,7 +99,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case PLAY:                                                                      // If it's play
                 this.mainFrame.getPlay().mouseReleased(e.getX() - 5, e.getY() - 30);  // Call the play's mouse released methods to do things depending on the position of the click
-            case EDIT_MAP:
+                break;
+            case EDIT_MAP:                                                                  // If it's edit
+                this.mainFrame.getEdit().mouseReleased(e.getX() - 5, e.getY() - 30);  // Call the edit's mouse released methods to do things depending on the position of the click
                 break;
             case SAVED_GAME:
                 break;

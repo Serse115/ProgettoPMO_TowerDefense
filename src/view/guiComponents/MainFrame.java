@@ -16,6 +16,7 @@ public class MainFrame extends JFrame implements Runnable {
     private Render render;                                            // Render object
     private Playable menu;                                            // Menu game scene
     private Playable play;                                            // Play game scene
+    private Playable edit;                                            // Edit game scene
 
 
 
@@ -33,8 +34,9 @@ public class MainFrame extends JFrame implements Runnable {
         this.gameScreen = new GameScreen(this);                       // Initializing the game screen
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
-        this.menu = new Menu(this);                                   // Initializing the menu game scene obect
+        this.menu = new Menu(this);                                   // Initializing the menu game scene object
         this.play = new Play(this);                                   // Initializing the play game scene object
+        this.edit = new EditMap(this);                                // Initializing the edit game scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -120,5 +122,10 @@ public class MainFrame extends JFrame implements Runnable {
     /** Play getter **/
     public Playable getPlay() {
         return this.play;
+    }
+
+    /** Edit getter **/
+    public Playable getEdit() {
+        return this.edit;
     }
 }

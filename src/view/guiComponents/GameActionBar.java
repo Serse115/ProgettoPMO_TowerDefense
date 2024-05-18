@@ -2,7 +2,6 @@ package view.guiComponents;
 
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
-
 import java.awt.*;
 
 import static view.gameScenes.GameScenes.MENU;
@@ -89,7 +88,6 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bPause.getButtonBounds().contains(x, y)) {    // If it's pressed on the pause button
             this.bPause.setMousePressed(true);                      // Add the effect
         }
-
     }
 
     /** Mouse released method **/
