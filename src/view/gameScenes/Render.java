@@ -27,6 +27,7 @@ public class Render {
 
 
     /**** Methods ****/
+    /** Render method **/
     public void render(Graphics g) {
 
         switch (GameScenes.gameScenes) {                    // According to what game scene is needed

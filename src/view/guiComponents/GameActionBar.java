@@ -3,7 +3,6 @@ package view.guiComponents;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
 import java.awt.*;
-
 import static view.gameScenes.GameScenes.MENU;
 
 /**** Class for the action bar in the Play game scene ****/

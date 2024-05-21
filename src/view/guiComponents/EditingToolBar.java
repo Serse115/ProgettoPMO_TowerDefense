@@ -3,6 +3,7 @@ package view.guiComponents;
 import view.gameScenes.EditMap;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
+import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
@@ -24,9 +25,9 @@ public class EditingToolBar extends Bar implements Playable {
     public EditingToolBar(int x, int y, int width, int height, EditMap editMap) {
         super(x, y, width, height);
         this.editMap = editMap;
-        this.bGrass = new MyButton("Grass", 130, 650, 100, 100);
-        this.bWater = new MyButton("Water", 250, 650, 100, 100);
-        this.bRoad = new MyButton("Road", 370, 650, 100, 100);
+        this.bGrass = new MyButton("Grass", 250, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png"));
+        this.bWater = new MyButton("Water", 320, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/water_atlas.png"));
+        this.bRoad = new MyButton("Road", 390, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/road_atlas.png"));
         this.bMenu = new MyButton("Menu", 10, 650, 100, 30);
         this.bSave = new MyButton("Save", 10, 690, 100, 30);
 
@@ -48,9 +49,9 @@ public class EditingToolBar extends Bar implements Playable {
         g.drawRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
 
         // Buttons
-        this.bGrass.draw(g);
-        this.bWater.draw(g);
-        this.bRoad.draw(g);
+        this.bGrass.draw(g, bGrass.getbImage());
+        this.bWater.draw(g, bWater.getbImage());
+        this.bRoad.draw(g, bRoad.getbImage());
         this.bMenu.draw(g);
         this.bSave.draw(g);
     }

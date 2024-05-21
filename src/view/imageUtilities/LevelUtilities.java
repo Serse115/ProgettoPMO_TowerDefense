@@ -29,7 +29,7 @@ public class LevelUtilities {
 
         try {
             PrintWriter p = new PrintWriter(f);             // PrintWriter object to write on the txt file
-            for (int i : idArr) {                           // For every id of te array of values to write
+            for (int i : idArr) {                           // For every id of the array of values to write
                 p.println(i);                               // Print the value on the txt
             }
             p.close();                                      // Close the PrintWriter object

@@ -1,6 +1,7 @@
 package view.guiComponents;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /** Interface for the clickable buttons **/
 public interface Clickable {
@@ -50,4 +51,7 @@ public interface Clickable {
 
     /** Height getter **/
     int getHeight();
+
+    /** Button image getter **/
+    BufferedImage getbImage();
 }
