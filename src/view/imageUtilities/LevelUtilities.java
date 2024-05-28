@@ -1,16 +1,49 @@
 package view.imageUtilities;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /***** Utility class for the level utilities operations: save, create and load levels *****/
 public class LevelUtilities {
 
+    /**** Static fields ****/
+    private static int nOfEditedMaps = initializeTheFilesVariableCount();             // Integer representing the number of edited maps saved
+    private static final String COUNT_FILE_PATH = "resources/levels/lvl_count.txt";   // Path to the file that keeps count of the saved files
+
+
     /**** Methods ****/
+    /** Static method to initialize the files count variable in the beginning **/
+    private static int initializeTheFilesVariableCount() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(COUNT_FILE_PATH))) {   // Use the buffered reader to read the value corresponding to the number of files
+            return Integer.parseInt(reader.readLine());                                       // Read the line and return it
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return 0;                                                                             // If something goes wrong return 0
+    }
+
+    /** Static method to update the files count variable **/
+    public static void initializeTheFilesCount() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(COUNT_FILE_PATH))) {   // Use the buffered reader to read the value corresponding to the number of files
+            String line = reader.readLine();                                                  // Read the line
+            if (line != null) {                                                               // If the line is not null
+                nOfEditedMaps = Integer.parseInt(line);                                       // Initialize the variable to the number of files
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** Static method to update the files count on the txt file **/
+    public static void updateFileCount() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(COUNT_FILE_PATH))) {   // Use the buffered writer to create a new writer with the chosen file path
+            writer.write(String.valueOf(nOfEditedMaps + 1));                                  // Then write the value increased on the text file
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /** Static method to create a new file for a new level **/
     public static void createFile(String lvlName) {
 
@@ -25,12 +58,16 @@ public class LevelUtilities {
     }
 
     /** Static sub-method to write the lvl info on a file **/
-    private static void writeToFile(File f, int[] idArr) {
+    private static void writeToFile(File f, int[][] idArr) {
 
         try {
             PrintWriter p = new PrintWriter(f);             // PrintWriter object to write on the txt file
-            for (int i : idArr) {                           // For every id of the array of values to write
-                p.println(i);                               // Print the value on the txt
+            for (int i = 0; i < 23; i++) {                  // For every id of the array of values to write
+                for (int j = 0; j < 23; j++) {
+                    int x = idArr[i][j];                        // Save the corresponding value in a variable on its own
+                    p.println(x);                               // Print the value of the variable on the txt
+                }
+
             }
             p.close();                                      // Close the PrintWriter object
         }
@@ -45,7 +82,7 @@ public class LevelUtilities {
         File lvlFile = new File("resources/levels/customLvl_" + name + ".txt");     // File name and path
 
         if (lvlFile.exists()) {                             // If the file exists
-            writeToFile(lvlFile, twoToOneDArr(twoDArr));    // Write the data to the file
+            writeToFile(lvlFile, twoDArr);                  // Write the data to the file
         }
         else {
             // Impossible to save
@@ -86,7 +123,8 @@ public class LevelUtilities {
     }
 
     /** Static method to create a level **/
-    public static void createLevel(String name, int[] arrLvl) {
+    public static void createLevel(String name, int[][] arrLvl) {
+
 
         File newLvl = new File("resources/levels/customLvl_" + name + ".txt");          // File name and path
 
@@ -137,5 +175,10 @@ public class LevelUtilities {
     public static int getDistance(float x1, float x2) {
 
         return (int) Math.abs(x1 - x2);
+    }
+
+    /** Get the number of maps as a string **/
+    public static String getnOfEditedMaps() {
+        return String.valueOf(nOfEditedMaps);
     }
 }

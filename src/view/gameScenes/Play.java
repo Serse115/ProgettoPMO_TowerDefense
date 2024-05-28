@@ -76,7 +76,7 @@ public class Play extends GameSceneBase implements Playable {
         if (this.grassImg != null) {
             for (int j = 0; j < 20; j++) {
                 for (int i = 0; i < 23; i++) {
-                    g.drawImage(this.grassImg, 32 * i, (32 * j) + 10, null);
+                    g.drawImage(this.grassImg, 32 * i, (32 * j), null);
                 }
             }
         }

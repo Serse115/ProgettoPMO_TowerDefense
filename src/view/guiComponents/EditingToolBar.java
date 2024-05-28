@@ -3,6 +3,7 @@ package view.guiComponents;
 import view.gameScenes.EditMap;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
+import view.imageUtilities.LevelUtilities;
 import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
@@ -42,7 +43,7 @@ public class EditingToolBar extends Bar implements Playable {
 
         // Body of the action bar
         g.setColor(new Color(220, 123, 15));
-        g.fillRect(super.getX(), super.getY(), super.getWidth()  , super.getHeight());
+        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
 
         // Background of the action bar
         g.setColor(Color.BLACK);
@@ -56,22 +57,42 @@ public class EditingToolBar extends Bar implements Playable {
         this.bSave.draw(g);
     }
 
+    /** Method to convert the lvl in a 2d array of ints (the tile types of the level itself) **/
+    private int[][] get2DArrFromLvl() {
+        Tile[][] lvlToSave = this.editMap.getLvLArray();            // Reference to the array to save
+        int[][] arrToReturn = new int[23][23];                      // Array with the lvl tile types to return
+
+        for (int j = 0; j < 23; j++) {
+            for (int i = 0; i < 23; i++) {
+                arrToReturn[j][i] = lvlToSave[j][i].getTileType();
+                System.out.println(arrToReturn[j][i]);
+            }
+        }
+
+        return arrToReturn;
+    }
+
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {              // If the click is in the menu button's bounds
             GameScenes.setGameScene(MENU);                              // Set the game scene to the menu
+            this.editMap.defaultLvLTilesLoader();                       // Reset the tiles for the default map
         }
-        else if (this.bSave.getButtonBounds().contains(x, y)) {         // If the click is in the save button's bounds
-            // Do nothing for now                                       // Do nothing just for now
+        else if (this.bSave.getButtonBounds().contains(x, y)) {                                     // If the click is in the save button's bounds
+            LevelUtilities.updateFileCount();                                                       // Update the file counter file txt + 1
+            LevelUtilities.initializeTheFilesCount();                                               // Update the files count variable that acts as a counter for the names too
+            LevelUtilities.createLevel(LevelUtilities.getnOfEditedMaps(), this.get2DArrFromLvl());  // Create a new txt file to save the int[][] and print it on the txt
+            GameScenes.setGameScene(MENU);                                                          // Set the game scene to the menu
+            this.editMap.defaultLvLTilesLoader();                                                   // Reset the tiles for the default map
         }
         else if (this.bRoad.getButtonBounds().contains(x, y)) {         // If the click is in the road button's bounds
-            // Use the road sprite
+            this.editMap.setSelectedTileToPaint(this.editMap.getGuiController().getRoad());        // Select the tile to paint as the road one
         }
         else if (this.bWater.getButtonBounds().contains(x, y)) {        // If the click is in the water button's bounds
-            // Use the water sprite
+            this.editMap.setSelectedTileToPaint(this.editMap.getGuiController().getWater());       // Select the tile to paint as the water one
         }
         else if (this.bGrass.getButtonBounds().contains(x, y)) {        // If the click is in the grass button's bounds
-            // Use the grass sprite
+            this.editMap.setSelectedTileToPaint(this.editMap.getGuiController().getGrass());        // Select the tile to paint as the grass one
         }
     }
 
