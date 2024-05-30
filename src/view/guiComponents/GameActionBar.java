@@ -1,9 +1,8 @@
 package view.guiComponents;
 
-import view.gameScenes.EndlessWaves;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
-import view.gameScenes.RandomGame;
+import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
@@ -11,10 +10,13 @@ import static view.gameScenes.GameScenes.MENU;
 public class GameActionBar extends Bar implements Playable {
 
     /**** Fields ****/
-    private Playable randomGame;          // Object reference to the "Random Game" game scene
-    private Playable endlessWaves;      // Object reference to the "Endless waves" game scene
+    private Playable randomGame;            // Object reference to the "Random Game" game scene
+    private Playable endlessWaves;          // Object reference to the "Endless waves" game scene
     private Clickable bMenu;                // Go back to the menu button
     private Clickable bPause;               // Pause the game button
+    private Clickable bTurret;              // Defense turret button
+    private Clickable bCannon;              // Defense cannon button
+    private Clickable bMachineGun;          // Defense machine-gun button
 
 
 
@@ -27,6 +29,9 @@ public class GameActionBar extends Bar implements Playable {
         this.endlessWaves = endlessWaves;
         this.bMenu = new MyButton("Menu", 10, 660, 100, 30);
         this.bPause = new MyButton("Pause", 10, 710, 100, 30);
+        this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
+        this.bCannon = new MyButton("Cannon", 220, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_cannon/cannon_icon.png"));
+        this.bMachineGun = new MyButton("MachineGun", 285, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_machinegun/machinegun_standing.png"));
     }
 
     /** Secondary constructor for the temporary Endless waves game mode **/
@@ -36,6 +41,9 @@ public class GameActionBar extends Bar implements Playable {
         this.endlessWaves = endlessWaves;
         this.bMenu = new MyButton("Menu", 10, 660, 100, 30);
         this.bPause = new MyButton("Pause", 10, 710, 100, 30);
+        this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
+        this.bCannon = new MyButton("Cannon", 220, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_cannon/cannon_icon.png"));
+        this.bMachineGun = new MyButton("MachineGun", 285, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_machinegun/machinegun_standing.png"));
     }
 
 
@@ -56,6 +64,9 @@ public class GameActionBar extends Bar implements Playable {
         // Buttons
         this.bMenu.draw(g);
         this.bPause.draw(g);
+        this.bTurret.draw(g, this.bTurret.getbImage());
+        this.bCannon.draw(g, this.bCannon.getbImage());
+        this.bMachineGun.draw(g, this.bMachineGun.getbImage());
     }
 
     /** Initialize map **/
@@ -77,8 +88,11 @@ public class GameActionBar extends Bar implements Playable {
 
     /** Mouse moved method **/
     public void mouseMoved(int x, int y) {
-        this.bMenu.setMouseOver(false);      // Set the mouse over for the menu button as false
-        this.bPause.setMouseOver(false);     // Set the mouse over for the pause button as false
+        this.bMenu.setMouseOver(false);         // Set the mouse over for the menu button as false
+        this.bPause.setMouseOver(false);        // Set the mouse over for the pause button as false
+        this.bTurret.setMouseOver(false);       // Set the mouse over for the turret button as false
+        this.bCannon.setMouseOver(false);       // Set the mouse over for the cannon button as false
+        this.bMachineGun.setMouseOver(false);   // Set the mouse over for the machine-gun button as false
 
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's moved over the menu button
             this.bMenu.setMouseOver(true);                       // Add the effect
@@ -86,12 +100,24 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bPause.getButtonBounds().contains(x, y)) {       // If it's moved over the pause button
             this.bPause.setMouseOver(true);                            // Add the effect
         }
+        else if (this.bTurret.getButtonBounds().contains(x, y)) {       // If it's moved over the turret button
+            this.bTurret.setMouseOver(true);                            // Add the effect
+        }
+        else if (this.bCannon.getButtonBounds().contains(x, y)) {       // If it's moved over the cannon button
+            this.bCannon.setMouseOver(true);                            // Add the effect
+        }
+        else if (this.bMachineGun.getButtonBounds().contains(x, y)) {       // If it's moved over the machine-gun button
+            this.bMachineGun.setMouseOver(true);                            // Add the effect
+        }
     }
 
     /** Mouse pressed method **/
     public void mousePressed(int x, int y) {
-        this.bMenu.setMousePressed(false);      // Set the mouse pressed over for the menu button as false
-        this.bPause.setMousePressed(false);     // Set the mouse pressed over for the pause button as false
+        this.bMenu.setMousePressed(false);          // Set the mouse pressed over for the menu button as false
+        this.bPause.setMousePressed(false);         // Set the mouse pressed over for the pause button as false
+        this.bTurret.setMousePressed(false);        // Set the mouse pressed over for the turret button as false
+        this.bCannon.setMousePressed(false);        // Set the mouse pressed over for the cannon button as false
+        this.bMachineGun.setMousePressed(false);    // Set the mouse pressed over for the machine-gun button as false
 
         if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's pressed on the menu button
             this.bMenu.setMousePressed(true);                   // Add the effect
@@ -99,12 +125,24 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bPause.getButtonBounds().contains(x, y)) {    // If it's pressed on the pause button
             this.bPause.setMousePressed(true);                      // Add the effect
         }
+        else if (this.bTurret.getButtonBounds().contains(x, y)) {    // If it's pressed on the turret button
+            this.bTurret.setMousePressed(true);                      // Add the effect
+        }
+        else if (this.bCannon.getButtonBounds().contains(x, y)) {    // If it's pressed on the cannon button
+            this.bCannon.setMousePressed(true);                      // Add the effect
+        }
+        else if (this.bMachineGun.getButtonBounds().contains(x, y)) {    // If it's pressed on the machine-gun button
+            this.bMachineGun.setMousePressed(true);                      // Add the effect
+        }
     }
 
     /** Mouse released method **/
     public void mouseReleased(int x, int y) {
         this.bMenu.resetBooleans();                 // Resetting the booleans for the menu button
         this.bPause.resetBooleans();                // Resetting the booleans for the pause button
+        this.bTurret.resetBooleans();               // Resetting the booleans for the turret button
+        this.bCannon.resetBooleans();               // Resetting the booleans for the cannon button
+        this.bMachineGun.resetBooleans();           // Resetting the booleans for the machine-gun button
     }
 
     /** Mouse dragged method **/
@@ -117,8 +155,23 @@ public class GameActionBar extends Bar implements Playable {
         return this.bMenu;
     }
 
-    /** Pause menu getter **/
+    /** Pause button getter **/
     public Clickable getbPause() {
         return this.bPause;
+    }
+
+    /** Turret button getter **/
+    public Clickable getbTurret() {
+        return this.bTurret;
+    }
+
+    /** Cannon button getter **/
+    public Clickable getbCannon() {
+        return this.bCannon;
+    }
+
+    /** Machine-gun button getter **/
+    public Clickable getbMachineGun() {
+        return this.bMachineGun;
     }
 }

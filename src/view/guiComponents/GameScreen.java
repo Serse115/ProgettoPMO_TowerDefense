@@ -28,7 +28,7 @@ public class GameScreen extends JPanel {
     /**** Constructors ****/
     /** Main constructor **/
     public GameScreen(MainFrame mainFrame) {
-        final Dimension size = new Dimension(750, 775);         // Setting the size for the panel
+        final Dimension size = new Dimension(736, 775);         // Setting the size for the panel
         super.setMinimumSize(size);                                         // Setting the minimum size for the panel
         super.setPreferredSize(size);                                       // Setting the preferred size for the panel
         super.setMaximumSize(size);                                         // Setting the maximum size for the panel

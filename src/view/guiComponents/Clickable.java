@@ -7,8 +7,11 @@ import java.awt.image.BufferedImage;
 public interface Clickable {
 
     /** Methods **/
-    /** Draw method **/
+    /** Basic draw method **/
     void draw(Graphics g);
+
+    /** Tiles choice draw method **/
+    void draw(Graphics g, BufferedImage bImg);
 
     /** Reset the boolean variables **/
     void resetBooleans();

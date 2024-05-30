@@ -1,7 +1,6 @@
 package view.guiComponents;
 
 import view.gameScenes.*;
-
 import javax.swing.*;
 
 /**** Class for the main game frame ****/

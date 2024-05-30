@@ -12,7 +12,6 @@ public class MyButton implements Clickable {
     private int y;                  // Y coordinate for the button's position on screen
     private int width;              // Width for the button
     private int height;             // Height for the button
-    //private int id;                 // Button id
     private BufferedImage bImage;   // Button image if needed
     private boolean mouseOver;      // Boolean variable representing the "mouse moving over the button" situation
     private boolean mousePressed;   // Boolean variable representing the "mouse pressing the button" situation
@@ -29,7 +28,6 @@ public class MyButton implements Clickable {
         this.y = y;
         this.width = width;
         this.height = height;
-        //this.id = -1;                   // Id is not necessary for the normal buttons
         this.bImage = null;             // Button image not needed in this case
         this.mouseOver = false;         // By default the buttons are not considered as moved over by the mouse
         this.mousePressed = false;      // By default  the buttons are not considered as pressed
@@ -37,9 +35,8 @@ public class MyButton implements Clickable {
     }
 
     /** Alternative constructor (For the tiles buttons when creating a map) **/
-    public MyButton(String text, int x, int y, int width, int height, BufferedImage bImg/*int id*/) {
-        this(text, x, y, width, height);        // Using the previous constructor
-        //this.id = id;                           // This time adding the id (the tiles buttons require an id)
+    public MyButton(String text, int x, int y, int width, int height, BufferedImage bImg) {
+        this(text, x, y, width, height);          // Using the previous constructor
         this.bImage = bImg;                       // Adding the image needed for the button
     }
 

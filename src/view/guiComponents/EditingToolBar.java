@@ -13,11 +13,11 @@ public class EditingToolBar extends Bar implements Playable {
 
     /**** Fields ****/
     private EditMap editMap;                // Object reference to the Editing game scene
-    private MyButton bGrass;                // Grass button
-    private MyButton bWater;                // Water button
-    private MyButton bRoad;                 // Road button
-    private MyButton bMenu;                 // Menu button
-    private MyButton bSave;                 // Save the map button
+    private Clickable bGrass;                // Grass button
+    private Clickable bWater;                // Water button
+    private Clickable bRoad;                 // Road button
+    private Clickable bMenu;                 // Menu button
+    private Clickable bSave;                 // Save the map button
 
 
 
@@ -50,9 +50,9 @@ public class EditingToolBar extends Bar implements Playable {
         g.drawRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
 
         // Buttons
-        this.bGrass.draw(g, bGrass.getbImage());
-        this.bWater.draw(g, bWater.getbImage());
-        this.bRoad.draw(g, bRoad.getbImage());
+        this.bGrass.draw(g, this.bGrass.getbImage());
+        this.bWater.draw(g, this.bWater.getbImage());
+        this.bRoad.draw(g, this.bRoad.getbImage());
         this.bMenu.draw(g);
         this.bSave.draw(g);
     }
