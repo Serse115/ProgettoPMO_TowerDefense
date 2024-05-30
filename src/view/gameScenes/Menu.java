@@ -23,9 +23,9 @@ public class Menu extends GameSceneBase implements Playable {
     public Menu(MainFrame mainFrame) {
         super(mainFrame);
 
-        this.bPlay = new MyButton("Play", 300, 150, 150, 50);
+        this.bPlay = new MyButton("Random Map", 300, 150, 150, 50);
         this.bEditMap = new MyButton("Edit Map", 300, 250, 150, 50);
-        this.bSavedGame = new MyButton("Saved Games", 300, 350, 150, 50);
+        this.bSavedGame = new MyButton("Saved Maps", 300, 350, 150, 50);
         this.bEndlessWaves = new MyButton("Endless Waves", 300, 450, 150, 50);
         this.bQuit = new MyButton("Quit", 300, 550, 150, 50);
     }
@@ -41,6 +41,11 @@ public class Menu extends GameSceneBase implements Playable {
         this.bSavedGame.draw(g);        // Draw the saved games button
         this.bEndlessWaves.draw(g);     // Draw the endless waves button
         this.bQuit.draw(g);             // Draw the quit button
+    }
+
+    /** Initialize map method **/
+    public void initializeMap() {
+        // Not required
     }
 
     /** Mouse clicked method **/

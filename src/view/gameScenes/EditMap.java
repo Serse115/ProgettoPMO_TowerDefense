@@ -32,7 +32,7 @@ public class EditMap extends GameSceneBase implements Playable {
         super(mainFrame);
         this.editingToolBar = new EditingToolBar(0, 640, 736, 160, this);
         this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
-        this.lvLArray = new Tile[23][23];
+        this.lvLArray = new Tile[20][23];
         this.selectedTileToPaint = null;
         this.guiController = new GUIController();
         this.defaultLvLTilesLoader();
@@ -53,6 +53,11 @@ public class EditMap extends GameSceneBase implements Playable {
         this.drawLevel(g);
         this.editingToolBar.render(g);
         this.drawSelectedTile(g);
+    }
+
+    /** Initialize map method **/
+    public void initializeMap() {
+        // Not required
     }
 
     /** Drawing the default level method**/

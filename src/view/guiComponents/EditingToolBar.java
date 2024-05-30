@@ -26,11 +26,11 @@ public class EditingToolBar extends Bar implements Playable {
     public EditingToolBar(int x, int y, int width, int height, EditMap editMap) {
         super(x, y, width, height);
         this.editMap = editMap;
-        this.bGrass = new MyButton("Grass", 250, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png"));
-        this.bWater = new MyButton("Water", 320, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/water_atlas.png"));
-        this.bRoad = new MyButton("Road", 390, 650, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/road_atlas.png"));
-        this.bMenu = new MyButton("Menu", 10, 650, 100, 30);
-        this.bSave = new MyButton("Save", 10, 690, 100, 30);
+        this.bGrass = new MyButton("Grass", 250, 680, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png"));
+        this.bWater = new MyButton("Water", 320, 680, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/water_atlas.png"));
+        this.bRoad = new MyButton("Road", 390, 680, 48, 48, SpriteUtilities.getSpriteAtlas("layout_atlas/road_atlas.png"));
+        this.bMenu = new MyButton("Menu", 10, 660, 100, 30);
+        this.bSave = new MyButton("Save", 10, 710, 100, 30);
 
     }
 
@@ -57,19 +57,23 @@ public class EditingToolBar extends Bar implements Playable {
         this.bSave.draw(g);
     }
 
+    /** Initialize map method **/
+    public void initializeMap() {
+        // Not required
+    }
+
     /** Method to convert the lvl in a 2d array of ints (the tile types of the level itself) **/
     private int[][] get2DArrFromLvl() {
         Tile[][] lvlToSave = this.editMap.getLvLArray();            // Reference to the array to save
-        int[][] arrToReturn = new int[23][23];                      // Array with the lvl tile types to return
+        int[][] arrToReturn = new int[20][23];                      // Array with the lvl tile types to return
 
-        for (int j = 0; j < 23; j++) {
-            for (int i = 0; i < 23; i++) {
-                arrToReturn[j][i] = lvlToSave[j][i].getTileType();
-                System.out.println(arrToReturn[j][i]);
+        for (int j = 0; j < 20; j++) {                              // For every value in each row
+            for (int i = 0; i < 23; i++) {                          // and column
+                arrToReturn[j][i] = lvlToSave[j][i].getTileType();  // Assign that value to the array to return
             }
         }
 
-        return arrToReturn;
+        return arrToReturn;                                         // Return the array
     }
 
     /** Mouse clicked method **/

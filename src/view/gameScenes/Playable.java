@@ -9,6 +9,9 @@ public interface Playable {
     /** Render method **/
     void render(Graphics g);
 
+    /** Initialize map method **/
+    void initializeMap();
+
     /** Mouse Clicked method **/
     void mouseClicked(int x, int y);
 

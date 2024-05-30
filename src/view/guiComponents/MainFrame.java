@@ -17,6 +17,8 @@ public class MainFrame extends JFrame implements Runnable {
     private Playable menu;                                            // Menu game scene
     private Playable play;                                            // Play game scene
     private Playable edit;                                            // Edit game scene
+    private Playable endlessWaves;                                    // Endless waves scene
+    private Playable temporaryEndlessWaves;                           // Temporary endless waves scene
 
 
 
@@ -35,8 +37,10 @@ public class MainFrame extends JFrame implements Runnable {
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
         this.menu = new Menu(this);                                   // Initializing the menu game scene object
-        this.play = new Play(this);                                   // Initializing the play game scene object
+        this.temporaryEndlessWaves = new EndlessWaves(this);          // Initializing the temporary endless waves scene object
+        this.play = new RandomGame(this, this.temporaryEndlessWaves); // Initializing the play game scene object
         this.edit = new EditMap(this);                                // Initializing the edit game scene object
+        this.endlessWaves = new EndlessWaves(this, this.play);        // Initializing the endless waves game scene objet
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -127,5 +131,10 @@ public class MainFrame extends JFrame implements Runnable {
     /** Edit getter **/
     public Playable getEdit() {
         return this.edit;
+    }
+
+    /** Endless waves getter **/
+    public Playable getEndlessWaves() {
+        return this.endlessWaves;
     }
 }

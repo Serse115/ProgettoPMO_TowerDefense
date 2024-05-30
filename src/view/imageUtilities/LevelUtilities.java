@@ -62,7 +62,7 @@ public class LevelUtilities {
 
         try {
             PrintWriter p = new PrintWriter(f);             // PrintWriter object to write on the txt file
-            for (int i = 0; i < 23; i++) {                  // For every id of the array of values to write
+            for (int i = 0; i < 20; i++) {                  // For every id of the array of values to write
                 for (int j = 0; j < 23; j++) {
                     int x = idArr[i][j];                        // Save the corresponding value in a variable on its own
                     p.println(x);                               // Print the value of the variable on the txt
@@ -104,22 +104,24 @@ public class LevelUtilities {
     }
 
     /** Static sub-method to read from a file **/
-    private static ArrayList<Integer> readFromFile(File f) {
+    private static int[][] readFromFile(File f) {
 
-        ArrayList<Integer> list = new ArrayList<>();                // List of read values to return
+        int[][] tilesArray = new int[20][23];                       // Array of int values to read and return
 
         try {
             Scanner sc = new Scanner(f);                            // Scanner object
 
-            while (sc.hasNextLine()) {                              // While there are still values to read
-                list.add(Integer.parseInt(sc.nextLine()));          // Read them and add them to the list
+            for (int i = 0; i < 20; i++) {                          // For every row to form
+                for (int j = 0; j < 23; j++) {                      // And column to form
+                    tilesArray[i][j] = sc.nextInt();                // Read the int and assign it to the position in the array list
+                }
             }
             sc.close();                                             // Then close the scanner object
         }
         catch (FileNotFoundException e) {                           // If there's no such file, throw and catch an exception
             e.printStackTrace();
         }
-        return list;                                                // Return the final list
+        return tilesArray;                                          // Return the final array
     }
 
     /** Static method to create a level **/
@@ -160,11 +162,10 @@ public class LevelUtilities {
     /** Static method to get the level data **/
     public static int[][] getLvlData(String name) {
 
-        File lvlFile = new File("resources/levels/customLvl_" + name + ".txt");     // File name and path
+        File lvlFile = new File(name);                              // File name and path
 
         if (lvlFile.exists()) {                                     // If the file exists
-            ArrayList<Integer> list = readFromFile(lvlFile);        // Read from the file and add the data to the list
-            return arrayListTo2DInt(list, 20, 20);       // Turn the list into a 2D array and return it
+            return readFromFile(lvlFile);                           // Return the 2D array of tiles corresponding to the map layout through the previous method
         }
         else {
             return null;                                            // Otherwise, return nothing

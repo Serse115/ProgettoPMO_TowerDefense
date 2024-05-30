@@ -9,18 +9,12 @@ public class Render {
     /**** Fields ****/
     private MainFrame mainFrame;
 
-    /* */
-    //private BufferedImage grassImg;      // Img to paint grass
-
 
 
 
     /**** Constructors ****/
     public Render(MainFrame mainFrame) {
         this.mainFrame = mainFrame;
-
-        /* */
-        //this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
     }
 
 
@@ -43,6 +37,7 @@ public class Render {
             case SAVED_GAME:
                 break;
             case ENDLESS_WAVES:
+                this.mainFrame.getEndlessWaves().render(g); // Render and paint the components of the endless waves page
                 break;
             case GAME_OVER:
                 break;

@@ -41,7 +41,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                     break;
                 case SAVED_GAME:
                     break;
-                case ENDLESS_WAVES:
+                case ENDLESS_WAVES:                                                                     // If it's endless waves
+                    this.mainFrame.getEndlessWaves().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse clicked methods to do things depending on the position of the click
                     break;
             }
         }
@@ -65,7 +66,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case SAVED_GAME:
                 break;
-            case ENDLESS_WAVES:
+            case ENDLESS_WAVES:                                                                   // If it's endless waves
+                this.mainFrame.getEndlessWaves().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the click
                 break;
         }
     }
@@ -85,7 +87,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case SAVED_GAME:
                 break;
-            case ENDLESS_WAVES:
+            case ENDLESS_WAVES:                                                                     // If it's endless waves
+                this.mainFrame.getEndlessWaves().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the click
                 break;
         }
     }
@@ -105,7 +108,8 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case SAVED_GAME:
                 break;
-            case ENDLESS_WAVES:
+            case ENDLESS_WAVES:                                                                      // If it's endless waves
+                this.mainFrame.getEndlessWaves().mouseReleased(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse released methods to do things depending on the position of the click
                 break;
         }
     }
