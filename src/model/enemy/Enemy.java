@@ -1,57 +1,55 @@
 package model.enemy;
 
-import view.imageUtilities.SpriteUtilities;
 import java.awt.image.BufferedImage;
 
-/**** Abstract parent class for the enemies ****/
-public abstract class Enemy {
+/**** Parent class for the enemies ****/
+public class Enemy implements Fightable {
 
     /**** Fields ****/
-    private short lifePoints;                     // Enemy's health
-    private byte speed;                           // Enemy's speed
-    private short hitPower;                       // Enemy's attack potency
-    private BufferedImage[] walkingImages;        // Enemy's walking frames
-    private BufferedImage[] attackingImages;      // Enemy's attacking frames
-    private BufferedImage[] deathImages;          // Enemy's death frames
+    private int lifePoints;                       // Enemy's health
+    private int speed;                            // Enemy's speed
+    private int hitPower;                         // Enemy's attack potency
+    private int xPosition;                        // X position of the enemy on the map
+    private int yPosition;                        // Y position of the enemy on the map
+    private int enemyIndex;                       // Id to identify every enemy currently in the game session
+    private BufferedImage[] walkingImages;        // Enemy's walking images
+    private BufferedImage[] attackingImages;      // Enemy's attacking images
+    private BufferedImage[] deathImages;          // Enemy's death images
 
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(short lifePoints, byte speed, short hitPower, String movingAtlasPath, String attackAtlasPath, String deathAtlasPath, int[] nOfSubImgs, int[] widths, int[] heights) {
+    public Enemy(int lifePoints, int speed, int hitPower, int enIdx, int walkingLength, int attackingLength, int deathLength) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
-        this.setFramesAnimations(movingAtlasPath, attackAtlasPath, deathAtlasPath, nOfSubImgs, widths, heights);    // Setting the enemy's frames through the paths assigned from the subclasses
+        this.xPosition = 0;
+        this.yPosition = 0;
+        this.enemyIndex = enIdx;
+        this.walkingImages = new BufferedImage[walkingLength];
+        this.attackingImages = new BufferedImage[attackingLength];
+        this.deathImages = new BufferedImage[deathLength];
     }
 
 
 
 
     /**** Methods ****/
-    /** Set the walking, attacking and death animation frames method **/
-    private void setFramesAnimations(String movingAtlasPath, String attackAtlasPath, String deathAtlasPath, int[] nOfSubImgs, int[] widths, int[] heights) {
-        BufferedImage imageAtlas = null;                                                                       // Image to store the sprites to obtain the animation frames
-        imageAtlas = SpriteUtilities.getSpriteAtlas(movingAtlasPath);                                         // Obtaining the whole walking sprite atlas
-        this.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[0], widths[0], heights[0]));// Setting the walking images
+    /** Move method **/
+    public void move() {
 
-        imageAtlas = SpriteUtilities.getSpriteAtlas(attackAtlasPath);                                           // Obtaining the whole attacking sprite atlas
-        this.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[1], widths[1], heights[1]));  // Setting the attacking images
-
-        imageAtlas = SpriteUtilities.getSpriteAtlas(deathAtlasPath);                                            // Obtaining the whole death sprite atlas
-        this.setDeathImages(SpriteUtilities.getAniSprites(0, 0, imageAtlas, nOfSubImgs[2], widths[2], heights[2]));     // Setting the death images
     }
 
-    /** Move method **/
-    public abstract void move();
-
     /** Hit method **/
-    public abstract void hit();
+    public void hit() {
+
+    }
 
     /*** Getters and setters ***/
     /** LifePoints getter **/
-    public short getLifePoints() {
+    public int getLifePoints() {
         return this.lifePoints;
     }
 
@@ -61,28 +59,53 @@ public abstract class Enemy {
     }
 
     /** Speed getter **/
-    public byte getSpeed() {
+    public int getSpeed() {
         return this.speed;
     }
 
     /** HitPower getter **/
-    public short getHitPower() {
+    public int getHitPower() {
         return this.hitPower;
     }
 
-    /** WalkingImages getter **/
+    /** X position getter **/
+    public int getxPosition() {
+        return this.xPosition;
+    }
+
+    /** Y position getter **/
+    public int getyPosition() {
+        return this.yPosition;
+    }
+
+    /** Walking images getter **/
     public BufferedImage[] getWalkingImages() {
         return this.walkingImages;
     }
 
-    /** AttackingImages getter **/
+    /** Walking images setter **/
+    public void setWalkingImages(BufferedImage[] imgs) {
+        this.walkingImages = imgs;
+    }
+
+    /** Attacking images getter **/
     public BufferedImage[] getAttackingImages() {
         return this.attackingImages;
     }
 
-    /** DeathImages getter **/
+    /** Attacking images setter **/
+    public void setAttackingImages(BufferedImage[] imgs) {
+        this.attackingImages = imgs;
+    }
+
+    /** Death images getter **/
     public BufferedImage[] getDeathImages() {
         return this.deathImages;
+    }
+
+    /** Death images setter **/
+    public void setDeathImages(BufferedImage[] imgs) {
+        this.deathImages = imgs;
     }
 
     /** LifePoints setter **/
@@ -100,18 +123,18 @@ public abstract class Enemy {
         this.hitPower = hitPower;
     }
 
-    /** WalkingImages setter **/
-    private void setWalkingImages(BufferedImage[] imgs) {
-        this.walkingImages = imgs;
+    /** LifePoints setter **/
+    public void setLifePoints(int lifePoints) {
+        this.lifePoints = lifePoints;
     }
 
-    /** AttackingImages setter **/
-    private void setAttackingImages(BufferedImage[] imgs) {
-        this.attackingImages = imgs;
+    /** X position setter **/
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
     }
 
-    /** DeathImages setter **/
-    private void setDeathImages(BufferedImage[] imgs) {
-        this.deathImages = imgs;
+    /** Y position setter **/
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
     }
 }

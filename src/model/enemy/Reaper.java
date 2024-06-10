@@ -1,12 +1,12 @@
 package model.enemy;
 
+import java.awt.image.BufferedImage;
+
 /**** Subclass of the Enemy abstract superclass, one of the implemented enemies of the game ****/
 public class Reaper extends Enemy implements Fightable {
 
     /**** Fields ****/
-    private static final String movingAtlasPath = "enemy_reaper/HostileRunningReaper.png";      // Path to the requested atlas resource
-    private static final String attackAtlasPath = "enemy_reaper/HostileAttackReaper.png";       // Path to the requested atlas resource
-    private static final String deathAtlasPath = "enemy_reaper/DeathAnimationReaper.png";       // Path to the requested atlas resource
+    // Inherited from parent class
 
 
 
@@ -14,8 +14,8 @@ public class Reaper extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Reaper(short lifePoints, byte speed, short hitPower) {
-        super(lifePoints, speed, hitPower, movingAtlasPath, attackAtlasPath, deathAtlasPath, new int[] {8, 10, 10}, new int[] {48, 48, 48}, new int[] {48, 48, 48});
+    public Reaper(int lifePoints, int speed, int hitPower, int enIndex) {
+        super(lifePoints, speed, hitPower, enIndex, 8, 10, 10);
     }
 
 
@@ -30,4 +30,10 @@ public class Reaper extends Enemy implements Fightable {
     public void hit() {
 
     }
+
+    /** CurrentlyInUsImages setter **/
+    //public void setCurrentInUseImages(BufferedImage[] imgs) {
+      //  super.setCurrentInUseImages(imgs);
+    //}
 }
+/* , new int[] {8, 10, 10}, new int[] {48, 48, 48}, new int[] {48, 48, 48} */

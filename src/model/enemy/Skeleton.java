@@ -4,9 +4,7 @@ package model.enemy;
 public class Skeleton extends Enemy implements Fightable {
 
     /**** Fields ****/
-    private static final String movingAtlasPath = "enemy_skeleton/skeleton_walk.png";      // Path to the requested atlas resource
-    private static final String attackAtlasPath = "enemy_skeleton/skeleton_attack.png";    // Path to the requested atlas resource
-    private static final String deathAtlasPath = "enemy_skeleton/skeleton_dead.png";       // Path to the requested atlas resource
+    // Inherited from parent class
 
 
 
@@ -14,8 +12,8 @@ public class Skeleton extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Skeleton(short lifePoints, byte speed, short hitPower) {
-        super(lifePoints, speed, hitPower, movingAtlasPath, attackAtlasPath, deathAtlasPath, new int[] {13, 18, 15}, new int[] {22, 43, 33}, new int[] {33, 37, 32});
+    public Skeleton(int lifePoints, int speed, int hitPower, int enIndex) {
+        super(lifePoints, speed, hitPower, enIndex, 13, 18, 15);
     }
 
 
@@ -23,11 +21,13 @@ public class Skeleton extends Enemy implements Fightable {
     /**** Methods ****/
     /** Move method **/
     public void move() {
-
+        super.move();
     }
 
     /** Hit method **/
     public void hit() {
-
+        super.hit();
     }
 }
+
+/* new int[] {13, 18, 15}, new int[] {22, 43, 33}, new int[] {33, 37, 32} */

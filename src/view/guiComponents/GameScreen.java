@@ -5,20 +5,11 @@ import model.enemy.Skeleton;
 import model.enemy.Zombie;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 /**** Class for the main panel that will handle the different statuses of the game (playing, menu... ) ****/
 public class GameScreen extends JPanel {
 
     /**** Fields ****/
-    /* */
-
-    private Reaper reaper;               // Reaper try
-    private Skeleton skeleton;           // Skeleton try
-    private Zombie zombie;               // Zombie try
-    private BufferedImage[] zombieWalking;  // Zombie walk array
-    private BufferedImage[] reaperWalking;  // Reaper walk array
-    private BufferedImage[] skeletonWalking;    // Skeleton walk array
     private MainFrame mainFrame;            // Main frame object
 
 
@@ -34,18 +25,6 @@ public class GameScreen extends JPanel {
         super.setMaximumSize(size);                                         // Setting the maximum size for the panel
 
         this.mainFrame = mainFrame;
-
-        /* */
-        this.reaper = new Reaper((short) 150, (byte) 1, (short) 50);
-
-        this.skeleton = new Skeleton((short) 75, (byte) 2, (short) 35);
-
-        this.zombie = new Zombie((short) 100, (byte) 3, (short) 25);
-
-        this.zombieWalking = this.zombie.getWalkingImages();
-        this.reaperWalking = this.reaper.getWalkingImages();
-        this.skeletonWalking = this.skeleton.getWalkingImages();
-
     }
 
 

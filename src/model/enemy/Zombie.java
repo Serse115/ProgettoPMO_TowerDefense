@@ -4,9 +4,7 @@ package model.enemy;
 public class Zombie extends Enemy implements Fightable {
 
     /**** Fields ****/
-    private static final String movingAtlasPath = "enemy_zombie/zombie_run.png";            // Path to the requested atlas resource
-    private static final String attackAtlasPath = "enemy_zombie/zombie_attack.png";         // Path to the requested atlas resource
-    private static final String deathAtlasPath = "enemy_zombie/zombie_dead.png";            // Path to the requested atlas resource
+    // Inherited from parent class
 
 
 
@@ -14,8 +12,8 @@ public class Zombie extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Zombie(short lifePoints, byte speed, short hitPower) {
-        super(lifePoints, speed, hitPower, movingAtlasPath, attackAtlasPath, deathAtlasPath, new int[] {8, 12, 5}, new int[] {96, 95, 95}, new int[] {56, 62, 48});
+    public Zombie(int lifePoints, int speed, int hitPower, int enIndex) {
+        super(lifePoints, speed, hitPower, enIndex, 8, 12, 5);
     }
 
 
@@ -31,3 +29,4 @@ public class Zombie extends Enemy implements Fightable {
 
     }
 }
+ /*  new int[] {8, 12, 5}, new int[] {96, 95, 95}, new int[] {56, 62, 48}, */
