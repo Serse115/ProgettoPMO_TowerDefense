@@ -71,7 +71,12 @@ public class GameActionBar extends Bar implements Playable {
 
     /** Initialize map **/
     public void initializeMap() {
-        // Not required
+        // Not required, handled in the randomGame and EndlessWaves class
+    }
+
+    /** Initialize enemies **/
+    public void initializeEnemies() {
+        // Not required, handled in the randomGame class
     }
 
     /** Mouse clicked method **/
@@ -79,6 +84,7 @@ public class GameActionBar extends Bar implements Playable {
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
             GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
             this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
+            this.randomGame.initializeEnemies();
             this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
         }
         else if (this.bPause.getButtonBounds().contains(x, y)) {  // If it's clicked within the pause game button's boundaries

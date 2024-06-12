@@ -1,31 +1,38 @@
 package view.guiComponents;
 
+import model.tower.Tower;
+
 import java.awt.image.BufferedImage;
 
 /***** Class for the tiles objects that form the map layout and playable field *****/
 public class Tile {
 
     /**** Fields ****/
-    private BufferedImage[] sprites;           // Sprite that forms the tile
+    private BufferedImage sprite;           // Sprite that forms the tile
     private int id;                            // Tile id
     private int tileType;                      // Type of the tile
+    private boolean hasTower;                  // Has tower variable to define if the tile already has a tower located in it
+    private Tower tower;                       // Object reference to the tower in the tile
 
 
 
     /**** Constructors ****/
     /** Main constructor for the static sprites (land/road) **/
     public Tile(BufferedImage sprite, int id, int tileType) {
-        this.sprites = new BufferedImage[1];
-        this.sprites[0] = sprite;
+        this.sprite = sprite;
         this.id = id;
         this.tileType = tileType;
+        this.hasTower = false;
+        this.tower = null;
     }
 
-    /** Second constructor for the animated sprites (water) **/
-    public Tile(BufferedImage[] sprites, int id, int tileType) {
-        this.sprites = sprites;
-        this.id = id;
-        this.tileType = tileType;
+    /** Secondary default constructor **/
+    public Tile() {
+        this.sprite = null;
+        this.id = 0;
+        this.tileType = 0;
+        this.hasTower = false;
+        this.tower = null;
     }
 
 
@@ -33,17 +40,12 @@ public class Tile {
     /**** Methods ****/
     /** Single sprite getter **/
     public BufferedImage getSprite() {
-        return this.sprites[0];
+        return this.sprite;
     }
 
-    /** Is animation boolean **/
-    public boolean isAnimatedSprite() {
-        return this.sprites.length > 1;
-    }
-
-    /** Animated sprite getter at chosen index **/
-    public BufferedImage getSprite(int animationIndex) {
-        return this.sprites[animationIndex];
+    /** Set sprite method **/
+    public void setSprite(BufferedImage img) {
+        this.sprite = img;
     }
 
     /** Id getter **/
@@ -54,5 +56,30 @@ public class Tile {
     /** Tile type getter **/
     public int getTileType() {
         return this.tileType;
+    }
+
+    /** Tile type setter **/
+    public void setTileType(int tileType) {
+        this.tileType = tileType;
+    }
+
+    /** Has tower getter **/
+    public boolean isHasTower() {
+        return this.hasTower;
+    }
+
+    /** Has tower setter **/
+    public void setHasTower(boolean hasTower) {
+        this.hasTower = hasTower;
+    }
+
+    /** Tower getter **/
+    public Tower getTower() {
+        return this.tower;
+    }
+
+    /** Tower setter **/
+    public void addTower(Tower newTower) {
+        this.tower = newTower;
     }
 }

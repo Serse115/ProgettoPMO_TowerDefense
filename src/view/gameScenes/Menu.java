@@ -45,7 +45,12 @@ public class Menu extends GameSceneBase implements Playable {
 
     /** Initialize map method **/
     public void initializeMap() {
-        // Not required
+        // Not required, handled in the randomGame class and the endlessWaves class
+    }
+
+    /** Initialize enemies method **/
+    public void initializeEnemies() {
+        // Not required, handled in the randomGame class and the endlessWaves class
     }
 
     /** Mouse clicked method **/

@@ -1,5 +1,7 @@
 package model.enemy;
 
+import view.guiComponents.Tile;
+
 import java.awt.image.BufferedImage;
 
 /**** Subclass of the Enemy abstract superclass, one of the implemented enemies of the game ****/
@@ -14,8 +16,8 @@ public class Reaper extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Reaper(int lifePoints, int speed, int hitPower, int enIndex) {
-        super(lifePoints, speed, hitPower, enIndex, 8, 10, 10);
+    public Reaper(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+        super(lifePoints, speed, hitPower, enIndex, 8, 10, 10, tiles, x, y, 48, 48);
     }
 
 

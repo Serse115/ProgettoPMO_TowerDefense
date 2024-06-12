@@ -60,6 +60,11 @@ public class EditMap extends GameSceneBase implements Playable {
         // Not required
     }
 
+    @Override
+    public void initializeEnemies() {
+        // Not required
+    }
+
     /** Drawing the default level method**/
     private void drawLevel(Graphics g) {
 

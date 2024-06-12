@@ -1,5 +1,7 @@
 package model.enemy;
 
+import view.guiComponents.Tile;
+
 /**** Subclass of the Enemy abstract superclass, one of the implemented enemies of the game ****/
 public class Zombie extends Enemy implements Fightable {
 
@@ -12,8 +14,8 @@ public class Zombie extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Zombie(int lifePoints, int speed, int hitPower, int enIndex) {
-        super(lifePoints, speed, hitPower, enIndex, 8, 12, 5);
+    public Zombie(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+        super(lifePoints, speed, hitPower, enIndex, 8, 12, 5, tiles, x, y, 96, 95);
     }
 
 

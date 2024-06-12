@@ -59,7 +59,12 @@ public class EditingToolBar extends Bar implements Playable {
 
     /** Initialize map method **/
     public void initializeMap() {
-        // Not required
+        // Not required, handled in the randomGame class and the Endless waves class
+    }
+
+    @Override
+    public void initializeEnemies() {
+        // Not required, handled in the randomGame class and the Endless waves class
     }
 
     /** Method to convert the lvl in a 2d array of ints (the tile types of the level itself) **/

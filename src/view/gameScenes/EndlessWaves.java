@@ -55,6 +55,11 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
     }
 
+    @Override
+    public void initializeEnemies() {
+
+    }
+
     /** Draw level method **/
     private void drawLevel(Graphics g) {
 

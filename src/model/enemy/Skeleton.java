@@ -1,5 +1,7 @@
 package model.enemy;
 
+import view.guiComponents.Tile;
+
 /**** Subclass of the Enemy abstract superclass, one of the implemented enemies of the game ****/
 public class Skeleton extends Enemy implements Fightable {
 
@@ -12,8 +14,8 @@ public class Skeleton extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Skeleton(int lifePoints, int speed, int hitPower, int enIndex) {
-        super(lifePoints, speed, hitPower, enIndex, 13, 18, 15);
+    public Skeleton(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+        super(lifePoints, speed, hitPower, enIndex, 13, 18, 15, tiles, x, y, 43, 37);
     }
 
 
@@ -25,8 +27,8 @@ public class Skeleton extends Enemy implements Fightable {
     }
 
     /** Hit method **/
-    public void hit() {
-        super.hit();
+    public void hit(Tile t) {
+        super.hit(t);
     }
 }
 

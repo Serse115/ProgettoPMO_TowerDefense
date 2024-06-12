@@ -12,6 +12,9 @@ public interface Playable {
     /** Initialize map method **/
     void initializeMap();
 
+    /** Initialize the enemies method **/
+    void initializeEnemies();
+
     /** Mouse Clicked method **/
     void mouseClicked(int x, int y);
 

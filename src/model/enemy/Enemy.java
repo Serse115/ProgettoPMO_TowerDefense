@@ -1,5 +1,7 @@
 package model.enemy;
 
+import view.guiComponents.Tile;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**** Parent class for the enemies ****/
@@ -12,25 +14,34 @@ public class Enemy implements Fightable {
     private int xPosition;                        // X position of the enemy on the map
     private int yPosition;                        // Y position of the enemy on the map
     private int enemyIndex;                       // Id to identify every enemy currently in the game session
+    private boolean isWalking;                    // Boolean variable to decide if the enemy is currently walking
+    private boolean isAttacking;                  // Boolean variable to decide if the enemy is currently attacking
     private BufferedImage[] walkingImages;        // Enemy's walking images
     private BufferedImage[] attackingImages;      // Enemy's attacking images
     private BufferedImage[] deathImages;          // Enemy's death images
+    private Tile[] nextTiles;                     // Tile object reference to check if the next tile is a tower to attack
+    private Tile tileToFight;                     // Tile id where the enemy stops to fight with the tower
+    private Rectangle bounds;                     // Hitbox and bounds of the enemy
 
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(int lifePoints, int speed, int hitPower, int enIdx, int walkingLength, int attackingLength, int deathLength) {
+    public Enemy(int lifePoints, int speed, int hitPower, int enIdx, int walkingLength, int attackingLength, int deathLength, Tile[] nextTiles, int x, int y, int width, int height) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
-        this.xPosition = 0;
-        this.yPosition = 0;
+        this.xPosition = x;
+        this.yPosition = y;
         this.enemyIndex = enIdx;
+        this.isWalking = true;
+        this.isAttacking = false;
         this.walkingImages = new BufferedImage[walkingLength];
         this.attackingImages = new BufferedImage[attackingLength];
         this.deathImages = new BufferedImage[deathLength];
+        this.nextTiles = nextTiles;
+        this.bounds = new Rectangle(x, y, width, height);
     }
 
 
@@ -39,12 +50,43 @@ public class Enemy implements Fightable {
     /**** Methods ****/
     /** Move method **/
     public void move() {
-
+        while (this.isWalking) {
+            this.setxPosition(this.getxPosition() + this.getSpeed());
+        }
     }
 
     /** Hit method **/
-    public void hit() {
+    public void hit(Tile t) {
+        while (this.isAttacking) {
+            t.getTower().setLifePoints(t.getTower().getLifePoints() - this.hitPower);
+        }
+    }
 
+    /** Check if the enemy will move **/
+    private void enemyLogic() {
+
+        while (this.isAlive()) {
+            while (this.isWalking) {                  // While there are no towers on the enemy's way and the enemy is walking with still health
+                for (Tile t : this.nextTiles) {                         // For each tile in the set of tiles composing the whole road way
+                    if (t.isHasTower() && t.getTower() != null) {       // If a tower is on the tile
+                        this.tileToFight = t;                           // Setting the tile to fight as the current tile where the turret is
+                        this.isAttacking = true;                        // Set the attacking variable as true so that the enemy can attack
+                        this.isWalking = false;                         // Stop the walking through making the isWalking variable false
+                    }
+                    else {                                              // Or else the variable remains true
+                        this.move();                                    // And the enemy keeps on moving
+                    }
+                }
+            }
+            while (this.isAttacking) {                // While there is a tower to attack
+                if (!tileToFight.isHasTower() && !this.isAttacking) {   //
+                    this.tileToFight = null;
+                    this.isAttacking = false;
+                    this.isWalking = true;
+                }
+
+            }
+        }
     }
 
     /*** Getters and setters ***/
@@ -81,6 +123,11 @@ public class Enemy implements Fightable {
     /** Walking images getter **/
     public BufferedImage[] getWalkingImages() {
         return this.walkingImages;
+    }
+
+    /** Walking single image getter try **/
+    public BufferedImage getSingleWalkingImage() {
+        return this.walkingImages[0];
     }
 
     /** Walking images setter **/
@@ -136,5 +183,25 @@ public class Enemy implements Fightable {
     /** Y position setter **/
     public void setyPosition(int yPosition) {
         this.yPosition = yPosition;
+    }
+
+    /** Is walking boolean getter **/
+    public boolean isWalking() {
+        return this.isWalking;
+    }
+
+    /** Is walking boolean setter **/
+    public void setWalking(boolean isWalking) {
+        this.isWalking = isWalking;
+    }
+
+    /** Is attacking boolean getter **/
+    public boolean isAttacking() {
+        return this.isAttacking;
+    }
+
+    /** Is attacking boolean setter **/
+    public void setAttacking(boolean isAttacking) {
+        this.isAttacking = isAttacking;
     }
 }
