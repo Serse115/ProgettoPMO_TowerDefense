@@ -14,7 +14,7 @@ public class Skeleton extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Skeleton(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+    public Skeleton(int lifePoints, float speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
         super(lifePoints, speed, hitPower, enIndex, 13, 18, 15, tiles, x, y, 43, 37);
     }
 

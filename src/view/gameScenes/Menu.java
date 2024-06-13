@@ -11,6 +11,7 @@ import static view.gameScenes.GameScenes.*;
 public class Menu extends GameSceneBase implements Playable {
 
     /**** Fields ****/
+    private RandomGame randomGame;   // Object reference to the randomGame scene
     private Clickable bPlay;         // Play button
     private Clickable bEditMap;      // Edit the map button
     private Clickable bSavedGame;    // Saved games button
@@ -20,7 +21,7 @@ public class Menu extends GameSceneBase implements Playable {
 
 
     /**** Constructors ****/
-    /** Main constructor **/
+    /** Main constructor to create the temporary menu to give time to the other components to be generated **/
     public Menu(MainFrame mainFrame) {
         super(mainFrame);
 
@@ -63,6 +64,7 @@ public class Menu extends GameSceneBase implements Playable {
     public void mouseClicked(int x, int y) {
         if (this.bPlay.getButtonBounds().contains(x, y)) {      // If it's clicked within the play button's boundaries
             GameScenes.setGameScene(PLAY);                      // Set the game scene as the playing one
+
         }
         else if (this.bEditMap.getButtonBounds().contains(x, y)) {  // If it's clicked within the edit map button
             GameScenes.setGameScene(EDIT_MAP);                      // Set the game scene as the map edit one

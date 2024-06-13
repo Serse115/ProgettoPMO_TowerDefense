@@ -22,10 +22,10 @@ public class RandomGame extends GameSceneBase implements Playable {
     private int[] positionsOnTheArray;              // Row position of each road in the array of the map
     private Fightable[] lvlEnemies;                 // Array of enemies that will be present in the level
     private GameLoopController gameLoopController;  // Game loop controller object reference to handle the game loop during the random game
-    private int animationIndex;
-    private int animationSpeed;
-    private long lastTime;
-    private long timer;
+    private int animationIndex;                     // Animation index int for the animation frames
+    private int animationSpeed;                     // Animation speed int for the animation frames
+    private long lastTime;                          // Loop time variable
+    private long timer;                             // Other loop time variable
 
 
 
@@ -42,7 +42,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.initializeMap();
         this.initializeEnemies();
         this.animationIndex = 0;
-        this.animationSpeed = 200; // Animation speed in milliseconds
+        this.animationSpeed = 150;                              // Animation speed in milliseconds
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
 
@@ -63,23 +63,29 @@ public class RandomGame extends GameSceneBase implements Playable {
 
     /** Update method **/
     public void update() {
-        long currentTime = System.currentTimeMillis();
-        timer += currentTime - lastTime;
-        lastTime = currentTime;
 
-        if (timer > animationSpeed) {
-            animationIndex++;
-            timer = 0;
+        try {
+            long currentTime = System.currentTimeMillis();
+            this.timer += currentTime - this.lastTime;
+            this.lastTime = currentTime;
 
-            // Loop back to the first frame if we've reached the end
-            for (Fightable enemy : this.lvlEnemies) {
-                if (animationIndex >= enemy.getWalkingImages().length) {
-                    animationIndex = 0;
+            if (this.timer > this.animationSpeed) {
+                this.animationIndex++;
+                this.timer = 0;
+
+                for (Fightable enemy : this.lvlEnemies) {
+                    if (this.animationIndex >= enemy.getWalkingImages().length) {
+                        this.animationIndex = 0;
+                    }
                 }
             }
-        }
 
-        // Update other game logic here (e.g., enemy movements, collisions)
+            for (Fightable enemy : this.lvlEnemies) {
+                enemy.enemyLogic();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -117,19 +123,19 @@ public class RandomGame extends GameSceneBase implements Playable {
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length);   // Generate the index for the roads for the enemies to appear on
 
             if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper
-                this.lvlEnemies[i] = new Reaper(115, 10, 7, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 10);   // And its sprite animations
+                this.lvlEnemies[i] = new Reaper(115, 0.4f, 7, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 10);   // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getReaperMovingAtlasPath(), 8, 48, 48));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getReaperAttackAtlasPath(), 10, 48, 48));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getReaperDeathAtlasPath(),10, 48, 48));
             }
             else if (enemyType == 1) {                                                       // If the generated type number is 0, add a skeleton
-                this.lvlEnemies[i] = new Skeleton(150, 8, 10, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 5);  // And its sprite animations
+                this.lvlEnemies[i] = new Skeleton(150, 0.3f, 10, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 5);  // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getSkeletonMovingAtlasPath(), 13, 22, 33));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getSkeletonAttackAtlasPath(), 18, 43, 37));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getSkeletonDeathAtlasPath(),15, 33, 32));
             }
             else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie
-                this.lvlEnemies[i] = new Zombie(90, 15, 5, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 30);     // And its sprite animations
+                this.lvlEnemies[i] = new Zombie(90, 0.5f, 5, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 30);     // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getZombieMovingAtlasPath(), 8, 96, 56));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getZombieAttackAtlasPath(), 12, 95, 62));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getZombieDeathAtlasPath(),5, 95, 48));
@@ -155,10 +161,13 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Drawing the enemies method **/
     private void drawEnemies(Graphics g) {
         for (Fightable e : this.lvlEnemies) {
-            for (int i = 0; i < e.getWalkingImages().length; i++) {
-                g.drawImage(e.getWalkingImages()[this.animationIndex], 0, e.getyPosition(), null);
+            if (e.isWalking()) {
+                g.drawImage(e.getWalkingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
+            } else if (e.isAttacking()) {
+                g.drawImage(e.getAttackingImages()[this.animationIndex], (int) e.getxPosition(), e.getyPosition(), null);
+            } else {
+                g.drawImage(e.getDeathImages()[this.animationIndex], (int) e.getxPosition(), e.getyPosition(), null);
             }
-            //g.drawImage(e.getSingleWalkingImage(), e.getxPosition(), e.getyPosition(), null);
         }
     }
 

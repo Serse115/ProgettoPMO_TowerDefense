@@ -16,7 +16,7 @@ public class Reaper extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Reaper(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+    public Reaper(int lifePoints, float speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
         super(lifePoints, speed, hitPower, enIndex, 8, 10, 10, tiles, x, y, 48, 48);
     }
 
@@ -25,7 +25,7 @@ public class Reaper extends Enemy implements Fightable {
     /**** Methods ****/
     /** Move method **/
     public void move() {
-
+        super.move();
     }
 
     /** Hit method **/

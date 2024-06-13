@@ -33,7 +33,8 @@ public class GameLoopController extends Thread {
         while (this.running) {                                   // While the status is running
             startTime = System.nanoTime();                  // Update the starting time with the system nano time
 
-            this.randomGame.update();                            // Update game state
+            this.randomGame.update();
+            // this.randomGame.render(this.g);
 
             elapsedTime = System.nanoTime() - startTime;             // Update the elapsed time
             waitTime = this.TARGET_TIME - (elapsedTime / 1000000);   // Convert to milliseconds

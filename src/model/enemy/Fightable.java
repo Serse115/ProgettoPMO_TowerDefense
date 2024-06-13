@@ -1,7 +1,6 @@
 package model.enemy;
 
 import view.guiComponents.Tile;
-
 import java.awt.image.BufferedImage;
 
 /**** Interface for the Enemy subclasses ****/
@@ -17,8 +16,18 @@ public interface Fightable {
     /** Is alive method **/
     boolean isAlive();
 
+    void enemyLogic();
+
+    boolean isWalking();
+
+    boolean isAttacking();
+
     /** Get walking images method **/
     BufferedImage[] getWalkingImages();
+
+    BufferedImage[] getAttackingImages();
+
+    BufferedImage[] getDeathImages();
 
     /** Set walking images method **/
     void setWalkingImages(BufferedImage[] imgs);
@@ -29,9 +38,12 @@ public interface Fightable {
     /** Set death images method **/
     void setDeathImages(BufferedImage[] imgs);
 
-    BufferedImage getSingleWalkingImage();
+    /** Get x position method **/
+    float getxPosition();
 
-    int getxPosition();
-
+    /** Get y position method **/
     int getyPosition();
+
+    /** Get the rectangle's width method **/
+    int getRectangleWidth();
 }

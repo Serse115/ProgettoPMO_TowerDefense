@@ -58,9 +58,9 @@ public class EditingToolBar extends Bar implements Playable {
         this.bSave.draw(g);
     }
 
-    @Override
+    /** Update method **/
     public void update() {
-
+        // Not required
     }
 
     /** Initialize map method **/
@@ -68,7 +68,7 @@ public class EditingToolBar extends Bar implements Playable {
         // Not required, handled in the randomGame class and the Endless waves class
     }
 
-    @Override
+    /** Initialize the enemies method **/
     public void initializeEnemies() {
         // Not required, handled in the randomGame class and the Endless waves class
     }

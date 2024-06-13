@@ -56,9 +56,9 @@ public class EditMap extends GameSceneBase implements Playable {
         this.drawSelectedTile(g);
     }
 
-    @Override
+    /** Update method **/
     public void update() {
-
+        // Not required
     }
 
     /** Initialize map method **/
@@ -66,7 +66,7 @@ public class EditMap extends GameSceneBase implements Playable {
         // Not required
     }
 
-    @Override
+    /** Initialize the enemies method **/
     public void initializeEnemies() {
         // Not required
     }

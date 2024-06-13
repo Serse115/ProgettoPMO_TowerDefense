@@ -90,13 +90,21 @@ public class GameActionBar extends Bar implements Playable {
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
-            GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
-            this.gameLoopController.stopGameLoop();
-            this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
-            this.randomGame.initializeEnemies();
-            this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
-            this.gameLoopController.restartGameLoop();
-
+            switch (GameScenes.gameScenes) {                     // Depending on the current gameScene
+                case PLAY:                                       // If the gameScene is the play one
+                    GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
+                    this.gameLoopController.stopGameLoop();                             // Stop the game loop for the random game
+                    this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
+                    this.randomGame.initializeEnemies();                                // Reset the game set of enemies for the new random game
+                    this.gameLoopController.restartGameLoop();                          // Restart the game loop
+                    break;
+                case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
+                    GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
+                    this.gameLoopController.stopGameLoop();                             // Stop the game loop for the random game
+                    this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
+                    this.gameLoopController.restartGameLoop();                          // Restart the game loop
+                    break;
+            }
         }
         else if (this.bPause.getButtonBounds().contains(x, y)) {  // If it's clicked within the pause game button's boundaries
             // do nothing for now

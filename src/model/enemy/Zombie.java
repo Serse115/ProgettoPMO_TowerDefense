@@ -14,7 +14,7 @@ public class Zombie extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Zombie(int lifePoints, int speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
+    public Zombie(int lifePoints, float speed, int hitPower, int enIndex, Tile[] tiles, int x, int y) {
         super(lifePoints, speed, hitPower, enIndex, 8, 12, 5, tiles, x, y, 96, 95);
     }
 
@@ -23,7 +23,7 @@ public class Zombie extends Enemy implements Fightable {
     /**** Methods ****/
     /** Move method **/
     public void move() {
-
+        super.move();
     }
 
     /** Hit method **/

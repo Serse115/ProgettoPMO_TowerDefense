@@ -1,6 +1,7 @@
 package view.guiComponents;
 
 import view.gameScenes.*;
+import view.gameScenes.Menu;
 import javax.swing.*;
 
 /**** Class for the main game frame ****/
@@ -36,7 +37,7 @@ public class MainFrame extends JFrame implements Runnable {
         this.gameScreen = new GameScreen(this);                       // Initializing the game screen
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
-        this.menu = new Menu(this);                                   // Initializing the menu game scene object
+        this.menu = new Menu(this);                                   // Initializing the temporary menu game scene object
         this.temporaryEndlessWaves = new EndlessWaves(this);          // Initializing the temporary endless waves scene object
         this.randomGame = new RandomGame(this, this.temporaryEndlessWaves); // Initializing the play game scene object
         this.edit = new EditMap(this);                                // Initializing the edit game scene object
@@ -65,6 +66,19 @@ public class MainFrame extends JFrame implements Runnable {
     /** GameScreen JPanel getter **/
     public GameScreen getGameScreen() {
         return this.gameScreen;
+    }
+
+    /** Update game method **/
+    private void updateGame() {
+        switch (GameScenes.gameScenes) {
+            case MENU:
+                break;
+            case PLAY:
+                this.randomGame.update();
+                break;
+            default:
+                break;
+        }
     }
 
     /** Override of the run method from the runnable interface (for the thread) **/
@@ -96,8 +110,10 @@ public class MainFrame extends JFrame implements Runnable {
 
             // Update part
             if (now - lastTimeUPS >= timePerUpdate) {             // Handle the updates, if every update happens for the correct amount of time
+                //this.updateGame();
                 lastTimeUPS = now;                                // Reset
                 updates++;                                        // and update
+
             }
 
             // Print frames and updates on screen
@@ -124,6 +140,11 @@ public class MainFrame extends JFrame implements Runnable {
     /** Menu getter **/
     public Playable getMenu() {
         return this.menu;
+    }
+
+    /** RandomGame getter **/
+    public Playable getRandomgame() {
+        return this.randomGame;
     }
 
     /** Play getter **/
