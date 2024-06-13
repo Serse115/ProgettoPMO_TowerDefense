@@ -14,10 +14,11 @@ public class MainFrame extends JFrame implements Runnable {
     private MouseInputListener mouseInputListener;                    // Object listener for the inputs received from the mouse
     private Render render;                                            // Render object
     private Playable menu;                                            // Menu game scene
-    private Playable play;                                            // Play game scene
+    private Playable randomGame;                                      // RandomGame game scene
     private Playable edit;                                            // Edit game scene
     private Playable endlessWaves;                                    // Endless waves scene
     private Playable temporaryEndlessWaves;                           // Temporary endless waves scene
+    private boolean running;                                          // Thread status variable
 
 
 
@@ -37,14 +38,16 @@ public class MainFrame extends JFrame implements Runnable {
 
         this.menu = new Menu(this);                                   // Initializing the menu game scene object
         this.temporaryEndlessWaves = new EndlessWaves(this);          // Initializing the temporary endless waves scene object
-        this.play = new RandomGame(this, this.temporaryEndlessWaves); // Initializing the play game scene object
+        this.randomGame = new RandomGame(this, this.temporaryEndlessWaves); // Initializing the play game scene object
         this.edit = new EditMap(this);                                // Initializing the edit game scene object
-        this.endlessWaves = new EndlessWaves(this, this.play);        // Initializing the endless waves game scene objet
+        this.endlessWaves = new EndlessWaves(this, this.randomGame, this.randomGame.getGameLoopController());  // Initializing the real endless waves game scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
         super.addMouseMotionListener(this.mouseInputListener);                 // Adding the mouse input listener as a mouse motion listener
         super.requestFocus();                                                  // Requesting the focus
+
+        this.running = true;
 
         super.pack();                                                          // Packing the components
         super.setVisible(true);                                                // Visibility of the JFrame to true
@@ -66,6 +69,7 @@ public class MainFrame extends JFrame implements Runnable {
 
     /** Override of the run method from the runnable interface (for the thread) **/
     /** Takes care of the game loop part with rendering and updates, gets automatically called from the thread itself **/
+    /** The game menu wouldn't work without it, it's necessary to start all the different game scenes and switch in between them all **/
     public void run() {
 
         // Local variables
@@ -79,7 +83,7 @@ public class MainFrame extends JFrame implements Runnable {
         int updates = 0;                                          // Updates number
 
         // Start of the handling
-        while (true) {
+        while (running) {
 
             now = System.nanoTime();                              // Setting the now time variable
 
@@ -123,8 +127,8 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     /** Play getter **/
-    public Playable getPlay() {
-        return this.play;
+    public Playable getRandomGame() {
+        return this.randomGame;
     }
 
     /** Edit getter **/

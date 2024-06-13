@@ -38,6 +38,7 @@ public class GameScreen extends JPanel {
         this.mainFrame.getRender().render(g);       // Plus calling the render method from the render object in the mainFrame class to paint what needed
 
 
+
     }
 }
 

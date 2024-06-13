@@ -1,6 +1,7 @@
 package view.gameScenes;
 
 import controller.GUIController;
+import controller.GameLoopController;
 import view.guiComponents.EditingToolBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
@@ -53,6 +54,11 @@ public class EditMap extends GameSceneBase implements Playable {
         this.drawLevel(g);
         this.editingToolBar.render(g);
         this.drawSelectedTile(g);
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /** Initialize map method **/
@@ -159,6 +165,11 @@ public class EditMap extends GameSceneBase implements Playable {
     public void mouseDragged(int x, int y) {
 
         // Do nothing for now
+    }
+
+    /** Get game loop controller method (not needed) **/
+    public GameLoopController getGameLoopController() {
+        return null;
     }
 
     /** Level getter **/

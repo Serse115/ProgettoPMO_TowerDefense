@@ -1,6 +1,7 @@
 package view.gameScenes;
 
 import controller.GUIController;
+import controller.GameLoopController;
 import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.imageUtilities.LevelUtilities;
@@ -20,9 +21,9 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
     /**** Constructors ****/
     /** Main constructor for the real endless waves game scene **/
-    public EndlessWaves(MainFrame mainFrame, Playable randomGame) {
+    public EndlessWaves(MainFrame mainFrame, Playable randomGame, GameLoopController gameLoopController) {
         super(mainFrame);
-        this.bottomBar = new GameActionBar(0, 640, 736, 160, randomGame, this);
+        this.bottomBar = new GameActionBar(0, 640, 736, 160, randomGame, this, gameLoopController);
         this.guiController = new GUIController();
         this.mapArrayTile = new int[23][23];
         this.initializeMap();
@@ -45,6 +46,11 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public void render(Graphics g) {
         this.drawLevel(g);
         this.bottomBar.render(g);
+
+    }
+
+    @Override
+    public void update() {
 
     }
 
@@ -104,5 +110,10 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public void mouseDragged(int x, int y) {
 
         // Do nothing for now
+    }
+
+    @Override
+    public GameLoopController getGameLoopController() {
+        return null;
     }
 }

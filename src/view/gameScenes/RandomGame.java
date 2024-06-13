@@ -1,6 +1,7 @@
 package view.gameScenes;
 
 import controller.GUIController;
+import controller.GameLoopController;
 import controller.ModelController;
 import model.enemy.*;
 import view.guiComponents.GameActionBar;
@@ -13,16 +14,18 @@ import java.util.Random;
 public class RandomGame extends GameSceneBase implements Playable {
 
     /**** Fields ****/
-    private GameActionBar bottomBar;            // Action bar at the bottom of the screen
-    private GUIController guiController;        // GUI controller object for the random map generating and the tiles
-    private ModelController modelController;    // Model controller object for the enemies
-    private Tile[][] mapArrayTile;               // Array of tiles for the map
-    private int numberOfRoads;                  // Number of roads on the map
-    private int[] positionsOnTheArray;          // Row position of each road in the array of the map
-    private Fightable[] lvlEnemies;             // Array of enemies that will be present in the level
-    //private Thread animationThread;             // Animation thread for the enemies
-    //private int currentFrameIndex;
-    //private int frameDelay;
+    private GameActionBar bottomBar;                // Action bar at the bottom of the screen
+    private GUIController guiController;            // GUI controller object for the random map generating and the tiles
+    private ModelController modelController;        // Model controller object for the enemies
+    private Tile[][] mapArrayTile;                  // Array of tiles for the map
+    private int numberOfRoads;                      // Number of roads on the map
+    private int[] positionsOnTheArray;              // Row position of each road in the array of the map
+    private Fightable[] lvlEnemies;                 // Array of enemies that will be present in the level
+    private GameLoopController gameLoopController;  // Game loop controller object reference to handle the game loop during the random game
+    private int animationIndex;
+    private int animationSpeed;
+    private long lastTime;
+    private long timer;
 
 
 
@@ -31,12 +34,20 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Main constructor **/
     public RandomGame(MainFrame mainFrame, Playable endlessWaves) {
         super(mainFrame);
-        this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves);
+        this.gameLoopController = new GameLoopController(this);
+        this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves, this.gameLoopController);
         this.guiController = new GUIController();
         this.modelController = new ModelController();
         this.mapArrayTile = new Tile[20][23];
         this.initializeMap();
         this.initializeEnemies();
+        this.animationIndex = 0;
+        this.animationSpeed = 200; // Animation speed in milliseconds
+        this.lastTime = System.currentTimeMillis();
+        this.timer = 0;
+
+        // Start the game loop
+        this.gameLoopController.start();
     }
 
 
@@ -46,9 +57,31 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Render method **/
     public void render(Graphics g) {
         this.drawLevel(g);
-        this.bottomBar.render(g);
         this.drawEnemies(g);
+        this.bottomBar.render(g);
     }
+
+    /** Update method **/
+    public void update() {
+        long currentTime = System.currentTimeMillis();
+        timer += currentTime - lastTime;
+        lastTime = currentTime;
+
+        if (timer > animationSpeed) {
+            animationIndex++;
+            timer = 0;
+
+            // Loop back to the first frame if we've reached the end
+            for (Fightable enemy : this.lvlEnemies) {
+                if (animationIndex >= enemy.getWalkingImages().length) {
+                    animationIndex = 0;
+                }
+            }
+        }
+
+        // Update other game logic here (e.g., enemy movements, collisions)
+    }
+
 
     /** Initialize the map tile method **/
     public void initializeMap() {
@@ -56,7 +89,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.numberOfRoads = this.randomGenerator(1, 8);                   // Generating the number of roads possible in the level
         this.positionsOnTheArray = new int[numberOfRoads];                                          // Initializing the number of row positions for the roads on the map
         for (int z = 0; z < numberOfRoads; z++) {                                                   // For every position of the road in the array
-            positionsOnTheArray[z] = this.randomGenerator(0, 20);          // Choose the rows where the roads will be located through the random method
+            positionsOnTheArray[z] = this.randomGenerator(1, 20);          // Choose the rows where the roads will be located through the random method
         }
         for (int j = 0; j < 20; j++) {                                                                  // For every row
             for (int i = 0; i < 23; i++) {                                                              // And column of the array of int
@@ -103,6 +136,10 @@ public class RandomGame extends GameSceneBase implements Playable {
             }
         }
 
+        // Reset animation fields when initializing new enemies
+        this.animationIndex = 0;
+        this.lastTime = System.currentTimeMillis();
+        this.timer = 0;
     }
 
     /** Drawing the level method **/
@@ -119,7 +156,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     private void drawEnemies(Graphics g) {
         for (Fightable e : this.lvlEnemies) {
             for (int i = 0; i < e.getWalkingImages().length; i++) {
-                g.drawImage(e.getWalkingImages()[i], e.getxPosition(), e.getyPosition(), null);
+                g.drawImage(e.getWalkingImages()[this.animationIndex], 0, e.getyPosition(), null);
             }
             //g.drawImage(e.getSingleWalkingImage(), e.getxPosition(), e.getyPosition(), null);
         }
@@ -172,5 +209,10 @@ public class RandomGame extends GameSceneBase implements Playable {
     public void mouseDragged(int x, int y) {
 
         // Do nothing for now
+    }
+
+    /** Game loop controller getter **/
+    public GameLoopController getGameLoopController() {
+        return this.gameLoopController;
     }
 }

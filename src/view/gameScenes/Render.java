@@ -29,7 +29,7 @@ public class Render {
                 this.mainFrame.getMenu().render(g);         // Render and paint the components of the menu page
                 break;
             case PLAY:
-                this.mainFrame.getPlay().render(g);         // Render and paint the components of the play page
+                this.mainFrame.getRandomGame().render(g);         // Render and paint the components of the play page
                 break;
             case EDIT_MAP:
                 this.mainFrame.getEdit().render(g);         // Render and paint the components of the edit page

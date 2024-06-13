@@ -1,5 +1,6 @@
 package view.guiComponents;
 
+import controller.GameLoopController;
 import view.gameScenes.EditMap;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
@@ -12,7 +13,7 @@ import static view.gameScenes.GameScenes.MENU;
 public class EditingToolBar extends Bar implements Playable {
 
     /**** Fields ****/
-    private EditMap editMap;                // Object reference to the Editing game scene
+    private EditMap editMap;                 // Object reference to the Editing game scene
     private Clickable bGrass;                // Grass button
     private Clickable bWater;                // Water button
     private Clickable bRoad;                 // Road button
@@ -55,6 +56,11 @@ public class EditingToolBar extends Bar implements Playable {
         this.bRoad.draw(g, this.bRoad.getbImage());
         this.bMenu.draw(g);
         this.bSave.draw(g);
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /** Initialize map method **/
@@ -164,5 +170,10 @@ public class EditingToolBar extends Bar implements Playable {
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
         // Do nothing for now
+    }
+
+    /** Get game loop method (not needed) **/
+    public GameLoopController getGameLoopController() {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
 package view.gameScenes;
 
 import view.guiComponents.MainFrame;
+import javax.swing.*;
 
 /**** Parent class for the game scenes ****/
 public class GameSceneBase {
@@ -32,6 +33,4 @@ public class GameSceneBase {
     public void updateTick() {
 
     }
-
-    /** Get the animation tick variable **/
 }

@@ -1,5 +1,6 @@
 package view.guiComponents;
 
+import controller.GameLoopController;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
 import view.imageUtilities.SpriteUtilities;
@@ -10,6 +11,7 @@ import static view.gameScenes.GameScenes.MENU;
 public class GameActionBar extends Bar implements Playable {
 
     /**** Fields ****/
+    private GameLoopController gameLoopController;  // Object reference to the Game loop controller
     private Playable randomGame;            // Object reference to the "Random Game" game scene
     private Playable endlessWaves;          // Object reference to the "Endless waves" game scene
     private Clickable bMenu;                // Go back to the menu button
@@ -23,10 +25,11 @@ public class GameActionBar extends Bar implements Playable {
 
     /**** Constructors ****/
     /** Main constructor for the Random maps and Endless waves game modes **/
-    public GameActionBar(int x, int y, int width, int height, Playable randomGame, Playable endlessWaves) {
+    public GameActionBar(int x, int y, int width, int height, Playable randomGame, Playable endlessWaves, GameLoopController gameLoopController) {
         super(x, y, width, height);             // Using the superclass constructor
         this.randomGame = randomGame;
         this.endlessWaves = endlessWaves;
+        this.gameLoopController = gameLoopController;
         this.bMenu = new MyButton("Menu", 10, 660, 100, 30);
         this.bPause = new MyButton("Pause", 10, 710, 100, 30);
         this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
@@ -69,6 +72,11 @@ public class GameActionBar extends Bar implements Playable {
         this.bMachineGun.draw(g, this.bMachineGun.getbImage());
     }
 
+    /** Update method **/
+    public void update() {
+        // Not required
+    }
+
     /** Initialize map **/
     public void initializeMap() {
         // Not required, handled in the randomGame and EndlessWaves class
@@ -83,9 +91,12 @@ public class GameActionBar extends Bar implements Playable {
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
             GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
+            this.gameLoopController.stopGameLoop();
             this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
             this.randomGame.initializeEnemies();
             this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
+            this.gameLoopController.restartGameLoop();
+
         }
         else if (this.bPause.getButtonBounds().contains(x, y)) {  // If it's clicked within the pause game button's boundaries
             // do nothing for now
@@ -154,6 +165,11 @@ public class GameActionBar extends Bar implements Playable {
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
         // Do nothing for now
+    }
+
+    /** Get game loop controller (not needed) **/
+    public GameLoopController getGameLoopController() {
+        return this.gameLoopController;
     }
 
     /** Menu button getter **/

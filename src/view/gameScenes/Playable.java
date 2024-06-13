@@ -1,5 +1,7 @@
 package view.gameScenes;
 
+import controller.GameLoopController;
+
 import java.awt.*;
 
 /**** Interface for the GameScenes subclasses ****/
@@ -8,6 +10,9 @@ public interface Playable {
     /**** Methods ****/
     /** Render method **/
     void render(Graphics g);
+
+    /** Update method **/
+    void update();
 
     /** Initialize map method **/
     void initializeMap();
@@ -29,4 +34,6 @@ public interface Playable {
 
     /** Mouse Dragged method **/
     void mouseDragged(int x, int y);
+
+    GameLoopController getGameLoopController();
 }

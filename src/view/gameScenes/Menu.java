@@ -1,5 +1,6 @@
 package view.gameScenes;
 
+import controller.GameLoopController;
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
@@ -41,6 +42,11 @@ public class Menu extends GameSceneBase implements Playable {
         this.bSavedGame.draw(g);        // Draw the saved games button
         this.bEndlessWaves.draw(g);     // Draw the endless waves button
         this.bQuit.draw(g);             // Draw the quit button
+    }
+
+    @Override
+    public void update() {
+
     }
 
     /** Initialize map method **/
@@ -128,5 +134,10 @@ public class Menu extends GameSceneBase implements Playable {
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
         // Not necessary
+    }
+
+    /** Get game loop controller method (not needed) **/
+    public GameLoopController getGameLoopController() {
+        return null;
     }
 }
