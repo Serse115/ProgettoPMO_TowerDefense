@@ -1,6 +1,8 @@
 package view.gameScenes;
 
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 
 import java.awt.*;
 
@@ -36,4 +38,8 @@ public interface Playable {
     void mouseDragged(int x, int y);
 
     GameLoopController getGameLoopController();
+
+    void setSelectedTower(Tower tower);
+
+    ModelController getModelController();
 }

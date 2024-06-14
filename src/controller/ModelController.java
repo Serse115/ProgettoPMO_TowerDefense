@@ -1,5 +1,6 @@
 package controller;
 
+import model.tower.*;
 import view.imageUtilities.SpriteUtilities;
 import java.awt.image.BufferedImage;
 
@@ -20,8 +21,16 @@ public class ModelController {
 
 
     /** Towers **/
-    private BufferedImage[] standingImages;                                 // Buffered images array for the set of standing images of the tower
-    private BufferedImage[] firingImages;                                   // Buffered images array for the set of firing images of the tower
+    private Placeable turret;
+    private Placeable cannon;
+    private Placeable machineGun;
+    private BufferedImage[] standingImages;                                                     // Buffered images array for the set of standing images of the tower
+    private BufferedImage[] firingImages;                                                       // Buffered images array for the set of firing images of the tower
+    private final String turretStandingPath = "tower_turret/turret_mk.png";                     //
+    private final String cannonStandingPath = "tower_cannon/cannon_standing.png";               //
+    private final String cannonShootingPath = "tower_cannon/cannon_shooting.png";               //
+    private final String machineGunStandingPath = "tower_machinegun/machinegun_standing.png";   //
+    private final String machineGunShootingPath = "tower_machinegun/machinegun_shooting.png";   //
 
 
 
@@ -29,6 +38,9 @@ public class ModelController {
     /**** Constructors ****/
     /** Main constructor **/
     public ModelController() {
+        this.turret = new Turret(50, 1.2f, 10, 0, 0, 111, 77, 0);
+        this.cannon = new Cannon(60, 2f, 18, 0, 0, 66, 58, 1);
+        this.machineGun = new MachineGun(65, 0.8f, 8, 0, 0, 71, 43, 2);
         this.standingImages = new BufferedImage[11];                        // Max size of the standing images
         this.firingImages = new BufferedImage[11];                          // Max size of the firing images
     }
@@ -140,5 +152,52 @@ public class ModelController {
     /** Reaper moving atlas path getter **/
     public String getReaperMovingAtlasPath() {
         return this.reaperWalkingPath;
+    }
+
+    /** Get turret type **/
+    public int getTurretType() {
+        return this.turret.getTowerType();
+    }
+
+    /** Get the cannon type **/
+    public int getCannonType() {
+        return this.cannon.getTowerType();
+    }
+
+    /** Get the machineGun type **/
+    public int getMachineGunType() {
+        return this.machineGun.getTowerType();
+    }
+
+    public String getTurretStandingPath() {
+        return turretStandingPath;
+    }
+
+    public String getCannonStandingPath() {
+        return cannonStandingPath;
+    }
+
+    public String getCannonShootingPath() {
+        return cannonShootingPath;
+    }
+
+    public String getMachineGunStandingPath() {
+        return machineGunStandingPath;
+    }
+
+    public String getMachineGunShootingPath() {
+        return machineGunShootingPath;
+    }
+
+    public Placeable getTurret() {
+        return this.turret;
+    }
+
+    public Placeable getCannon() {
+        return this.cannon;
+    }
+
+    public Placeable getMachineGun() {
+        return this.machineGun;
     }
 }

@@ -1,6 +1,8 @@
 package view.guiComponents;
 
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 import view.gameScenes.EditMap;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
@@ -174,6 +176,16 @@ public class EditingToolBar extends Bar implements Playable {
 
     /** Get game loop method (not needed) **/
     public GameLoopController getGameLoopController() {
+        return null;
+    }
+
+    @Override
+    public void setSelectedTower(Tower tower) {
+
+    }
+
+    @Override
+    public ModelController getModelController() {
         return null;
     }
 }

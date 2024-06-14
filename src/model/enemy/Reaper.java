@@ -2,8 +2,6 @@ package model.enemy;
 
 import view.guiComponents.Tile;
 
-import java.awt.image.BufferedImage;
-
 /**** Subclass of the Enemy abstract superclass, one of the implemented enemies of the game ****/
 public class Reaper extends Enemy implements Fightable {
 
@@ -31,11 +29,7 @@ public class Reaper extends Enemy implements Fightable {
     /** Hit method **/
     public void hit() {
 
-    }
 
-    /** CurrentlyInUsImages setter **/
-    //public void setCurrentInUseImages(BufferedImage[] imgs) {
-      //  super.setCurrentInUseImages(imgs);
-    //}
+    }
 }
 /* , new int[] {8, 10, 10}, new int[] {48, 48, 48}, new int[] {48, 48, 48} */

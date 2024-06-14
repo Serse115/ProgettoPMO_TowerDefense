@@ -4,6 +4,7 @@ import controller.GUIController;
 import controller.GameLoopController;
 import controller.ModelController;
 import model.enemy.*;
+import model.tower.Tower;
 import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
@@ -23,9 +24,16 @@ public class RandomGame extends GameSceneBase implements Playable {
     private Fightable[] lvlEnemies;                 // Array of enemies that will be present in the level
     private GameLoopController gameLoopController;  // Game loop controller object reference to handle the game loop during the random game
     private int animationIndex;                     // Animation index int for the animation frames
-    private int animationSpeed;                     // Animation speed int for the animation frames
+    private int animationSpeed;                     // Animation speed int for the animation frames in milliseconds
     private long lastTime;                          // Loop time variable
     private long timer;                             // Other loop time variable
+    private Tile tileToAddTower;                    // Tile variable reference where the tower will be added
+    private Tower towerToAdd;                       // Tower variable reference for the tower chosen to add to the specific tile
+    private boolean towerToDraw;                    // Variable to decide if the tile will have a tower added
+    private int xMouseCoord;                        // Coordinate x for the current mouse location
+    private int yMouseCoord;                        // Coordinate y for the current mouse location
+    private int lastTileX;                          // Coordinate x for the location of the last tile highlighted
+    private int lastTileY;                          // Coordinate y for the location of the last tile highlighted
 
 
 
@@ -42,9 +50,16 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.initializeMap();
         this.initializeEnemies();
         this.animationIndex = 0;
-        this.animationSpeed = 150;                              // Animation speed in milliseconds
+        this.animationSpeed = 150;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
+        this.tileToAddTower = null;
+        this.towerToAdd = null;
+        this.towerToDraw = false;
+        this.xMouseCoord = 0;
+        this.yMouseCoord = 0;
+        this.lastTileX = 0;
+        this.lastTileY = 0;
 
         // Start the game loop
         this.gameLoopController.start();
@@ -184,11 +199,48 @@ public class RandomGame extends GameSceneBase implements Playable {
         return this.mapArrayTile[index];
     }
 
+    /** Set the selected tower as the one chosen **/
+    public void setSelectedTower(Tower selectedTower) {
+        this.towerToAdd = selectedTower;
+    }
+
+    /** Selected tile setter **/
+    public void setSelectedTileToAddTowerOn(Tile selectedTileForTower) {
+        this.tileToAddTower = selectedTileForTower;                     // Giving the selected tile to paint value to the chosen one
+        this.towerToDraw = true;                                        // Change the possibility of the selected tile to be needed to be repainted
+    }
+
+    /** Tile change method **/
+    /*private void addTowerToTile(int x, int y) {
+
+        if (this.tileToAddTower != null) {                      // If the selected tile to add the tower on has been chosen
+
+            int tileX = x / 32;                                 // X position of the tile to change
+            int tileY = y / 32;                                 // Y position of the tile to change
+
+            if (this.tileToAddTower.getTileType() == 2) {      // If the tile type is a road tile type
+
+                if (this.lastTileX == tileX && this.lastTileY == tileY && this.tileToAddTower.isHasTower()) {    // If the tile highlighted has the
+                    return;                                      // contains already a tower, then do nothing and return
+                }
+                else {                                                              // Else
+                    this.lastTileX = x;                                             // Update the last tile position coord x to the current x
+                    this.lastTileY = y;                                             // Update the last tile position coord y to the current y
+                    this.tileToAddTower = this.selectedTileToPaint.getTileType();     // Update the last tile type to the current one selected to paint
+                    this.mapArrayTile[tileY][tileX]. = this.selectedTileToPaint;
+                }
+            }
+        }
+    }
+    */
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
 
         if (y >= 640) {                             // If the mouse click is located inside the bottom game action bar bounds
             this.bottomBar.mouseClicked(x, y);      // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
+        }
+        else {
+
         }
     }
 
@@ -197,6 +249,11 @@ public class RandomGame extends GameSceneBase implements Playable {
 
         if (y >= 640) {                             // If the mouse moved position is located inside the bottom game action bar bounds
             this.bottomBar.mouseMoved(x, y);        // Use the bottom bar's mouse moved method passing it the coordinates of where its clicked
+        }
+        else {
+            this.towerToDraw = true;                     // Now there's need to focus on a tile to eventually paint since the mouse is not on the toolbar
+            this.xMouseCoord = (x / 32) * 32;            // Giving the coordinate of x divided and then multiplied to assure the closest value to 32 multipliers
+            this.yMouseCoord = (y / 32) * 32;            // Giving the coordinate of y divided and then multiplied to assure the closest value to 32 multipliers
         }
     }
 
@@ -223,5 +280,9 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Game loop controller getter **/
     public GameLoopController getGameLoopController() {
         return this.gameLoopController;
+    }
+
+    public ModelController getModelController() {
+        return this.modelController;
     }
 }

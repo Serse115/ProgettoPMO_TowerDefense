@@ -1,6 +1,8 @@
 package view.guiComponents;
 
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
 import view.imageUtilities.SpriteUtilities;
@@ -109,6 +111,15 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bPause.getButtonBounds().contains(x, y)) {  // If it's clicked within the pause game button's boundaries
             // do nothing for now
         }
+        else if (this.bTurret.getButtonBounds().contains(x, y)) {   // If it's clicked within the turret tower button's boundaries
+            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getTurret());
+        }
+        else if (this.bCannon.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
+            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getCannon());
+        }
+        else if (this.bMachineGun.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
+            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getMachineGun());
+        }
     }
 
     /** Mouse moved method **/
@@ -178,6 +189,16 @@ public class GameActionBar extends Bar implements Playable {
     /** Get game loop controller (not needed) **/
     public GameLoopController getGameLoopController() {
         return this.gameLoopController;
+    }
+
+    @Override
+    public void setSelectedTower(Tower tower) {
+        //
+    }
+
+    @Override
+    public ModelController getModelController() {
+        return null;
     }
 
     /** Menu button getter **/

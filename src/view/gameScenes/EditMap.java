@@ -2,6 +2,8 @@ package view.gameScenes;
 
 import controller.GUIController;
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 import view.guiComponents.EditingToolBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
@@ -169,6 +171,16 @@ public class EditMap extends GameSceneBase implements Playable {
 
     /** Get game loop controller method (not needed) **/
     public GameLoopController getGameLoopController() {
+        return null;
+    }
+
+    @Override
+    public void setSelectedTower(Tower tower) {
+
+    }
+
+    @Override
+    public ModelController getModelController() {
         return null;
     }
 
