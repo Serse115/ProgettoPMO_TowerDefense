@@ -1,6 +1,9 @@
 package view.guiComponents;
 
+import model.tower.Cannon;
+import model.tower.MachineGun;
 import model.tower.Tower;
+import model.tower.Turret;
 
 import java.awt.image.BufferedImage;
 
@@ -80,7 +83,18 @@ public class Tile {
 
     /** Tower setter **/
     public void addTower(Tower newTower) {
-        this.tower = newTower;
+
+
+        switch (newTower.getTowerType()) {
+            case 0:
+                this.tower = new Turret(1700, 1.2f, 10, 0, 0, 0);
+                break;
+            case 1:
+                this.tower = new Cannon(2100, 2f, 18, 0, 0, 1);
+                break;
+            case 2:
+                this.tower = new MachineGun(1500, 0.8f, 8, 0, 0, 2);
+        }
     }
 
     /** Check the tower life points **/
