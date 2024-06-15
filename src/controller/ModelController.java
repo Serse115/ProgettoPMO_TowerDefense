@@ -38,9 +38,9 @@ public class ModelController {
     /**** Constructors ****/
     /** Main constructor **/
     public ModelController() {
-        this.turret = new Turret(50, 1.2f, 10, 0, 0, 111, 77, 0);
-        this.cannon = new Cannon(60, 2f, 18, 0, 0, 66, 58, 1);
-        this.machineGun = new MachineGun(65, 0.8f, 8, 0, 0, 71, 43, 2);
+        this.turret = new Turret(1700, 1.2f, 10, 0, 0, 0);
+        this.cannon = new Cannon(2100, 2f, 18, 0, 0, 1);
+        this.machineGun = new MachineGun(1500, 0.8f, 8, 0, 0, 2);
         this.standingImages = new BufferedImage[11];                        // Max size of the standing images
         this.firingImages = new BufferedImage[11];                          // Max size of the firing images
     }

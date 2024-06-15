@@ -70,6 +70,11 @@ public class Tower implements Placeable {
         return standingImages;
     }
 
+    /** First image of the standing images array getter **/
+    public BufferedImage getFirstStandingImage() {
+        return this.standingImages[0];
+    }
+
     /** Standing images setter **/
     public void setStandingImages(BufferedImage[] standingImages) {
         this.standingImages = standingImages;
@@ -111,6 +116,14 @@ public class Tower implements Placeable {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public int getWidth() {
+        return this.bounds.width;
+    }
+
+    public int getHeight() {
+        return this.bounds.height;
     }
 
     public void setBounds(Rectangle bounds) {

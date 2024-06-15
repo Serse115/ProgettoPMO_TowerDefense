@@ -74,22 +74,23 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.drawLevel(g);
         this.drawEnemies(g);
         this.bottomBar.render(g);
+        this.drawSelectedTileTower(g);
     }
 
     /** Update method **/
     public void update() {
 
         try {
-            long currentTime = System.currentTimeMillis();
-            this.timer += currentTime - this.lastTime;
-            this.lastTime = currentTime;
+            long currentTime = System.currentTimeMillis();                          // Current time variable with the System feature in milliseconds
+            this.timer += currentTime - this.lastTime;                              // Timer update
+            this.lastTime = currentTime;                                            // Last time update
 
-            if (this.timer > this.animationSpeed) {
-                this.animationIndex++;
-                this.timer = 0;
+            if (this.timer > this.animationSpeed) {                                 // If the timer is higher than the animation speed
+                this.animationIndex++;                                              // Increase the animation index variable
+                this.timer = 0;                                                     // And reset the time variable
 
-                for (Fightable enemy : this.lvlEnemies) {
-                    if (this.animationIndex >= enemy.getWalkingImages().length) {
+                for (Fightable enemy : this.lvlEnemies) {                               // For every enemy in the array of enemies
+                    if (this.animationIndex >= enemy.getWalkingImages().length) {       //
                         this.animationIndex = 0;
                     }
                 }
@@ -138,19 +139,19 @@ public class RandomGame extends GameSceneBase implements Playable {
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length);   // Generate the index for the roads for the enemies to appear on
 
             if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper
-                this.lvlEnemies[i] = new Reaper(115, 0.4f, 7, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 10);   // And its sprite animations
+                this.lvlEnemies[i] = new Reaper(115, 0.4f, 2, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 10);   // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getReaperMovingAtlasPath(), 8, 48, 48));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getReaperAttackAtlasPath(), 10, 48, 48));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getReaperDeathAtlasPath(),10, 48, 48));
             }
             else if (enemyType == 1) {                                                       // If the generated type number is 0, add a skeleton
-                this.lvlEnemies[i] = new Skeleton(150, 0.3f, 10, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 5);  // And its sprite animations
+                this.lvlEnemies[i] = new Skeleton(150, 0.3f, 3, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 5);  // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getSkeletonMovingAtlasPath(), 13, 22, 33));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getSkeletonAttackAtlasPath(), 18, 43, 37));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getSkeletonDeathAtlasPath(),15, 33, 32));
             }
             else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie
-                this.lvlEnemies[i] = new Zombie(90, 0.5f, 5, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 30);     // And its sprite animations
+                this.lvlEnemies[i] = new Zombie(90, 0.5f, 1, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 30);     // And its sprite animations
                 this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getZombieMovingAtlasPath(), 8, 96, 56));
                 this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getZombieAttackAtlasPath(), 12, 95, 62));
                 this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getZombieDeathAtlasPath(),5, 95, 48));
@@ -169,6 +170,9 @@ public class RandomGame extends GameSceneBase implements Playable {
         for (int j = 0; j < 20; j++) {                                                                                                             // For every row
             for (int i = 0; i < 23; i++) {                                                                                                         // And column
                 g.drawImage(this.mapArrayTile[j][i].getSprite(), 32 * i, (32 * j), null);  // Draw the right tile image
+                if (this.mapArrayTile[j][i].isHasTower()) {
+                    g.drawImage(this.mapArrayTile[j][i].getTower().getFirstStandingImage(), 32 * i, (32 * j), 32, 32,null);  // Draw the tower on the tile
+                }
             }
         }
     }
@@ -176,12 +180,12 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Drawing the enemies method **/
     private void drawEnemies(Graphics g) {
         for (Fightable e : this.lvlEnemies) {
-            if (e.isWalking()) {
-                g.drawImage(e.getWalkingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
-            } else if (e.isAttacking()) {
-                g.drawImage(e.getAttackingImages()[this.animationIndex], (int) e.getxPosition(), e.getyPosition(), null);
+            if (e.isWalking() && e.isAlive()) {
+                g.drawImage(e.getWalkingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
+            } else if (e.isAttacking() && e.isAlive()) {
+                g.drawImage(e.getAttackingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
             } else {
-                g.drawImage(e.getDeathImages()[this.animationIndex], (int) e.getxPosition(), e.getyPosition(), null);
+                g.drawImage(e.getDeathImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
             }
         }
     }
@@ -204,35 +208,31 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.towerToAdd = selectedTower;
     }
 
-    /** Selected tile setter **/
-    public void setSelectedTileToAddTowerOn(Tile selectedTileForTower) {
-        this.tileToAddTower = selectedTileForTower;                     // Giving the selected tile to paint value to the chosen one
-        this.towerToDraw = true;                                        // Change the possibility of the selected tile to be needed to be repainted
-    }
-
     /** Tile change method **/
-    /*private void addTowerToTile(int x, int y) {
+    private void addTowerToTile(int x, int y) {
 
-        if (this.tileToAddTower != null) {                      // If the selected tile to add the tower on has been chosen
+        if (this.towerToAdd != null) {                      // If the selected tower to add the tile has been chosen
 
             int tileX = x / 32;                                 // X position of the tile to change
             int tileY = y / 32;                                 // Y position of the tile to change
 
-            if (this.tileToAddTower.getTileType() == 2) {      // If the tile type is a road tile type
-
-                if (this.lastTileX == tileX && this.lastTileY == tileY && this.tileToAddTower.isHasTower()) {    // If the tile highlighted has the
-                    return;                                      // contains already a tower, then do nothing and return
-                }
-                else {                                                              // Else
-                    this.lastTileX = x;                                             // Update the last tile position coord x to the current x
-                    this.lastTileY = y;                                             // Update the last tile position coord y to the current y
-                    this.tileToAddTower = this.selectedTileToPaint.getTileType();     // Update the last tile type to the current one selected to paint
-                    this.mapArrayTile[tileY][tileX]. = this.selectedTileToPaint;
-                }
+            Tile selectedTile = this.mapArrayTile[tileY][tileX];        // Selected tile to change
+            if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
+                selectedTile.setHasTower(true);                                         // Set the tile as having a tower
+                selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
+                this.towerToDraw = false;                                               // Reset the tower drawing variable to false
+                this.towerToAdd = null;                                                 // Reset the selected tower variable to false
             }
         }
     }
-    */
+
+    /** Draw the selected tile's tower method **/
+    private void drawSelectedTileTower(Graphics g) {
+        if (this.towerToAdd != null && this.towerToDraw) {            // If the tower to add is chosen and the change tile option is active
+            g.drawImage(this.towerToAdd.getFirstStandingImage(), this.xMouseCoord, this.yMouseCoord, 32, 32, null);        // Draw the tile
+        }
+    }
+
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
 
@@ -240,7 +240,7 @@ public class RandomGame extends GameSceneBase implements Playable {
             this.bottomBar.mouseClicked(x, y);      // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
         }
         else {
-
+            this.addTowerToTile(x, y);
         }
     }
 
@@ -249,6 +249,7 @@ public class RandomGame extends GameSceneBase implements Playable {
 
         if (y >= 640) {                             // If the mouse moved position is located inside the bottom game action bar bounds
             this.bottomBar.mouseMoved(x, y);        // Use the bottom bar's mouse moved method passing it the coordinates of where its clicked
+            this.towerToDraw = false;
         }
         else {
             this.towerToDraw = true;                     // Now there's need to focus on a tile to eventually paint since the mouse is not on the toolbar

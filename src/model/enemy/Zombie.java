@@ -27,8 +27,8 @@ public class Zombie extends Enemy implements Fightable {
     }
 
     /** Hit method **/
-    public void hit() {
-
+    public void hit(Tile t) {
+        super.hit(t);
     }
 }
  /*  new int[] {8, 12, 5}, new int[] {96, 95, 95}, new int[] {56, 62, 48}, */

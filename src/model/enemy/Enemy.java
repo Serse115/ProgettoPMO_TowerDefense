@@ -55,18 +55,18 @@ public class Enemy implements Fightable {
 
     /** Hit method **/
     public void hit(Tile t) {
-        while (this.isAttacking) {
-            t.getTower().setLifePoints(t.getTower().getLifePoints() - this.hitPower);
-        }
+        System.out.println("Hitting tower!");
+        t.getTower().setLifePoints(t.getTower().getLifePoints() - this.hitPower);
+        t.checkTowerLife();
     }
 
     /** Update the current tile position method **/
     private void updateTilePosition() {
 
-        int tilePositionX = (int) this.xPosition / 32;
+        int tilePositionX = (int) this.xPosition / 32;                          // Calculate the tile position through the x position
 
         if (tilePositionX >= 0 && tilePositionX < this.nextTiles.length) {      // Check for boundaries
-            this.currentTile = this.nextTiles[tilePositionX];
+            this.currentTile = this.nextTiles[tilePositionX];                   // Update the tile reference
         } else {
             this.currentTile = null;
         }
@@ -75,33 +75,26 @@ public class Enemy implements Fightable {
     /** Check if the enemy will move **/
     public void enemyLogic() {
 
-        if (this.isAlive()) {
-            this.updateTilePosition();
+        if (this.isAlive()) {                                                   // If the enemy is still alive
+            this.updateTilePosition();                                          // Update the tile positions reference
 
-            if (this.isWalking) {                                       // While there are no towers on the enemy's way and the enemy is walking with still health
-                for (Tile t : this.nextTiles) {                         // For each tile in the set of tiles composing the whole road way
-                    if (t.isHasTower() && t.getTower() != null) {       // If a tower is on the tile
-                        this.currentTile = t;                           // Setting the tile to fight as the current tile where the turret is
-                        this.isAttacking = true;                        // Set the attacking variable as true so that the enemy can attack
-                        this.isWalking = false;                         // Stop the walking through making the isWalking variable false
-                        break;
-                    }
-                }
-                if (this.isWalking) {                                    // If the variable remains true
-                    this.move();                                         // And the enemy keeps on moving
+            if (this.isWalking) {                                                                                           // If the walking boolean variable is true
+                if (this.currentTile != null && this.currentTile.isHasTower() && this.currentTile.getTower() != null) {     // If the current tile is not null,
+                    this.isWalking = false;                                     // If it has a tower and the tower is not null, set the walking boolean as false
+                    this.isAttacking = true;                                    // And set the attacking boolean variable as true and end the walking loop
+                } else {
+                    this.move();                                                // Or else keep walking
                 }
             }
-            if (this.isAttacking) {                                      // If the attack variable is true
-                this.hit(this.currentTile);                              // Use the method to hit to fight the tower
-                if (!this.currentTile.isHasTower()) {                    // If there's no tower to fight anymore
-                    this.isAttacking = false;                            // Set the fighting variable to false
-                    this.isWalking = true;                               // Set the walking variable to true
-                    this.currentTile = null;                             // Set the tile to fight reference to null
+
+            if (this.isAttacking) {                                   // If the attacking boolean variable is true
+                if (this.currentTile != null && this.currentTile.isHasTower() && this.currentTile.getTower() != null) {     // If the current tile is not null,
+                    this.hit(this.currentTile);                       // If the current tile has a tower and the tower is different from null, hit the tower in the tile
+                } else {
+                    this.isAttacking = false;                         // Or else set the attacking boolean variable as false to end the attacking phase
+                    this.isWalking = true;                            // Restart the walking phase
                 }
             }
-        }
-        else {
-
         }
     }
 
@@ -114,6 +107,10 @@ public class Enemy implements Fightable {
     /** IsAlive getter **/
     public boolean isAlive() {
         return this.lifePoints > 0;
+    }
+
+    public void die() {
+
     }
 
     /** Speed getter **/

@@ -1,6 +1,8 @@
 package view.gameScenes;
 
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
@@ -140,6 +142,16 @@ public class Menu extends GameSceneBase implements Playable {
 
     /** Get game loop controller method (not needed) **/
     public GameLoopController getGameLoopController() {
+        return null;
+    }
+
+    @Override
+    public void setSelectedTower(Tower tower) {
+
+    }
+
+    @Override
+    public ModelController getModelController() {
         return null;
     }
 }

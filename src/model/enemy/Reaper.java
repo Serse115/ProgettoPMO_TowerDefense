@@ -27,9 +27,8 @@ public class Reaper extends Enemy implements Fightable {
     }
 
     /** Hit method **/
-    public void hit() {
-
-
+    public void hit(Tile t) {
+        super.hit(t);
     }
 }
 /* , new int[] {8, 10, 10}, new int[] {48, 48, 48}, new int[] {48, 48, 48} */

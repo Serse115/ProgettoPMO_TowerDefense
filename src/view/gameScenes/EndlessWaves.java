@@ -2,6 +2,8 @@ package view.gameScenes;
 
 import controller.GUIController;
 import controller.GameLoopController;
+import controller.ModelController;
+import model.tower.Tower;
 import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.imageUtilities.LevelUtilities;
@@ -114,6 +116,16 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
     @Override
     public GameLoopController getGameLoopController() {
+        return null;
+    }
+
+    @Override
+    public void setSelectedTower(Tower tower) {
+
+    }
+
+    @Override
+    public ModelController getModelController() {
         return null;
     }
 }

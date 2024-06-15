@@ -82,4 +82,13 @@ public class Tile {
     public void addTower(Tower newTower) {
         this.tower = newTower;
     }
+
+    /** Check the tower life points **/
+    public void checkTowerLife() {
+        if (this.tower.getLifePoints() < 0) {
+            this.hasTower = false;
+            this.tower = null;
+        }
+    }
+
 }
