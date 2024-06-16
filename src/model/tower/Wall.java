@@ -16,7 +16,7 @@ public class Wall extends Tower implements Placeable {
     /**** Constructors ****/
     /** Using the superclass constructor **/
     public Wall() {
-        super(8500, 0, 0, 0, 0, 66, 58, 3);
+        super(8500, 0, 0, 0, 0, 109, 3);
         super.setStandingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.wallSpritePath), 1, 65, 109));
         super.setFiringImages(null);
     }

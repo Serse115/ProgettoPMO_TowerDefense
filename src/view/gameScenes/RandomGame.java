@@ -164,7 +164,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Initialize the number of enemies for the map **/
     public void initializeEnemies() {
 
-        int nOfEnemies = this.randomGenerator(1, 30);             // Generating a value in between 1 and 30 enemies (from easy to hard)
+        int nOfEnemies = this.randomGenerator(1, 15);             // Generating a value in between 1 and 30 enemies (from easy to hard)
         this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
         for (int i = 0; i < nOfEnemies; i ++) {                                       // For every enemy
@@ -211,9 +211,6 @@ public class RandomGame extends GameSceneBase implements Playable {
             } else if (e.isAttacking() && e.isAlive()) {
                 g.drawImage(e.getAttackingImages()[this.attackingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
             }
-            //} else {
-              //  g.drawImage(e.getDeathImages()[this.deathAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
-            //}
         }
     }
 
@@ -246,6 +243,8 @@ public class RandomGame extends GameSceneBase implements Playable {
             Tile selectedTile = this.mapArrayTile[tileY][tileX];        // Selected tile to change
             if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
                 selectedTile.setHasTower(true);                                         // Set the tile as having a tower
+                this.towerToAdd.setyPosition(y);                                        // Set the y coordinate for the tower's reference
+                this.towerToAdd.setxPosition(x);                                        // Set the x coordinate for the tower's reference
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
                 this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
@@ -258,7 +257,6 @@ public class RandomGame extends GameSceneBase implements Playable {
     private void drawSelectedTileTower(Graphics g) {
         if (this.towerToAdd != null && this.towerToDraw) {            // If the tower to add is chosen and the change tile option is active
             g.drawImage(this.towerToAdd.getFirstStandingImage(), this.xMouseCoord, this.yMouseCoord, 32, 32, null);        // Draw the tile
-            //this.towerToAdd.setWidthHitboxBounds(this.xMouseCoord);
         }
     }
 

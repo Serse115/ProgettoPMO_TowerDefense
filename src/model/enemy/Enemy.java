@@ -71,7 +71,7 @@ public class Enemy implements Fightable {
         }
     }
 
-    /** Check if the enemy will move **/
+    /** Enemy logic method to handle all the situations the enemy may be in **/
     public void enemyLogic() {
 
         if (this.isAlive()) {                                                   // If the enemy is still alive
@@ -103,21 +103,9 @@ public class Enemy implements Fightable {
         return this.lifePoints;
     }
 
-
-
     /** IsAlive getter **/
     public boolean isAlive() {
         return this.lifePoints > 0;
-    }
-
-    /** Speed getter **/
-    public float getSpeed() {
-        return this.speed;
-    }
-
-    /** HitPower getter **/
-    public int getHitPower() {
-        return this.hitPower;
     }
 
     /** X position getter **/
@@ -128,11 +116,6 @@ public class Enemy implements Fightable {
     /** Y position getter **/
     public int getyPosition() {
         return this.yPosition;
-    }
-
-    /** Get index method **/
-    public int getEnemyIndex() {
-        return this.enemyIndex;
     }
 
     /** Walking images getter **/
@@ -166,33 +149,8 @@ public class Enemy implements Fightable {
     }
 
     /** LifePoints setter **/
-    public void setLifePoints(short lifePoints) {
-        this.lifePoints = lifePoints;
-    }
-
-    /** Speed setter **/
-    public void getSpeed(byte speed) {
-        this.speed = speed;
-    }
-
-    /** HitPower setter **/
-    public void getHitPower(short hitPower) {
-        this.hitPower = hitPower;
-    }
-
-    /** LifePoints setter **/
     public void setLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
-    }
-
-    /** X position setter **/
-    public void setxPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    /** Y position setter **/
-    public void setyPosition(int yPosition) {
-        this.yPosition = yPosition;
     }
 
     /** Is walking boolean getter **/
@@ -200,19 +158,9 @@ public class Enemy implements Fightable {
         return this.isWalking;
     }
 
-    /** Is walking boolean setter **/
-    public void setWalking(boolean isWalking) {
-        this.isWalking = isWalking;
-    }
-
     /** Is attacking boolean getter **/
     public boolean isAttacking() {
         return this.isAttacking;
-    }
-
-    /** Is attacking boolean setter **/
-    public void setAttacking(boolean isAttacking) {
-        this.isAttacking = isAttacking;
     }
 
     /** Rectangle width getter **/
@@ -221,13 +169,7 @@ public class Enemy implements Fightable {
     }
 
     /** Return the line of fire of the tile **/
-
-
-    public int getOffset() {
-        return 0;
-    }
-
     public int getLineOfFire() {
-        return 0;
+        return this.yPosition / 32;
     }
 }

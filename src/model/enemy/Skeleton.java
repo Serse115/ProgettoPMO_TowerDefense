@@ -38,12 +38,9 @@ public class Skeleton extends Enemy implements Fightable {
         super.hit(t);
     }
 
-    public int getLineOfFire(int offSet) {
-        return ((super.getyPosition() + 5) / 32);
-    }
-
     @Override
-    public int getOffset() {
-        return 5;
+    /** Get line of fire method override **/
+    public int getLineOfFire() {
+        return (super.getyPosition() + 22);
     }
 }

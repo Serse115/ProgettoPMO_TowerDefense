@@ -24,5 +24,7 @@ public interface Placeable {
 
     void shoot(Fightable enemy);
 
-    void setWidthHitboxBounds(int width);
+    void setyPosition(int yPosition);
+
+    void setxPosition(int yPosition);
 }

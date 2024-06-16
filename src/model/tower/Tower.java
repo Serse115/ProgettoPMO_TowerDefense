@@ -21,46 +21,52 @@ public class Tower implements Placeable {
     private Fightable enemyInRange;                     // Object reference to the enemy in range
     private boolean isStanding;                         // Variable to check if the tower is just standing
     private boolean isShooting;                         // Variable to check if the tower is shooting
-    private int range;
 
 
 
 
     /**** Constructors ****/
-    public Tower(int lifePoints, float fireCooldown, int dmgPower, int x, int y, int width, int height, int towerType) {
+    public Tower(int lifePoints, float fireCooldown, int dmgPower, int x, int y, int height, int towerType) {
         this.lifePoints = lifePoints;
         this.fireCooldown = fireCooldown;
         this.dmgPower = dmgPower;
         this.xPosition = x;
         this.yPosition = y;
-        this.bounds = new Rectangle(x, y, width, height);
+        this.bounds = new Rectangle(0, y, x, height);
         this.towerType = towerType;
         this.enemyInRange = null;
         this.isStanding = true;
         this.isShooting = false;
-        this.range = 500;
     }
 
 
 
 
     /**** Methods ****/
+    /** Shoot method **/
     public void shoot(Fightable enemyInRange) {
         System.out.println("Hitting enemy!");
         enemyInRange.setLifePoints(enemyInRange.getLifePoints() - this.dmgPower);
     }
 
+    /** Method to check if the enemy is in range of the tower with a slight offset tolerance **/
     private boolean isInRange(Fightable enemy) {
-        double distance = (enemy.getxPosition() - this.xPosition);
-        return distance <= this.range;
+        return ((-15 <= (this.yPosition - enemy.getLineOfFire())) && ((this.yPosition - enemy.getLineOfFire()) <= 15));
     }
 
 
+    /** Tower logic method to handle all the situations the tower may be in **/
     public void towerLogic(ArrayList<Fightable> enemies) {
         for (Fightable enemy : enemies) {
-            if (enemy != null && enemy.isAlive() && this.isInRange(enemy) && ((this.yPosition / 32) == enemy.getLineOfFire())) {
+            if (enemy != null && enemy.isAlive() && this.isInRange(enemy)) {
+                this.isShooting = true;
+                this.isStanding = false;
                 this.shoot(enemy);
                 break;
+            }
+            else {
+                this.isStanding = true;
+                this.isShooting = false;
             }
         }
     }
@@ -73,26 +79,6 @@ public class Tower implements Placeable {
     /** LIfe points setter **/
     public void setLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
-    }
-
-    /** Cooldown getter **/
-    public float getFireCooldown() {
-        return fireCooldown;
-    }
-
-    /** Cooldown setter **/
-    public void setFireCooldown(int fireCooldown) {
-        this.fireCooldown = fireCooldown;
-    }
-
-    /** Dmg power getter **/
-    public int getDmgPower() {
-        return dmgPower;
-    }
-
-    /** Dmg power setter **/
-    public void setDmgPower(int dmgPower) {
-        this.dmgPower = dmgPower;
     }
 
     /** Standing images getter **/
@@ -123,6 +109,7 @@ public class Tower implements Placeable {
     public int getxPosition() {
         return xPosition;
     }
+
 
     public void setxPosition(int xPosition) {
         this.xPosition = xPosition;

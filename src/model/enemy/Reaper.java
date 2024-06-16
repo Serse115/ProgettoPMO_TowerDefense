@@ -38,12 +38,9 @@ public class Reaper extends Enemy implements Fightable {
         super.hit(t);
     }
 
-   public int getLineOfFire(int offSet) {
-        return ((super.getyPosition() + 10) / 32);
-   }
-
-   @Override
-   public int getOffset() {
-        return 10;
-   }
+    @Override
+    /** Get line of fire method override **/
+    public int getLineOfFire() {
+        return (super.getyPosition() + 22);
+    }
 }

@@ -38,12 +38,9 @@ public class Zombie extends Enemy implements Fightable {
         super.hit(t);
     }
 
-    public int getLineOfFire(int offSet) {
-        return ((super.getyPosition() + 30) / 32);
-    }
-
     @Override
-    public int getOffset() {
-        return 30;
+    /** Get line of fire method override **/
+    public int getLineOfFire() {
+        return (super.getyPosition() + 42);
     }
 }
