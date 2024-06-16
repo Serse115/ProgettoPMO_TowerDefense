@@ -22,6 +22,8 @@ public interface Fightable {
 
     boolean isAttacking();
 
+    int getEnemyIndex();
+
     /** Get walking images method **/
     BufferedImage[] getWalkingImages();
 
@@ -46,4 +48,14 @@ public interface Fightable {
 
     /** Get the rectangle's width method **/
     int getRectangleWidth();
+
+    /** Set the life points method **/
+    void setLifePoints(int lifePoints);
+
+    /** Get the life points method **/
+    int getLifePoints();
+
+    int getOffset();
+
+    int getLineOfFire();
 }

@@ -1,5 +1,7 @@
 package controller;
 
+import view.gameScenes.Playable;
+import view.gameScenes.RandomGame;
 import view.guiComponents.Tile;
 import view.imageUtilities.SpriteUtilities;
 import java.awt.image.BufferedImage;

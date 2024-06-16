@@ -184,6 +184,11 @@ public class EditMap extends GameSceneBase implements Playable {
         return null;
     }
 
+    @Override
+    public void resetTowers() {
+
+    }
+
     /** Level getter **/
     public Tile[][] getLvLArray() {
         return this.lvLArray;

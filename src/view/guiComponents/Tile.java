@@ -1,10 +1,6 @@
 package view.guiComponents;
 
-import model.tower.Cannon;
-import model.tower.MachineGun;
-import model.tower.Tower;
-import model.tower.Turret;
-
+import model.tower.*;
 import java.awt.image.BufferedImage;
 
 /***** Class for the tiles objects that form the map layout and playable field *****/
@@ -15,7 +11,7 @@ public class Tile {
     private int id;                            // Tile id
     private int tileType;                      // Type of the tile
     private boolean hasTower;                  // Has tower variable to define if the tile already has a tower located in it
-    private Tower tower;                       // Object reference to the tower in the tile
+    private Placeable tower;                       // Object reference to the tower in the tile
 
 
 
@@ -77,23 +73,32 @@ public class Tile {
     }
 
     /** Tower getter **/
-    public Tower getTower() {
+    public Placeable getTower() {
         return this.tower;
     }
 
+    /** Tower setter for the reset **/
+    public void resetTower() {
+        this.tower = null;
+        this.hasTower = false;
+    }
     /** Tower setter **/
-    public void addTower(Tower newTower) {
+    public void addTower(Placeable newTower) {
 
 
         switch (newTower.getTowerType()) {
             case 0:
-                this.tower = new Turret(1700, 1.2f, 10, 0, 0, 0);
+                this.tower = new Turret();
                 break;
             case 1:
-                this.tower = new Cannon(2100, 2f, 18, 0, 0, 1);
+                this.tower = new Cannon();
                 break;
             case 2:
-                this.tower = new MachineGun(1500, 0.8f, 8, 0, 0, 2);
+                this.tower = new MachineGun();
+                break;
+            case 3:
+                this.tower = new Wall();
+                break;
         }
     }
 
@@ -104,5 +109,4 @@ public class Tile {
             this.tower = null;
         }
     }
-
 }

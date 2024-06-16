@@ -55,7 +55,6 @@ public class Enemy implements Fightable {
 
     /** Hit method **/
     public void hit(Tile t) {
-        System.out.println("Hitting tower!");
         t.getTower().setLifePoints(t.getTower().getLifePoints() - this.hitPower);
         t.checkTowerLife();
     }
@@ -104,13 +103,11 @@ public class Enemy implements Fightable {
         return this.lifePoints;
     }
 
+
+
     /** IsAlive getter **/
     public boolean isAlive() {
         return this.lifePoints > 0;
-    }
-
-    public void die() {
-
     }
 
     /** Speed getter **/
@@ -131,6 +128,11 @@ public class Enemy implements Fightable {
     /** Y position getter **/
     public int getyPosition() {
         return this.yPosition;
+    }
+
+    /** Get index method **/
+    public int getEnemyIndex() {
+        return this.enemyIndex;
     }
 
     /** Walking images getter **/
@@ -216,5 +218,16 @@ public class Enemy implements Fightable {
     /** Rectangle width getter **/
     public int getRectangleWidth() {
         return this.bounds.width;
+    }
+
+    /** Return the line of fire of the tile **/
+
+
+    public int getOffset() {
+        return 0;
+    }
+
+    public int getLineOfFire() {
+        return 0;
     }
 }

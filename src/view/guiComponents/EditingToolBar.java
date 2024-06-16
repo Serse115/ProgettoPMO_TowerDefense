@@ -188,4 +188,9 @@ public class EditingToolBar extends Bar implements Playable {
     public ModelController getModelController() {
         return null;
     }
+
+    @Override
+    public void resetTowers() {
+
+    }
 }

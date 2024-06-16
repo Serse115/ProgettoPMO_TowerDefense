@@ -128,4 +128,9 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public ModelController getModelController() {
         return null;
     }
+
+    @Override
+    public void resetTowers() {
+
+    }
 }

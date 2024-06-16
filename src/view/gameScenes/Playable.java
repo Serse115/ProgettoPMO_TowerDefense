@@ -42,4 +42,6 @@ public interface Playable {
     void setSelectedTower(Tower tower);
 
     ModelController getModelController();
+
+    void resetTowers();
 }

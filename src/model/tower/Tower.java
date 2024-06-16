@@ -1,7 +1,9 @@
 package model.tower;
 
+import model.enemy.Fightable;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 /***** Parent class for the tower *****/
 public class Tower implements Placeable {
@@ -15,7 +17,11 @@ public class Tower implements Placeable {
     private int towerType;                              // Type of the tower
     private BufferedImage[] standingImages;             // Images for the standing state of the tower
     private BufferedImage[] firingImages;               // Images for the firing state of the tower
-    private Rectangle bounds;                           // Hitbox and bounds of the enemy
+    private Rectangle bounds;                           // Hitbox and bounds of the tower
+    private Fightable enemyInRange;                     // Object reference to the enemy in range
+    private boolean isStanding;                         // Variable to check if the tower is just standing
+    private boolean isShooting;                         // Variable to check if the tower is shooting
+    private int range;
 
 
 
@@ -29,12 +35,36 @@ public class Tower implements Placeable {
         this.yPosition = y;
         this.bounds = new Rectangle(x, y, width, height);
         this.towerType = towerType;
+        this.enemyInRange = null;
+        this.isStanding = true;
+        this.isShooting = false;
+        this.range = 500;
     }
 
 
 
 
     /**** Methods ****/
+    public void shoot(Fightable enemyInRange) {
+        System.out.println("Hitting enemy!");
+        enemyInRange.setLifePoints(enemyInRange.getLifePoints() - this.dmgPower);
+    }
+
+    private boolean isInRange(Fightable enemy) {
+        double distance = (enemy.getxPosition() - this.xPosition);
+        return distance <= this.range;
+    }
+
+
+    public void towerLogic(ArrayList<Fightable> enemies) {
+        for (Fightable enemy : enemies) {
+            if (enemy != null && enemy.isAlive() && this.isInRange(enemy) && ((this.yPosition / 32) == enemy.getLineOfFire())) {
+                this.shoot(enemy);
+                break;
+            }
+        }
+    }
+
     /** Life points getter **/
     public int getLifePoints() {
         return lifePoints;
@@ -128,5 +158,29 @@ public class Tower implements Placeable {
 
     public void setBounds(Rectangle bounds) {
         this.bounds = bounds;
+    }
+
+    public void setWidthHitboxBounds(int width) {
+        this.bounds.width = width;
+    }
+
+    public void setEnemyInRange(Fightable enemy) {
+        this.enemyInRange = enemy;
+    }
+
+    public boolean isStanding() {
+        return isStanding;
+    }
+
+    public boolean isShooting() {
+        return isShooting;
+    }
+
+    public void setStanding(boolean standing) {
+        this.isStanding = standing;
+    }
+
+    public void setShooting(boolean shooting) {
+        this.isShooting = shooting;
     }
 }

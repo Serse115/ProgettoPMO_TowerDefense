@@ -4,11 +4,14 @@ import controller.GUIController;
 import controller.GameLoopController;
 import controller.ModelController;
 import model.enemy.*;
+import model.tower.Placeable;
 import model.tower.Tower;
 import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 /**** Class for the random game scene ****/
@@ -17,18 +20,21 @@ public class RandomGame extends GameSceneBase implements Playable {
     /**** Fields ****/
     private GameActionBar bottomBar;                // Action bar at the bottom of the screen
     private GUIController guiController;            // GUI controller object for the random map generating and the tiles
-    private ModelController modelController;        // Model controller object for the enemies
+    //private ModelController modelController;        // Model controller object for the enemies
     private Tile[][] mapArrayTile;                  // Array of tiles for the map
     private int numberOfRoads;                      // Number of roads on the map
     private int[] positionsOnTheArray;              // Row position of each road in the array of the map
-    private Fightable[] lvlEnemies;                 // Array of enemies that will be present in the level
+    private ArrayList <Fightable> lvlEnemies;       // Array of enemies that will be present in the level
+    private ArrayList <Placeable> lvlTowers;        // ArrayLiat of the towers in the level
     private GameLoopController gameLoopController;  // Game loop controller object reference to handle the game loop during the random game
-    private int animationIndex;                     // Animation index int for the animation frames
+    private int walkingAnimationIndex;              // Animation index int for the walking animation frames
+    private int attackingAnimationIndex;            // Animation index int for the attacking animation frames
+    private int deathAnimationIndex;                // Animation index int for the death animation frames
     private int animationSpeed;                     // Animation speed int for the animation frames in milliseconds
     private long lastTime;                          // Loop time variable
     private long timer;                             // Other loop time variable
     private Tile tileToAddTower;                    // Tile variable reference where the tower will be added
-    private Tower towerToAdd;                       // Tower variable reference for the tower chosen to add to the specific tile
+    private Placeable towerToAdd;                   // Tower variable reference for the tower chosen to add to the specific tile
     private boolean towerToDraw;                    // Variable to decide if the tile will have a tower added
     private int xMouseCoord;                        // Coordinate x for the current mouse location
     private int yMouseCoord;                        // Coordinate y for the current mouse location
@@ -45,11 +51,13 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.gameLoopController = new GameLoopController(this);
         this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves, this.gameLoopController);
         this.guiController = new GUIController();
-        this.modelController = new ModelController();
+        //this.modelController = new ModelController();
         this.mapArrayTile = new Tile[20][23];
         this.initializeMap();
         this.initializeEnemies();
-        this.animationIndex = 0;
+        this.walkingAnimationIndex = 0;
+        this.attackingAnimationIndex = 0;
+        this.deathAnimationIndex = 0;
         this.animationSpeed = 150;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
@@ -60,6 +68,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.yMouseCoord = 0;
         this.lastTileX = 0;
         this.lastTileY = 0;
+        this.lvlTowers = new ArrayList<>();
 
         // Start the game loop
         this.gameLoopController.start();
@@ -86,19 +95,43 @@ public class RandomGame extends GameSceneBase implements Playable {
             this.lastTime = currentTime;                                            // Last time update
 
             if (this.timer > this.animationSpeed) {                                 // If the timer is higher than the animation speed
-                this.animationIndex++;                                              // Increase the animation index variable
+                this.walkingAnimationIndex++;                                       // Increase the walking animation index variable
+                this.attackingAnimationIndex++;                                     // Increase the attacking animation index variable
+                this.deathAnimationIndex++;                                         // Increase the attacking animation index variable
                 this.timer = 0;                                                     // And reset the time variable
 
-                for (Fightable enemy : this.lvlEnemies) {                               // For every enemy in the array of enemies
-                    if (this.animationIndex >= enemy.getWalkingImages().length) {       //
-                        this.animationIndex = 0;
+                for (Fightable enemy : this.lvlEnemies) {                                    // For every enemy in the array of enemies
+                    if (this.walkingAnimationIndex >= enemy.getWalkingImages().length) {     // If the animation index is over the length of the walking images array
+                        this.walkingAnimationIndex = 0;                                             // Reset the animation index
+                    }
+                    if (this.attackingAnimationIndex >= enemy.getAttackingImages().length) {        // If the animation index is over the length of the attacking images array
+                        this.attackingAnimationIndex = 0;                                           // Reset the animation index
+                    }
+                    if (this.deathAnimationIndex >= enemy.getDeathImages().length) {                // If the animation index is over the length of the death images array
+                        this.deathAnimationIndex = 0;                                               // Reset the animation index
                     }
                 }
             }
 
-            for (Fightable enemy : this.lvlEnemies) {
-                enemy.enemyLogic();
+
+            Iterator<Fightable> iterator = this.lvlEnemies.iterator();              // Iterator for the list of enemies
+            while (iterator.hasNext()) {
+                Fightable enemy = iterator.next();
+                if (enemy.isAlive()) {
+                    enemy.enemyLogic();                                             // Start the enemy logic
+                } else {
+                    iterator.remove();                                              // Remove the enemy
+                }
             }
+
+
+            for (Placeable tower : this.lvlTowers) {                            // For every tower in the level
+                if (this.lvlTowers.size() > 0) {                                // If the number of towers is more than 0 (at least on tower is on the field)
+                    tower.towerLogic(this.lvlEnemies);                          // Start the tower logic
+                }
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -132,34 +165,27 @@ public class RandomGame extends GameSceneBase implements Playable {
     public void initializeEnemies() {
 
         int nOfEnemies = this.randomGenerator(1, 30);             // Generating a value in between 1 and 30 enemies (from easy to hard)
-        this.lvlEnemies = new Enemy[nOfEnemies];                                      // Initializing the list of enemies with the number of enemies generated prior
+        this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
         for (int i = 0; i < nOfEnemies; i ++) {                                       // For every enemy
             int enemyType = this.randomGenerator(0, 3);           // Generate a value representing the type of enemy that will appear in the game
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length);   // Generate the index for the roads for the enemies to appear on
 
             if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper
-                this.lvlEnemies[i] = new Reaper(115, 0.4f, 2, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 10);   // And its sprite animations
-                this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getReaperMovingAtlasPath(), 8, 48, 48));
-                this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getReaperAttackAtlasPath(), 10, 48, 48));
-                this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getReaperDeathAtlasPath(),10, 48, 48));
+                this.lvlEnemies.add(new Reaper(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));   // And its sprite animations
             }
-            else if (enemyType == 1) {                                                       // If the generated type number is 0, add a skeleton
-                this.lvlEnemies[i] = new Skeleton(150, 0.3f, 3, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 5);  // And its sprite animations
-                this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getSkeletonMovingAtlasPath(), 13, 22, 33));
-                this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getSkeletonAttackAtlasPath(), 18, 43, 37));
-                this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getSkeletonDeathAtlasPath(),15, 33, 32));
+            else if (enemyType == 1) {                                                       // If the generated type number is 1, add a skeleton
+                this.lvlEnemies.add(new Skeleton(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), (this.positionsOnTheArray[indexRoad] * 32) - 5));  // And its sprite animations
             }
             else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie
-                this.lvlEnemies[i] = new Zombie(90, 0.5f, 1, i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), 0, (this.positionsOnTheArray[indexRoad] * 32) - 30);     // And its sprite animations
-                this.lvlEnemies[i].setWalkingImages(this.modelController.getWalkingImages(this.modelController.getZombieMovingAtlasPath(), 8, 96, 56));
-                this.lvlEnemies[i].setAttackingImages(this.modelController.getAttackingImages(this.modelController.getZombieAttackAtlasPath(), 12, 95, 62));
-                this.lvlEnemies[i].setDeathImages(this.modelController.getDeathImages(this.modelController.getZombieDeathAtlasPath(),5, 95, 48));
+                this.lvlEnemies.add(new Zombie(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 30));     // And its sprite animations
             }
         }
 
         // Reset animation fields when initializing new enemies
-        this.animationIndex = 0;
+        this.walkingAnimationIndex = 0;
+        this.attackingAnimationIndex = 0;
+        this.deathAnimationIndex = 0;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
     }
@@ -180,13 +206,14 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Drawing the enemies method **/
     private void drawEnemies(Graphics g) {
         for (Fightable e : this.lvlEnemies) {
-            if (e.isWalking() && e.isAlive()) {
-                g.drawImage(e.getWalkingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
+            if (e.isWalking() && e.isAlive() ) {
+                g.drawImage(e.getWalkingImages()[this.walkingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
             } else if (e.isAttacking() && e.isAlive()) {
-                g.drawImage(e.getAttackingImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
-            } else {
-                g.drawImage(e.getDeathImages()[this.animationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
+                g.drawImage(e.getAttackingImages()[this.attackingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
             }
+            //} else {
+              //  g.drawImage(e.getDeathImages()[this.deathAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
+            //}
         }
     }
 
@@ -220,6 +247,7 @@ public class RandomGame extends GameSceneBase implements Playable {
             if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
                 selectedTile.setHasTower(true);                                         // Set the tile as having a tower
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
+                this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
                 this.towerToAdd = null;                                                 // Reset the selected tower variable to false
             }
@@ -230,6 +258,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     private void drawSelectedTileTower(Graphics g) {
         if (this.towerToAdd != null && this.towerToDraw) {            // If the tower to add is chosen and the change tile option is active
             g.drawImage(this.towerToAdd.getFirstStandingImage(), this.xMouseCoord, this.yMouseCoord, 32, 32, null);        // Draw the tile
+            //this.towerToAdd.setWidthHitboxBounds(this.xMouseCoord);
         }
     }
 
@@ -284,6 +313,17 @@ public class RandomGame extends GameSceneBase implements Playable {
     }
 
     public ModelController getModelController() {
-        return this.modelController;
+       // return this.modelController;
+        return null;
+    }
+
+    public void resetTowers() {
+
+        for (int i = 0; i < 20; i ++) {
+            for (int j = 0; j < 23; j++) {
+                this.mapArrayTile[i][j].resetTower();
+            }
+        }
+        this.lvlTowers.clear();
     }
 }

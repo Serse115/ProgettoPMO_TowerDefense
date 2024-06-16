@@ -154,4 +154,9 @@ public class Menu extends GameSceneBase implements Playable {
     public ModelController getModelController() {
         return null;
     }
+
+    @Override
+    public void resetTowers() {
+
+    }
 }

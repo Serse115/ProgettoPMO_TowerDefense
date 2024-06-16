@@ -2,9 +2,10 @@ package view.guiComponents;
 
 import controller.GameLoopController;
 import controller.ModelController;
-import model.tower.Tower;
+import model.tower.*;
 import view.gameScenes.GameScenes;
 import view.gameScenes.Playable;
+import view.gameScenes.RandomGame;
 import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
@@ -21,6 +22,7 @@ public class GameActionBar extends Bar implements Playable {
     private Clickable bTurret;              // Defense turret button
     private Clickable bCannon;              // Defense cannon button
     private Clickable bMachineGun;          // Defense machine-gun button
+    private Clickable bWall;                // Defense wall button
 
 
 
@@ -37,6 +39,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
         this.bCannon = new MyButton("Cannon", 220, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_cannon/cannon_icon.png"));
         this.bMachineGun = new MyButton("MachineGun", 285, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_machinegun/machinegun_icon.png"));
+        this.bWall = new MyButton("Wall", 350, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_wall/defenseWall_icon.jpg"));
     }
 
     /** Secondary constructor for the temporary Endless waves game mode **/
@@ -49,6 +52,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
         this.bCannon = new MyButton("Cannon", 220, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_cannon/cannon_icon.png"));
         this.bMachineGun = new MyButton("MachineGun", 285, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_machinegun/machinegun_icon.png"));
+        this.bWall = new MyButton("Wall", 350, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_wall/defenseWall_icon.jpg"));
     }
 
 
@@ -72,6 +76,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret.draw(g, this.bTurret.getbImage());
         this.bCannon.draw(g, this.bCannon.getbImage());
         this.bMachineGun.draw(g, this.bMachineGun.getbImage());
+        this.bWall.draw(g, this.bWall.getbImage());
     }
 
     /** Update method **/
@@ -98,6 +103,7 @@ public class GameActionBar extends Bar implements Playable {
                     this.gameLoopController.stopGameLoop();                             // Stop the game loop for the random game
                     this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
                     this.randomGame.initializeEnemies();                                // Reset the game set of enemies for the new random game
+                    this.randomGame.resetTowers();                                      // Reset the towers in the game
                     this.gameLoopController.restartGameLoop();                          // Restart the game loop
                     break;
                 case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
@@ -112,13 +118,16 @@ public class GameActionBar extends Bar implements Playable {
             // do nothing for now
         }
         else if (this.bTurret.getButtonBounds().contains(x, y)) {   // If it's clicked within the turret tower button's boundaries
-            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getTurret());
+            this.randomGame.setSelectedTower(new Turret());         // Set the turret as the selected tower
         }
         else if (this.bCannon.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
-            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getCannon());
+            this.randomGame.setSelectedTower(new Cannon());         // Set the cannon as the selected tower
         }
         else if (this.bMachineGun.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
-            this.randomGame.setSelectedTower((Tower) this.randomGame.getModelController().getMachineGun());
+            this.randomGame.setSelectedTower(new MachineGun());         // Set the machinegun as the selected tower
+        }
+        else if (this.bWall.getButtonBounds().contains(x, y)) {     // If it's clicked within the cannon tower button's boundaries
+            this.randomGame.setSelectedTower(new Wall());           // Set the wall as the selected tower
         }
     }
 
@@ -129,6 +138,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret.setMouseOver(false);       // Set the mouse over for the turret button as false
         this.bCannon.setMouseOver(false);       // Set the mouse over for the cannon button as false
         this.bMachineGun.setMouseOver(false);   // Set the mouse over for the machine-gun button as false
+        this.bWall.setMouseOver(false);         // Set the mouse over for the machine-gun button as false
 
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's moved over the menu button
             this.bMenu.setMouseOver(true);                       // Add the effect
@@ -145,6 +155,9 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bMachineGun.getButtonBounds().contains(x, y)) {       // If it's moved over the machine-gun button
             this.bMachineGun.setMouseOver(true);                            // Add the effect
         }
+        else if (this.bWall.getButtonBounds().contains(x, y)) {   // If it's moved over the wall button
+            this.bWall.setMouseOver(true);                        // Add the effect
+        }
     }
 
     /** Mouse pressed method **/
@@ -154,6 +167,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret.setMousePressed(false);        // Set the mouse pressed over for the turret button as false
         this.bCannon.setMousePressed(false);        // Set the mouse pressed over for the cannon button as false
         this.bMachineGun.setMousePressed(false);    // Set the mouse pressed over for the machine-gun button as false
+        this.bWall.setMousePressed(false);          // Set the mouse pressed over for the wall button as false
 
         if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's pressed on the menu button
             this.bMenu.setMousePressed(true);                   // Add the effect
@@ -170,6 +184,9 @@ public class GameActionBar extends Bar implements Playable {
         else if (this.bMachineGun.getButtonBounds().contains(x, y)) {    // If it's pressed on the machine-gun button
             this.bMachineGun.setMousePressed(true);                      // Add the effect
         }
+        else if (this.bWall.getButtonBounds().contains(x, y)) {      // If it's pressed on the wall button
+            this.bWall.setMousePressed(true);                        // Add the effect
+        }
     }
 
     /** Mouse released method **/
@@ -179,6 +196,7 @@ public class GameActionBar extends Bar implements Playable {
         this.bTurret.resetBooleans();               // Resetting the booleans for the turret button
         this.bCannon.resetBooleans();               // Resetting the booleans for the cannon button
         this.bMachineGun.resetBooleans();           // Resetting the booleans for the machine-gun button
+        this.bWall.resetBooleans();                 // Resetting the booleans for the wall button
     }
 
     /** Mouse dragged method **/
@@ -199,6 +217,11 @@ public class GameActionBar extends Bar implements Playable {
     @Override
     public ModelController getModelController() {
         return null;
+    }
+
+    @Override
+    public void resetTowers() {
+        // Not necessary
     }
 
     /** Menu button getter **/
@@ -224,5 +247,10 @@ public class GameActionBar extends Bar implements Playable {
     /** Machine-gun button getter **/
     public Clickable getbMachineGun() {
         return this.bMachineGun;
+    }
+
+    /** Wall button getter **/
+    public Clickable getbWall() {
+        return this.bWall;
     }
 }
