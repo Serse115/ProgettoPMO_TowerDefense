@@ -10,6 +10,7 @@ import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -30,6 +31,8 @@ public class RandomGame extends GameSceneBase implements Playable {
     private int walkingAnimationIndex;              // Animation index int for the walking animation frames
     private int attackingAnimationIndex;            // Animation index int for the attacking animation frames
     private int deathAnimationIndex;                // Animation index int for the death animation frames
+    private int standingAnimationIndex;             // Animation index int for the standing animation frames
+    private int shootingAnimationIndex;             // Animation index int for the standing animation frames
     private int animationSpeed;                     // Animation speed int for the animation frames in milliseconds
     private long lastTime;                          // Loop time variable
     private long timer;                             // Other loop time variable
@@ -58,6 +61,8 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.walkingAnimationIndex = 0;
         this.attackingAnimationIndex = 0;
         this.deathAnimationIndex = 0;
+        this.standingAnimationIndex = 0;
+        this.shootingAnimationIndex = 0;
         this.animationSpeed = 150;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
@@ -82,6 +87,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     public void render(Graphics g) {
         this.drawLevel(g);
         this.drawEnemies(g);
+        this.drawTowers(g);
         this.bottomBar.render(g);
         this.drawSelectedTileTower(g);
     }
@@ -97,7 +103,9 @@ public class RandomGame extends GameSceneBase implements Playable {
             if (this.timer > this.animationSpeed) {                                 // If the timer is higher than the animation speed
                 this.walkingAnimationIndex++;                                       // Increase the walking animation index variable
                 this.attackingAnimationIndex++;                                     // Increase the attacking animation index variable
-                this.deathAnimationIndex++;                                         // Increase the attacking animation index variable
+                this.standingAnimationIndex++;                                      // Increase the standing animation index variable
+                this.shootingAnimationIndex++;
+
                 this.timer = 0;                                                     // And reset the time variable
 
                 for (Fightable enemy : this.lvlEnemies) {                                    // For every enemy in the array of enemies
@@ -107,8 +115,14 @@ public class RandomGame extends GameSceneBase implements Playable {
                     if (this.attackingAnimationIndex >= enemy.getAttackingImages().length) {        // If the animation index is over the length of the attacking images array
                         this.attackingAnimationIndex = 0;                                           // Reset the animation index
                     }
-                    if (this.deathAnimationIndex >= enemy.getDeathImages().length) {                // If the animation index is over the length of the death images array
-                        this.deathAnimationIndex = 0;                                               // Reset the animation index
+                }
+
+                for (Placeable tower : this.lvlTowers) {
+                    if (this.standingAnimationIndex >= tower.getStandingImages().length) {          // If the animation index is over the length of the standing images array
+                        this.standingAnimationIndex = 0;                                            // Reset the animation index
+                    }
+                    if (this.shootingAnimationIndex >= tower.getShootingImages().length) {          // If the animation index is over the length of the shooting images array
+                        this.shootingAnimationIndex = 0;                                            // Reset the animation index
                     }
                 }
             }
@@ -124,10 +138,11 @@ public class RandomGame extends GameSceneBase implements Playable {
                 }
             }
 
-
-            for (Placeable tower : this.lvlTowers) {                            // For every tower in the level
-                if (this.lvlTowers.size() > 0) {                                // If the number of towers is more than 0 (at least on tower is on the field)
-                    tower.towerLogic(this.lvlEnemies);                          // Start the tower logic
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 23; j++) {
+                    if (this.mapArrayTile[i][j].isHasTower() && this.mapArrayTile[i][j].getTower() != null) {
+                        this.mapArrayTile[i][j].getTower().towerLogic(this.lvlEnemies);
+                    }
                 }
             }
 
@@ -164,7 +179,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Initialize the number of enemies for the map **/
     public void initializeEnemies() {
 
-        int nOfEnemies = this.randomGenerator(1, 15);             // Generating a value in between 1 and 30 enemies (from easy to hard)
+        int nOfEnemies = this.randomGenerator(1, 20);             // Generating a value in between 1 and 30 enemies (from easy to hard)
         this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
         for (int i = 0; i < nOfEnemies; i ++) {                                       // For every enemy
@@ -193,12 +208,9 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Drawing the level method **/
     private void drawLevel(Graphics g) {
 
-        for (int j = 0; j < 20; j++) {                                                                                                             // For every row
-            for (int i = 0; i < 23; i++) {                                                                                                         // And column
-                g.drawImage(this.mapArrayTile[j][i].getSprite(), 32 * i, (32 * j), null);  // Draw the right tile image
-                if (this.mapArrayTile[j][i].isHasTower()) {
-                    g.drawImage(this.mapArrayTile[j][i].getTower().getFirstStandingImage(), 32 * i, (32 * j), 32, 32,null);  // Draw the tower on the tile
-                }
+        for (int i = 0; i < 20; i++) {                                                                                                             // For every row
+            for (int j = 0; j < 23; j++) {                                                                                                         // And column
+                g.drawImage(this.mapArrayTile[i][j].getSprite(), 32 * j, (32 * i), null);  // Draw the right tile image
             }
         }
     }
@@ -212,6 +224,32 @@ public class RandomGame extends GameSceneBase implements Playable {
                 g.drawImage(e.getAttackingImages()[this.attackingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
             }
         }
+    }
+
+    /** Draw the towers method **/
+    private void drawTowers(Graphics g) {
+
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 23; j++) {
+
+                if (this.mapArrayTile[i][j].isHasTower()) {
+                    if (this.mapArrayTile[i][j].getTower().isStanding()) {
+                        BufferedImage[] standingImages = this.mapArrayTile[i][j].getTower().getStandingImages();
+                        if (standingImages != null && standingImages.length > 0) {
+                            int index = Math.min(this.standingAnimationIndex, standingImages.length - 1);
+                            g.drawImage(standingImages[index], 32 * j, 32 * i, 32, 32, null);
+                        }
+                    }
+                    else if (this.mapArrayTile[i][j].getTower().isShooting()) {
+                        BufferedImage[] shootingImages = this.mapArrayTile[i][j].getTower().getShootingImages();
+                        if (shootingImages != null && shootingImages.length > 0) {
+                            int index = Math.min(this.shootingAnimationIndex, shootingImages.length - 1);
+                            g.drawImage(shootingImages[index], 32 * j, 32 * i, 32, 32, null);
+                        }
+                    }
+                }
+            }
+         }
     }
 
     /** Random method to select the number of roads and other tiles and also for the enemies **/
@@ -247,6 +285,8 @@ public class RandomGame extends GameSceneBase implements Playable {
                 this.towerToAdd.setxPosition(x);                                        // Set the x coordinate for the tower's reference
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
                 this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
+                this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);
+
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
                 this.towerToAdd = null;                                                 // Reset the selected tower variable to false
             }
@@ -323,5 +363,11 @@ public class RandomGame extends GameSceneBase implements Playable {
             }
         }
         this.lvlTowers.clear();
+
+        // Reset animation fields when initializing new towers
+        this.standingAnimationIndex = 0;
+        this.shootingAnimationIndex = 0;
+        this.lastTime = System.currentTimeMillis();
+        this.timer = 0;
     }
 }

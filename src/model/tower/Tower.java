@@ -57,19 +57,24 @@ public class Tower implements Placeable {
 
     /** Tower logic method to handle all the situations the tower may be in **/
     public void towerLogic(ArrayList<Fightable> enemies) {
+
+        boolean foundEnemyInRange = false;
+
         for (Fightable enemy : enemies) {
             if (enemy != null && enemy.isAlive() && this.isInRange(enemy)) {
                 this.isShooting = true;
                 this.isStanding = false;
                 this.shoot(enemy);
+                foundEnemyInRange = true;
                 break;
             }
-            else {
-                this.isStanding = true;
-                this.isShooting = false;
-            }
+        }
+        if (!foundEnemyInRange) {
+            this.isShooting = false;
+            this.isStanding = true;
         }
     }
+
 
     /** Life points getter **/
     public int getLifePoints() {
@@ -97,7 +102,7 @@ public class Tower implements Placeable {
     }
 
     /** Firing images getter **/
-    public BufferedImage[] getFiringImages() {
+    public BufferedImage[] getShootingImages() {
         return firingImages;
     }
 

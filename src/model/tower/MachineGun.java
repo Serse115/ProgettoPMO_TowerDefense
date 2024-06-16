@@ -18,12 +18,12 @@ public class MachineGun extends Tower implements Placeable {
     /** Using the superclass constructor **/
     public MachineGun() {
         super(1500, 0.8f, 1, 0, 0, 43, 2);
-        super.setStandingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.machineGunStandingPath), 1, 71, 43));
+        super.setStandingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.machineGunStandingPath), 4, 72, 46));
         super.setFiringImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.machineGunShootingPath), 4, 83, 43));
     }
 
 
 
     /**** Methods ****/
-
+    // Inherited from superclass
 }

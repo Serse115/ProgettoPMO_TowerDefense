@@ -14,11 +14,15 @@ public interface Placeable {
 
     BufferedImage[] getStandingImages();
 
-    public BufferedImage[] getFiringImages();
+    public BufferedImage[] getShootingImages();
 
     BufferedImage getFirstStandingImage();
 
     int getLifePoints();
+
+    int getxPosition();
+
+    int getyPosition();
 
     void setLifePoints(int lifePoints);
 
@@ -27,4 +31,8 @@ public interface Placeable {
     void setyPosition(int yPosition);
 
     void setxPosition(int yPosition);
+
+    boolean isStanding();
+
+    boolean isShooting();
 }
