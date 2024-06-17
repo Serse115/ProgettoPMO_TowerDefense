@@ -15,6 +15,7 @@ public class Tower implements Placeable {
     private int xPosition;                              // X position of the tower
     private int yPosition;                              // Y position of the tower
     private int towerType;                              // Type of the tower
+    private int cost;                                   // Gold cost to build
     private BufferedImage[] standingImages;             // Images for the standing state of the tower
     private BufferedImage[] firingImages;               // Images for the firing state of the tower
     private Rectangle bounds;                           // Hitbox and bounds of the tower
@@ -26,12 +27,13 @@ public class Tower implements Placeable {
 
 
     /**** Constructors ****/
-    public Tower(int lifePoints, float fireCooldown, int dmgPower, int x, int y, int height, int towerType) {
+    public Tower(int lifePoints, float fireCooldown, int dmgPower, int x, int y, int height, int towerType, int cost) {
         this.lifePoints = lifePoints;
         this.fireCooldown = fireCooldown;
         this.dmgPower = dmgPower;
         this.xPosition = x;
         this.yPosition = y;
+        this.cost = cost;
         this.bounds = new Rectangle(0, y, x, height);
         this.towerType = towerType;
         this.enemyInRange = null;
@@ -174,5 +176,9 @@ public class Tower implements Placeable {
 
     public void setShooting(boolean shooting) {
         this.isShooting = shooting;
+    }
+
+    public int getCost(){
+        return this.cost;
     }
 }

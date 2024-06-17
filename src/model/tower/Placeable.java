@@ -37,4 +37,6 @@ public interface Placeable {
     boolean isShooting();
 
     BufferedImage getFirstStandingImage();
+
+    int getCost();
 }

@@ -146,4 +146,9 @@ public class Menu extends GameSceneBase implements Playable {
     public void resetTowers() {
 
     }
+
+    @Override
+    public int getGold() {
+        return 0;
+    }
 }

@@ -39,4 +39,6 @@ public interface Playable {
     void setSelectedTower(Tower tower);
 
     void resetTowers();
+
+    int getGold();
 }

@@ -19,17 +19,17 @@ public class Enemy implements Fightable {
     private boolean isAttacking;                  // Boolean variable to decide if the enemy is currently attacking
     private BufferedImage[] walkingImages;        // Enemy's walking images
     private BufferedImage[] attackingImages;      // Enemy's attacking images
-    private BufferedImage[] deathImages;          // Enemy's death images
     private Tile[] nextTiles;                     // Tile object reference to check if the next tile is a tower to attack
     private Tile currentTile;                     // Tile id where the enemy stops to fight with the tower
     private Rectangle bounds;                     // Hitbox and bounds of the enemy
+    private int goldReward;                       // Amount of gold rewarded when killing the unit
 
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(int lifePoints, float speed, int hitPower, int enIdx, int walkingLength, int attackingLength, int deathLength, Tile[] nextTiles, float x, int y, int width, int height) {
+    public Enemy(int lifePoints, float speed, int hitPower, int enIdx, int walkingLength, int attackingLength, int deathLength, Tile[] nextTiles, float x, int y, int width, int height, int goldReward) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
@@ -40,9 +40,9 @@ public class Enemy implements Fightable {
         this.isAttacking = false;
         this.walkingImages = new BufferedImage[walkingLength];
         this.attackingImages = new BufferedImage[attackingLength];
-        this.deathImages = new BufferedImage[deathLength];
         this.nextTiles = nextTiles;
         this.bounds = new Rectangle((int) x, y, width, height);
+        this.goldReward = goldReward;
     }
 
 
@@ -142,16 +142,6 @@ public class Enemy implements Fightable {
         this.attackingImages = imgs;
     }
 
-    /** Death images getter **/
-    public BufferedImage[] getDeathImages() {
-        return this.deathImages;
-    }
-
-    /** Death images setter **/
-    public void setDeathImages(BufferedImage[] imgs) {
-        this.deathImages = imgs;
-    }
-
     /** LifePoints setter **/
     public void setLifePoints(int lifePoints) {
         this.lifePoints = lifePoints;
@@ -175,5 +165,10 @@ public class Enemy implements Fightable {
     /** Return the line of fire of the tile **/
     public int getLineOfFire() {
         return this.yPosition / 32;
+    }
+
+    /** Get the gold reward **/
+    public int getGoldReward() {
+        return this.goldReward;
     }
 }

@@ -28,16 +28,11 @@ public interface Fightable {
 
     BufferedImage[] getAttackingImages();
 
-    BufferedImage[] getDeathImages();
-
     /** Set walking images method **/
     void setWalkingImages(BufferedImage[] imgs);
 
     /** Set attacking images method **/
     void setAttackingImages(BufferedImage[] imgs);
-
-    /** Set death images method **/
-    void setDeathImages(BufferedImage[] imgs);
 
     /** Get x position method **/
     float getxPosition();
@@ -55,4 +50,6 @@ public interface Fightable {
     int getLifePoints();
 
     int getLineOfFire();
+
+    int getGoldReward();
 }

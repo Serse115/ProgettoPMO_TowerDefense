@@ -188,4 +188,9 @@ public class EditingToolBar extends Bar implements Playable {
     public void resetTowers() {
 
     }
+
+    @Override
+    public int getGold() {
+        return 0;
+    }
 }

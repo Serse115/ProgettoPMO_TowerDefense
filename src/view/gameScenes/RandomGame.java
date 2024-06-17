@@ -29,13 +29,12 @@ public class RandomGame extends GameSceneBase implements Playable {
     private int nOfEnemies;                         // Number of enemies in the level
     private int walkingAnimationIndex;              // Animation index int for the walking animation frames
     private int attackingAnimationIndex;            // Animation index int for the attacking animation frames
-    private int deathAnimationIndex;                // Animation index int for the death animation frames
     private int standingAnimationIndex;             // Animation index int for the standing animation frames
     private int shootingAnimationIndex;             // Animation index int for the standing animation frames
     private int animationSpeed;                     // Animation speed int for the animation frames in milliseconds
     private long lastTime;                          // Loop time variable
     private long timer;                             // Other loop time variable
-    private Tile tileToAddTower;                    // Tile variable reference where the tower will be added
+    private int gold;                               // Gold resource for placing towers
     private Placeable towerToAdd;                   // Tower variable reference for the tower chosen to add to the specific tile
     private boolean towerToDraw;                    // Variable to decide if the tile will have a tower added
     private int xMouseCoord;                        // Coordinate x for the current mouse location
@@ -51,18 +50,17 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves);
         this.guiController = new GUIController();
         this.mapArrayTile = new Tile[20][23];
-        this.nOfEnemies = this.randomGenerator(1, 20);
+        this.nOfEnemies = this.randomGenerator(1, 25);
         this.initializeMap();
         this.initializeEnemies();
         this.walkingAnimationIndex = 0;
         this.attackingAnimationIndex = 0;
-        this.deathAnimationIndex = 0;
         this.standingAnimationIndex = 0;
         this.shootingAnimationIndex = 0;
         this.animationSpeed = 125;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
-        this.tileToAddTower = null;
+        this.gold = (nOfEnemies * 50);
         this.towerToAdd = null;
         this.towerToDraw = false;
         this.xMouseCoord = 0;
@@ -126,6 +124,7 @@ public class RandomGame extends GameSceneBase implements Playable {
                     enemy.enemyLogic();                                             // Start the enemy logic
                 } else {
                     iterator.remove();                                              // Remove the enemy
+                    this.gold += enemy.getGoldReward();                             // Get the gold reward
                 }
             }
 
@@ -176,7 +175,7 @@ public class RandomGame extends GameSceneBase implements Playable {
 
         this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
-        for (int i = 0; i < nOfEnemies; i ++) {                                       // For every enemy
+        for (int i = 0; i <= nOfEnemies; i++) {                                       // For every enemy
             int enemyType = this.randomGenerator(0, 3);           // Generate a value representing the type of enemy that will appear in the game
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length);   // Generate the index for the roads for the enemies to appear on
 
@@ -194,7 +193,6 @@ public class RandomGame extends GameSceneBase implements Playable {
         // Reset animation fields when initializing new enemies
         this.walkingAnimationIndex = 0;
         this.attackingAnimationIndex = 0;
-        this.deathAnimationIndex = 0;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
     }
@@ -267,7 +265,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Tile change method **/
     private void addTowerToTile(int x, int y) {
 
-        if (this.towerToAdd != null) {                      // If the selected tower to add the tile has been chosen
+        if (this.towerToAdd != null && this.gold >= this.towerToAdd.getCost()) {     // If the selected tower to add the tile has been chosen and there's enough gold
 
             int tileX = x / 32;                                 // X position of the tile to change
             int tileY = y / 32;                                 // Y position of the tile to change
@@ -280,6 +278,7 @@ public class RandomGame extends GameSceneBase implements Playable {
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
                 this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
                 this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);
+                this.gold -= this.towerToAdd.getCost();
 
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
                 this.towerToAdd = null;                                                 // Reset the selected tower variable to false
@@ -339,12 +338,6 @@ public class RandomGame extends GameSceneBase implements Playable {
         // Do nothing for now
     }
 
-    /** Game loop controller getter **/
-    public GameLoopController getGameLoopController() {
-        //return this.gameLoopController;
-        return null;
-    }
-
     public void resetTowers() {
 
         for (int i = 0; i < 20; i ++) {
@@ -359,5 +352,9 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.shootingAnimationIndex = 0;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
+    }
+
+    public int getGold() {
+        return this.gold;
     }
 }

@@ -69,6 +69,7 @@ public class GameActionBar extends Bar implements Playable {
         g.setColor(Color.BLACK);
         g.drawRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
 
+
         // Buttons
         this.bMenu.draw(g);
         this.bPause.draw(g);
@@ -76,6 +77,29 @@ public class GameActionBar extends Bar implements Playable {
         this.bCannon.draw(g, this.bCannon.getbImage());
         this.bMachineGun.draw(g, this.bMachineGun.getbImage());
         this.bWall.draw(g, this.bWall.getbImage());
+        this.drawGoldDisplayBar(g);
+    }
+
+    private void drawGoldDisplayBar(Graphics g) {
+
+        // Space for the gold stats
+        g.setColor(Color.BLACK);
+        g.drawRect(540, 640, 200, 149);
+        g.setColor(Color.GRAY);
+        g.fillRect(541, 641, 200, 148);
+
+        // Displaying the available gold
+        g.setColor(Color.BLACK);
+        Font font = new Font("Arial", Font.BOLD, 10);           // Changing the font and size of the string
+        g.setFont(font);
+
+        switch (GameScenes.gameScenes) {
+            case PLAY:
+                g.drawString("Available gold: " + this.randomGame.getGold(), 580, 675);
+                break;
+            case ENDLESS_WAVES:
+                break;
+        }
     }
 
     /** Update method **/
@@ -95,21 +119,18 @@ public class GameActionBar extends Bar implements Playable {
 
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
+        System.out.println("x position " + x + " and y position " + y);
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
             switch (GameScenes.gameScenes) {                     // Depending on the current gameScene
                 case PLAY:                                       // If the gameScene is the play one
                     GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
-                    //this.gameLoopController.stopGameLoop();                             // Stop the game loop for the random game
                     this.randomGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
                     this.randomGame.initializeEnemies();                                // Reset the game set of enemies for the new random game
                     this.randomGame.resetTowers();                                      // Reset the towers in the game
-                    //this.gameLoopController.restartGameLoop();                          // Restart the game loop
                     break;
                 case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
                     GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
-                    //this.gameLoopController.stopGameLoop();                             // Stop the game loop for the random game
                     this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
-                    //this.gameLoopController.restartGameLoop();                          // Restart the game loop
                     break;
             }
         }
@@ -203,12 +224,6 @@ public class GameActionBar extends Bar implements Playable {
         // Do nothing for now
     }
 
-    /** Get game loop controller (not needed) **/
-    public GameLoopController getGameLoopController() {
-        //return this.gameLoopController;
-        return null;
-    }
-
     @Override
     public void setSelectedTower(Tower tower) {
         //
@@ -217,6 +232,11 @@ public class GameActionBar extends Bar implements Playable {
     @Override
     public void resetTowers() {
         // Not necessary
+    }
+
+    @Override
+    public int getGold() {
+        return 0;
     }
 
     /** Menu button getter **/

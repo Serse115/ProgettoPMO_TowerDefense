@@ -10,7 +10,6 @@ public class Reaper extends Enemy implements Fightable {
     // Most inherited from parent class
     private final String reaperWalkingPath = "enemy_reaper/HostileRunningReaper.png";           // Path for the reaper walking images
     private final String reaperAttackingPath = "enemy_reaper/HostileAttackReaper.png";          // Path for the reaper attacking images
-    private final String reaperDeathPath = "enemy_reaper/DeathAnimationReaper.png";             // Path for the reaper death images
 
 
 
@@ -19,10 +18,9 @@ public class Reaper extends Enemy implements Fightable {
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor and sets the images) **/
     public Reaper(int enIndex, Tile[] tiles, int y) {
-        super(1550, 0.25f, 2, enIndex, 8, 10, 10, tiles, 0, y, 48, 48);
+        super(1550, 0.25f, 2, enIndex, 8, 10, 10, tiles, 0, y, 48, 48, 40);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperWalkingPath), 8, 48, 48));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperAttackingPath), 10, 48, 48));
-        super.setDeathImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperDeathPath), 10, 48, 48));
     }
 
 
@@ -38,7 +36,6 @@ public class Reaper extends Enemy implements Fightable {
         super.hit(t);
     }
 
-    @Override
     /** Get line of fire method override **/
     public int getLineOfFire() {
         return (super.getyPosition() + 22);

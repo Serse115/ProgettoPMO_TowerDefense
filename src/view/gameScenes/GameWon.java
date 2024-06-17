@@ -1,6 +1,5 @@
 package view.gameScenes;
 
-import controller.ModelController;
 import model.tower.Tower;
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
@@ -100,5 +99,10 @@ public class GameWon extends GameSceneBase implements Playable {
     @Override
     public void resetTowers() {
 
+    }
+
+    @Override
+    public int getGold() {
+        return 0;
     }
 }
