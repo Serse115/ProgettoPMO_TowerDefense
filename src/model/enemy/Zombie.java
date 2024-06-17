@@ -19,7 +19,7 @@ public class Zombie extends Enemy implements Fightable {
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
     public Zombie(int enIndex, Tile[] tiles, int y) {
-        super(950, 0.5f, 1, enIndex, 8, 12, 5, tiles, 0, y, 96, 95);
+        super(950, 0.35f, 1, enIndex, 8, 12, 5, tiles, 0, y, 96, 95);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.zombieWalkingPath), 8, 96, 56));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.zombieAttackingPath), 12, 95, 62));
         super.setDeathImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.zombieDeathPath), 5, 95, 48));

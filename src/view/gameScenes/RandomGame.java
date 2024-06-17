@@ -41,8 +41,6 @@ public class RandomGame extends GameSceneBase implements Playable {
     private boolean towerToDraw;                    // Variable to decide if the tile will have a tower added
     private int xMouseCoord;                        // Coordinate x for the current mouse location
     private int yMouseCoord;                        // Coordinate y for the current mouse location
-    private int lastTileX;                          // Coordinate x for the location of the last tile highlighted
-    private int lastTileY;                          // Coordinate y for the location of the last tile highlighted
 
 
 
@@ -63,7 +61,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.deathAnimationIndex = 0;
         this.standingAnimationIndex = 0;
         this.shootingAnimationIndex = 0;
-        this.animationSpeed = 150;
+        this.animationSpeed = 125;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
         this.tileToAddTower = null;
@@ -71,8 +69,6 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.towerToDraw = false;
         this.xMouseCoord = 0;
         this.yMouseCoord = 0;
-        this.lastTileX = 0;
-        this.lastTileY = 0;
         this.lvlTowers = new ArrayList<>();
 
         // Start the game loop
@@ -249,7 +245,7 @@ public class RandomGame extends GameSceneBase implements Playable {
                     }
                 }
             }
-         }
+        }
     }
 
     /** Random method to select the number of roads and other tiles and also for the enemies **/
@@ -351,7 +347,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     }
 
     public ModelController getModelController() {
-       // return this.modelController;
+        // return this.modelController;
         return null;
     }
 

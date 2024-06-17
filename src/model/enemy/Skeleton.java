@@ -19,7 +19,7 @@ public class Skeleton extends Enemy implements Fightable {
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
     public Skeleton(int enIndex, Tile[] tiles, int y) {
-        super(1750, 0.3f, 3, enIndex, 13, 18, 15, tiles, 0, y, 43, 37);
+        super(1750, 0.15f, 3, enIndex, 13, 18, 15, tiles, 0, y, 43, 37);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.skeletonWalkingPath), 13, 22, 33));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.skeletonAttackingPath), 18, 43, 37));
         super.setDeathImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.skeletonDeathPath), 15, 33, 32));
