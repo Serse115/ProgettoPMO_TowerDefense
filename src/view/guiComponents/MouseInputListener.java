@@ -42,12 +42,15 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 case SAVED_GAME:
                     break;
                 case ENDLESS_WAVES:                                                                     // If it's endless waves
-                    this.mainFrame.getEndlessWaves().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse clicked methods to do things depending on the position of the click
+                    this.mainFrame.getEndlessWaves().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the endless waves mouse clicked methods to do things depending on the position of the click
+                    break;
+                case GAME_OVER:                                                                        // If it's game over
+                    this.mainFrame.getGameOver().mouseClicked(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse clicked methods to do things depending on the position of the click
+                    break;
+                case GAME_WON:                                                                        // If it's game won
+                    this.mainFrame.getGameWon().mouseClicked(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse clicked methods to do things depending on the position of the click
                     break;
             }
-        }
-        else if (e.getButton() == MouseEvent.BUTTON3) {
-            System.out.println("Right mouse button clicked");
         }
     }
 
@@ -68,6 +71,12 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case ENDLESS_WAVES:                                                                   // If it's endless waves
                 this.mainFrame.getEndlessWaves().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the click
+                break;
+            case GAME_OVER:                                                                        // If it's game over
+                this.mainFrame.getGameOver().mouseMoved(e.getX() - 5, e.getY() - 30);       // Call the game over's mouse moved methods to do things depending on the position of the click
+                break;
+            case GAME_WON:                                                                     // If it's game won
+                this.mainFrame.getGameWon().mouseMoved(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse moved methods to do things depending on the position of the click
                 break;
         }
     }
@@ -90,6 +99,12 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case ENDLESS_WAVES:                                                                     // If it's endless waves
                 this.mainFrame.getEndlessWaves().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the click
                 break;
+            case GAME_OVER:                                                                       // If it's game over
+                this.mainFrame.getGameOver().mousePressed(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse pressed methods to do things depending on the position of the click
+                break;
+            case GAME_WON:                                                                       // If it's game won
+                this.mainFrame.getGameWon().mousePressed(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse pressed methods to do things depending on the position of the click
+                break;
         }
     }
 
@@ -110,6 +125,12 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case ENDLESS_WAVES:                                                                      // If it's endless waves
                 this.mainFrame.getEndlessWaves().mouseReleased(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse released methods to do things depending on the position of the click
+                break;
+            case GAME_OVER:                                                                        // If it's game over
+                this.mainFrame.getGameOver().mouseReleased(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse released methods to do things depending on the position of the click
+                break;
+            case GAME_WON:                                                                        // If it's game won
+                this.mainFrame.getGameWon().mouseReleased(e.getX() - 5, e.getY() - 30);     // Call the game over's mouse released methods to do things depending on the position of the click
                 break;
         }
     }

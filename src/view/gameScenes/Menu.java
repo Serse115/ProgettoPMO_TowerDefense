@@ -13,7 +13,6 @@ import static view.gameScenes.GameScenes.*;
 public class Menu extends GameSceneBase implements Playable {
 
     /**** Fields ****/
-    private RandomGame randomGame;   // Object reference to the randomGame scene
     private Clickable bPlay;         // Play button
     private Clickable bEditMap;      // Edit the map button
     private Clickable bSavedGame;    // Saved games button
@@ -26,7 +25,6 @@ public class Menu extends GameSceneBase implements Playable {
     /** Main constructor to create the temporary menu to give time to the other components to be generated **/
     public Menu(MainFrame mainFrame) {
         super(mainFrame);
-
         this.bPlay = new MyButton("Random Map", 300, 150, 150, 50);
         this.bEditMap = new MyButton("Edit Map", 300, 250, 150, 50);
         this.bSavedGame = new MyButton("Saved Maps", 300, 350, 150, 50);
@@ -66,7 +64,6 @@ public class Menu extends GameSceneBase implements Playable {
     public void mouseClicked(int x, int y) {
         if (this.bPlay.getButtonBounds().contains(x, y)) {      // If it's clicked within the play button's boundaries
             GameScenes.setGameScene(PLAY);                      // Set the game scene as the playing one
-
         }
         else if (this.bEditMap.getButtonBounds().contains(x, y)) {  // If it's clicked within the edit map button
             GameScenes.setGameScene(EDIT_MAP);                      // Set the game scene as the map edit one
@@ -140,19 +137,9 @@ public class Menu extends GameSceneBase implements Playable {
         // Not necessary
     }
 
-    /** Get game loop controller method (not needed) **/
-    public GameLoopController getGameLoopController() {
-        return null;
-    }
-
     @Override
     public void setSelectedTower(Tower tower) {
 
-    }
-
-    @Override
-    public ModelController getModelController() {
-        return null;
     }
 
     @Override

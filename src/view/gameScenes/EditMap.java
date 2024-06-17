@@ -180,11 +180,6 @@ public class EditMap extends GameSceneBase implements Playable {
     }
 
     @Override
-    public ModelController getModelController() {
-        return null;
-    }
-
-    @Override
     public void resetTowers() {
 
     }

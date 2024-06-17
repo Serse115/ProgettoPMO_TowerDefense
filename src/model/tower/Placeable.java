@@ -1,6 +1,8 @@
 package model.tower;
 
 import model.enemy.Fightable;
+
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -15,8 +17,6 @@ public interface Placeable {
     BufferedImage[] getStandingImages();
 
     public BufferedImage[] getShootingImages();
-
-    BufferedImage getFirstStandingImage();
 
     int getLifePoints();
 
@@ -35,4 +35,6 @@ public interface Placeable {
     boolean isStanding();
 
     boolean isShooting();
+
+    BufferedImage getFirstStandingImage();
 }

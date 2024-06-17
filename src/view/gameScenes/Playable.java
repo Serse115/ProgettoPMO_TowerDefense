@@ -1,6 +1,5 @@
 package view.gameScenes;
 
-import controller.GameLoopController;
 import controller.ModelController;
 import model.tower.Tower;
 
@@ -37,11 +36,7 @@ public interface Playable {
     /** Mouse Dragged method **/
     void mouseDragged(int x, int y);
 
-    GameLoopController getGameLoopController();
-
     void setSelectedTower(Tower tower);
-
-    ModelController getModelController();
 
     void resetTowers();
 }

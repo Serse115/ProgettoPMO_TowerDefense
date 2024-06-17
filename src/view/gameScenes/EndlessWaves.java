@@ -23,9 +23,9 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
     /**** Constructors ****/
     /** Main constructor for the real endless waves game scene **/
-    public EndlessWaves(MainFrame mainFrame, Playable randomGame, GameLoopController gameLoopController) {
+    public EndlessWaves(MainFrame mainFrame, Playable randomGame) {
         super(mainFrame);
-        this.bottomBar = new GameActionBar(0, 640, 736, 160, randomGame, this, gameLoopController);
+        this.bottomBar = new GameActionBar(0, 640, 736, 160, randomGame, this);
         this.guiController = new GUIController();
         this.mapArrayTile = new int[23][23];
         this.initializeMap();
@@ -115,18 +115,8 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     }
 
     @Override
-    public GameLoopController getGameLoopController() {
-        return null;
-    }
-
-    @Override
     public void setSelectedTower(Tower tower) {
 
-    }
-
-    @Override
-    public ModelController getModelController() {
-        return null;
     }
 
     @Override

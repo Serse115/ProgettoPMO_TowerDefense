@@ -9,7 +9,8 @@ public enum GameScenes {
     EDIT_MAP,
     SAVED_GAME,
     ENDLESS_WAVES,
-    GAME_OVER;
+    GAME_OVER,
+    GAME_WON;
 
     /** Main variable **/
     public static GameScenes gameScenes = MENU;             // Setting the main game scene as the menu

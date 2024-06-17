@@ -1,5 +1,6 @@
 package model.enemy;
 
+import view.gameScenes.GameScenes;
 import view.guiComponents.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -76,6 +77,9 @@ public class Enemy implements Fightable {
 
         if (this.isAlive()) {                                                   // If the enemy is still alive
             this.updateTilePosition();                                          // Update the tile positions reference
+            if (this.xPosition >= 735) {
+                GameScenes.setGameScene(GameScenes.GAME_OVER);
+            }
 
             if (this.isWalking) {                                                                                           // If the walking boolean variable is true
                 if (this.currentTile != null && this.currentTile.isHasTower() && this.currentTile.getTower() != null) {     // If the current tile is not null,

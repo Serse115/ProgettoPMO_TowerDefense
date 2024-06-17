@@ -19,6 +19,8 @@ public class MainFrame extends JFrame implements Runnable {
     private Playable edit;                                            // Edit game scene
     private Playable endlessWaves;                                    // Endless waves scene
     private Playable temporaryEndlessWaves;                           // Temporary endless waves scene
+    private Playable gameOver;                                        // Game over scene
+    private Playable gameWon;                                         // Game won scene
     private boolean running;                                          // Thread status variable
 
 
@@ -41,7 +43,9 @@ public class MainFrame extends JFrame implements Runnable {
         this.temporaryEndlessWaves = new EndlessWaves(this);          // Initializing the temporary endless waves scene object
         this.randomGame = new RandomGame(this, this.temporaryEndlessWaves); // Initializing the play game scene object
         this.edit = new EditMap(this);                                // Initializing the edit game scene object
-        this.endlessWaves = new EndlessWaves(this, this.randomGame, this.randomGame.getGameLoopController());  // Initializing the real endless waves game scene object
+        this.endlessWaves = new EndlessWaves(this, this.randomGame);  // Initializing the real endless waves game scene object
+        this.gameOver = new GameOver(this);                           // Initializing the game over scene object
+        this.gameWon = new GameWon(this);                             // Initializing the game won scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -72,6 +76,7 @@ public class MainFrame extends JFrame implements Runnable {
     private void updateGame() {
         switch (GameScenes.gameScenes) {
             case MENU:
+                this.menu.update();
                 break;
             case PLAY:
                 this.randomGame.update();
@@ -110,7 +115,7 @@ public class MainFrame extends JFrame implements Runnable {
 
             // Update part
             if (now - lastTimeUPS >= timePerUpdate) {             // Handle the updates, if every update happens for the correct amount of time
-                //this.updateGame();
+                this.updateGame();
                 lastTimeUPS = now;                                // Reset
                 updates++;                                        // and update
 
@@ -160,5 +165,15 @@ public class MainFrame extends JFrame implements Runnable {
     /** Endless waves getter **/
     public Playable getEndlessWaves() {
         return this.endlessWaves;
+    }
+
+    /** Game over getter **/
+    public Playable getGameOver() {
+        return this.gameOver;
+    }
+
+    /** Game won getter **/
+    public Playable getGameWon() {
+        return this.gameWon;
     }
 }

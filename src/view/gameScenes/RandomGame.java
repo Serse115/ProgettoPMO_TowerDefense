@@ -21,13 +21,12 @@ public class RandomGame extends GameSceneBase implements Playable {
     /**** Fields ****/
     private GameActionBar bottomBar;                // Action bar at the bottom of the screen
     private GUIController guiController;            // GUI controller object for the random map generating and the tiles
-    //private ModelController modelController;        // Model controller object for the enemies
     private Tile[][] mapArrayTile;                  // Array of tiles for the map
     private int numberOfRoads;                      // Number of roads on the map
     private int[] positionsOnTheArray;              // Row position of each road in the array of the map
     private ArrayList <Fightable> lvlEnemies;       // Array of enemies that will be present in the level
     private ArrayList <Placeable> lvlTowers;        // ArrayLiat of the towers in the level
-    private GameLoopController gameLoopController;  // Game loop controller object reference to handle the game loop during the random game
+    private int nOfEnemies;                         // Number of enemies in the level
     private int walkingAnimationIndex;              // Animation index int for the walking animation frames
     private int attackingAnimationIndex;            // Animation index int for the attacking animation frames
     private int deathAnimationIndex;                // Animation index int for the death animation frames
@@ -49,11 +48,10 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Main constructor **/
     public RandomGame(MainFrame mainFrame, Playable endlessWaves) {
         super(mainFrame);
-        this.gameLoopController = new GameLoopController(this);
-        this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves, this.gameLoopController);
+        this.bottomBar = new GameActionBar(0, 640, 736, 160, this, endlessWaves);
         this.guiController = new GUIController();
-        //this.modelController = new ModelController();
         this.mapArrayTile = new Tile[20][23];
+        this.nOfEnemies = this.randomGenerator(1, 20);
         this.initializeMap();
         this.initializeEnemies();
         this.walkingAnimationIndex = 0;
@@ -70,9 +68,6 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.xMouseCoord = 0;
         this.yMouseCoord = 0;
         this.lvlTowers = new ArrayList<>();
-
-        // Start the game loop
-        this.gameLoopController.start();
     }
 
 
@@ -142,6 +137,10 @@ public class RandomGame extends GameSceneBase implements Playable {
                 }
             }
 
+            if (this.lvlEnemies.isEmpty()) {
+                GameScenes.setGameScene(GameScenes.GAME_WON);
+            }
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -175,7 +174,6 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Initialize the number of enemies for the map **/
     public void initializeEnemies() {
 
-        int nOfEnemies = this.randomGenerator(1, 20);             // Generating a value in between 1 and 30 enemies (from easy to hard)
         this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
         for (int i = 0; i < nOfEnemies; i ++) {                                       // For every enemy
@@ -343,11 +341,7 @@ public class RandomGame extends GameSceneBase implements Playable {
 
     /** Game loop controller getter **/
     public GameLoopController getGameLoopController() {
-        return this.gameLoopController;
-    }
-
-    public ModelController getModelController() {
-        // return this.modelController;
+        //return this.gameLoopController;
         return null;
     }
 

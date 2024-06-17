@@ -40,6 +40,10 @@ public class Render {
                 this.mainFrame.getEndlessWaves().render(g); // Render and paint the components of the endless waves page
                 break;
             case GAME_OVER:
+                this.mainFrame.getGameOver().render(g);     // Render and paint the components of the game over page
+                break;
+            case GAME_WON:
+                this.mainFrame.getGameWon().render(g);     // Render and paint the components of the game won page
                 break;
         }
     }
