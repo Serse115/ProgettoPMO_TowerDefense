@@ -11,7 +11,7 @@ public class Tile {
     private int id;                            // Tile id
     private int tileType;                      // Type of the tile
     private boolean hasTower;                  // Has tower variable to define if the tile already has a tower located in it
-    private Placeable tower;                       // Object reference to the tower in the tile
+    private Placeable tower;                   // Object reference to the tower in the tile
 
 
 

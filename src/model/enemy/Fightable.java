@@ -50,6 +50,4 @@ public interface Fightable {
     int getLifePoints();
 
     int getLineOfFire();
-
-    int getGoldReward();
 }

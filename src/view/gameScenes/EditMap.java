@@ -189,6 +189,16 @@ public class EditMap extends GameSceneBase implements Playable {
         return 0;
     }
 
+    @Override
+    public int getWave() {
+        return 0;
+    }
+
+    @Override
+    public void setBottomBar(Playable bottomBar) {
+
+    }
+
     /** Level getter **/
     public Tile[][] getLvLArray() {
         return this.lvLArray;

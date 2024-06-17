@@ -41,4 +41,8 @@ public interface Playable {
     void resetTowers();
 
     int getGold();
+
+    int getWave();
+
+    void setBottomBar(Playable bottomBar);
 }

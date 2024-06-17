@@ -19,7 +19,6 @@ public class Tower implements Placeable {
     private BufferedImage[] standingImages;             // Images for the standing state of the tower
     private BufferedImage[] firingImages;               // Images for the firing state of the tower
     private Rectangle bounds;                           // Hitbox and bounds of the tower
-    private Fightable enemyInRange;                     // Object reference to the enemy in range
     private boolean isStanding;                         // Variable to check if the tower is just standing
     private boolean isShooting;                         // Variable to check if the tower is shooting
 
@@ -36,7 +35,6 @@ public class Tower implements Placeable {
         this.cost = cost;
         this.bounds = new Rectangle(0, y, x, height);
         this.towerType = towerType;
-        this.enemyInRange = null;
         this.isStanding = true;
         this.isShooting = false;
     }
@@ -47,7 +45,6 @@ public class Tower implements Placeable {
     /**** Methods ****/
     /** Shoot method **/
     public void shoot(Fightable enemyInRange) {
-        System.out.println("Hitting enemy!");
         enemyInRange.setLifePoints(enemyInRange.getLifePoints() - this.dmgPower);
     }
 
@@ -156,10 +153,6 @@ public class Tower implements Placeable {
 
     public void setWidthHitboxBounds(int width) {
         this.bounds.width = width;
-    }
-
-    public void setEnemyInRange(Fightable enemy) {
-        this.enemyInRange = enemy;
     }
 
     public boolean isStanding() {

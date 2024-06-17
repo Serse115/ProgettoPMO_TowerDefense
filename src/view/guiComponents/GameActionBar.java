@@ -41,7 +41,9 @@ public class GameActionBar extends Bar implements Playable {
         this.bWall = new MyButton("Wall", 350, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_wall/defenseWall_icon.jpg"));
     }
 
+
     /** Secondary constructor for the temporary Endless waves game mode **/
+    /*
     public GameActionBar(int x, int y, int width, int height, Playable endlessWaves) {
         super(x, y, width, height);             // Using the superclass constructor
         this.randomGame = null;
@@ -53,6 +55,9 @@ public class GameActionBar extends Bar implements Playable {
         this.bMachineGun = new MyButton("MachineGun", 285, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_machinegun/machinegun_icon.png"));
         this.bWall = new MyButton("Wall", 350, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_wall/defenseWall_icon.jpg"));
     }
+
+     */
+
 
 
 
@@ -98,6 +103,8 @@ public class GameActionBar extends Bar implements Playable {
                 g.drawString("Available gold: " + this.randomGame.getGold(), 580, 675);
                 break;
             case ENDLESS_WAVES:
+                g.drawString("Available gold: " + this.endlessWaves.getGold(), 580, 675);
+                g.drawString("Wave : " + this.endlessWaves.getWave(), 580, 725);
                 break;
         }
     }
@@ -119,7 +126,6 @@ public class GameActionBar extends Bar implements Playable {
 
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
-        System.out.println("x position " + x + " and y position " + y);
         if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
             switch (GameScenes.gameScenes) {                     // Depending on the current gameScene
                 case PLAY:                                       // If the gameScene is the play one
@@ -131,6 +137,8 @@ public class GameActionBar extends Bar implements Playable {
                 case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
                     GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
                     this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
+                    this.endlessWaves.initializeEnemies();                                // Reset the game set of enemies for the new random game
+                    this.endlessWaves.resetTowers();                                      // Reset the towers in the game
                     break;
             }
         }
@@ -138,16 +146,44 @@ public class GameActionBar extends Bar implements Playable {
             // do nothing for now
         }
         else if (this.bTurret.getButtonBounds().contains(x, y)) {   // If it's clicked within the turret tower button's boundaries
-            this.randomGame.setSelectedTower(new Turret());         // Set the turret as the selected tower
+            switch (GameScenes.gameScenes) {                        // Depending on what game mode are we playing and what game scene are we on
+                case PLAY:
+                    this.randomGame.setSelectedTower(new Turret());         // Set the turret as the selected tower
+                    break;
+                case ENDLESS_WAVES:
+                    this.endlessWaves.setSelectedTower(new Turret());       // Set the turret as the selected tower
+                    break;
+            }
         }
         else if (this.bCannon.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
-            this.randomGame.setSelectedTower(new Cannon());         // Set the cannon as the selected tower
+            switch (GameScenes.gameScenes) {                        // Depending on what game mode are we playing and what game scene are we on
+                case PLAY:
+                    this.randomGame.setSelectedTower(new Cannon());         // Set the cannon as the selected tower
+                    break;
+                case ENDLESS_WAVES:
+                    this.endlessWaves.setSelectedTower(new Cannon());       // Set the cannon as the selected tower
+                    break;
+            }
         }
         else if (this.bMachineGun.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
-            this.randomGame.setSelectedTower(new MachineGun());         // Set the machinegun as the selected tower
+            switch (GameScenes.gameScenes) {                            // Depending on what game mode are we playing and what game scene are we on
+                case PLAY:
+                    this.randomGame.setSelectedTower(new MachineGun());         // Set the machinegun as the selected tower
+                    break;
+                case ENDLESS_WAVES:
+                    this.endlessWaves.setSelectedTower(new MachineGun());         // Set the machinegun as the selected tower
+                    break;
+            }
         }
         else if (this.bWall.getButtonBounds().contains(x, y)) {     // If it's clicked within the cannon tower button's boundaries
-            this.randomGame.setSelectedTower(new Wall());           // Set the wall as the selected tower
+            switch (GameScenes.gameScenes) {                            // Depending on what game mode are we playing and what game scene are we on
+                case PLAY:
+                    this.randomGame.setSelectedTower(new Wall());           // Set the wall as the selected tower
+                    break;
+                case ENDLESS_WAVES:
+                    this.endlessWaves.setSelectedTower(new Wall());           // Set the wall as the selected tower
+                    break;
+            }
         }
     }
 
@@ -237,6 +273,16 @@ public class GameActionBar extends Bar implements Playable {
     @Override
     public int getGold() {
         return 0;
+    }
+
+    @Override
+    public int getWave() {
+        return 0;
+    }
+
+    @Override
+    public void setBottomBar(Playable bottomBar) {
+        // Not required
     }
 
     /** Menu button getter **/

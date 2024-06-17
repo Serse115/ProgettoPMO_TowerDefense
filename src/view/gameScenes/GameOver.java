@@ -54,12 +54,18 @@ public class GameOver extends GameSceneBase implements Playable {
     @Override
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's clicked within the menu button's boundaries
-            GameScenes.setGameScene(MENU);                      // Set the game scene as the menu one
-            super.getMainFrame().getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
-            super.getMainFrame().getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
-            super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the game
-        }
+            if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
 
+                GameScenes.setGameScene(MENU);                                                           // Set the game scene back to the menu
+                super.getMainFrame().getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
+                super.getMainFrame().getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
+                super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the game
+
+                super.getMainFrame().getEndlessWaves().initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
+                super.getMainFrame().getEndlessWaves().initializeEnemies();                              // Reset the game set of enemies for the new endless waves game
+                super.getMainFrame().getEndlessWaves().resetTowers();                                    // Reset the towers in the game
+            }
+        }
     }
 
     @Override
@@ -102,5 +108,15 @@ public class GameOver extends GameSceneBase implements Playable {
     @Override
     public int getGold() {
         return 0;
+    }
+
+    @Override
+    public int getWave() {
+        return 0;
+    }
+
+    @Override
+    public void setBottomBar(Playable bottomBar) {
+
     }
 }

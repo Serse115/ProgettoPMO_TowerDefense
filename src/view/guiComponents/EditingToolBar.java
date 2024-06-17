@@ -193,4 +193,14 @@ public class EditingToolBar extends Bar implements Playable {
     public int getGold() {
         return 0;
     }
+
+    @Override
+    public int getWave() {
+        return 0;
+    }
+
+    @Override
+    public void setBottomBar(Playable bottomBar) {
+
+    }
 }
