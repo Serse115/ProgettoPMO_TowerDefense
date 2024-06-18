@@ -1,7 +1,5 @@
 package view.guiComponents;
 
-import java.awt.*;
-
 /**** Parent class for the bar to add to the game scenes ****/
 public class Bar {
 
@@ -26,22 +24,6 @@ public class Bar {
 
 
     /**** Methods ****/
-    /** Method to draw the bar's buttons feedback **/
-    public void drawButtonFeedback(Graphics g, MyButton b) {
-        if (b.isMouseOver()) {                                  // If the mouse is over the button
-            g.setColor(Color.WHITE);                            // Set the color to white
-        }
-        else {                                                  // Or else
-            g.setColor(Color.BLACK);                            // Set the color to black
-        }
-        g.drawRect(b.getX(), b.getY(), b.getWidth(), b.getHeight());    // Drawing the button's border
-
-        if (b.isMousePressed()) {                               // If the button is pressed
-            g.drawRect(b.getX() + 1, b.getY() + 1, b.getWidth() - 2, b.getHeight() - 2);        // Drawing the effect
-            g.drawRect(b.getX() + 2, b.getY() + 2, b.getWidth() - 4, b.getHeight() - 4);        // Drawing the effect
-        }
-    }
-
     /** X getter **/
     public int getX() {
         return this.x;

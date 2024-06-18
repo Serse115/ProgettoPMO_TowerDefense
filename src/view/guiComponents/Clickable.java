@@ -16,21 +16,6 @@ public interface Clickable {
     /** Reset the boolean variables **/
     void resetBooleans();
 
-    /** Text getter **/
-    String getText();
-
-    /** Text setter **/
-    void setText(String text);
-
-    /** Id getter **/
-    int getId();
-
-    /** Id setter **/
-    void setId(int id);
-
-    /** Mouse over getter **/
-    boolean isMouseOver();
-
     /** Mouse over setter **/
     void setMouseOver(boolean mouseOver);
 

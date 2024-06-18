@@ -1,12 +1,9 @@
 package view.gameScenes;
 
 import controller.GUIController;
-import controller.GameLoopController;
-import controller.ModelController;
 import model.enemy.*;
 import model.tower.Placeable;
 import model.tower.Tower;
-import view.guiComponents.GameActionBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
 import java.awt.*;
@@ -19,7 +16,7 @@ import java.util.Random;
 public class RandomGame extends GameSceneBase implements Playable {
 
     /**** Fields ****/
-    private Playable bottomBar;                // Action bar at the bottom of the screen
+    private Playable bottomBar;                     // Action bar at the bottom of the screen
     private GUIController guiController;            // GUI controller object for the random map generating and the tiles
     private Tile[][] mapArrayTile;                  // Array of tiles for the map
     private int numberOfRoads;                      // Number of roads on the map
@@ -76,13 +73,13 @@ public class RandomGame extends GameSceneBase implements Playable {
     /**** Methods ****/
     /** Render method **/
     public void render(Graphics g) {
-        this.drawLevel(g);
-        this.drawEnemies(g);
-        this.drawTowers(g);
-        if (this.bottomBar != null) {
-            this.bottomBar.render(g);
+        this.drawLevel(g);                  // Draw the level
+        this.drawEnemies(g);                // Draw the enemies
+        this.drawTowers(g);                 // Draw the towers
+        if (this.bottomBar != null) {       // If the bottomBar is not null
+            this.bottomBar.render(g);       // Draw it
         }
-        this.drawSelectedTileTower(g);
+        this.drawSelectedTileTower(g);      // Draw the preview of the chosen tower (if selected)
     }
 
     /** Update method **/
@@ -97,8 +94,7 @@ public class RandomGame extends GameSceneBase implements Playable {
                 this.walkingAnimationIndex++;                                       // Increase the walking animation index variable
                 this.attackingAnimationIndex++;                                     // Increase the attacking animation index variable
                 this.standingAnimationIndex++;                                      // Increase the standing animation index variable
-                this.shootingAnimationIndex++;
-
+                this.shootingAnimationIndex++;                                      // Increase the shooting animation index variable
                 this.timer = 0;                                                     // And reset the time variable
 
                 for (Fightable enemy : this.lvlEnemies) {                                    // For every enemy in the array of enemies
@@ -110,7 +106,7 @@ public class RandomGame extends GameSceneBase implements Playable {
                     }
                 }
 
-                for (Placeable tower : this.lvlTowers) {
+                for (Placeable tower : this.lvlTowers) {                                            // For every tower in the arrayList of towers
                     if (this.standingAnimationIndex >= tower.getStandingImages().length) {          // If the animation index is over the length of the standing images array
                         this.standingAnimationIndex = 0;                                            // Reset the animation index
                     }
@@ -122,27 +118,26 @@ public class RandomGame extends GameSceneBase implements Playable {
 
 
             Iterator<Fightable> iterator = this.lvlEnemies.iterator();              // Iterator for the list of enemies
-            while (iterator.hasNext()) {
-                Fightable enemy = iterator.next();
-                if (enemy.isAlive()) {
+            while (iterator.hasNext()) {                                            // While there are still items to check
+                Fightable enemy = iterator.next();                                  // Set the variable as the item to check the enemies
+                if (enemy.isAlive()) {                                              // If the enemy represented by the variable item is alive
                     enemy.enemyLogic();                                             // Start the enemy logic
-                } else {
+                } else {                                                            // Else
                     iterator.remove();                                              // Remove the enemy
                 }
             }
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 20; i++) {                                                                      // For every row and column of the array of tiles of the level
                 for (int j = 0; j < 23; j++) {
-                    if (this.mapArrayTile[i][j].isHasTower() && this.mapArrayTile[i][j].getTower() != null) {
-                        this.mapArrayTile[i][j].getTower().towerLogic(this.lvlEnemies);
+                    if (this.mapArrayTile[i][j].isHasTower() && this.mapArrayTile[i][j].getTower() != null) {   // If a tile has a tower and the tower is not null
+                        this.mapArrayTile[i][j].getTower().towerLogic(this.lvlEnemies);                         // Start the tower logic for that tower
                     }
                 }
             }
 
-            if (this.lvlEnemies.isEmpty()) {
-                GameScenes.setGameScene(GameScenes.GAME_WON);
+            if (this.lvlEnemies.isEmpty()) {                            // If the list of enemies is empty and there are no more enemies
+                GameScenes.setGameScene(GameScenes.GAME_WON);           // Set the game scene as the victory one
             }
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,10 +148,10 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Initialize the map tile method **/
     public void initializeMap() {
 
-        this.numberOfRoads = this.randomGenerator(1, 8, 0);                   // Generating the number of roads possible in the level
+        this.numberOfRoads = this.randomGenerator(1, 8, 0);               // Generating the number of roads possible in the level
         this.positionsOnTheArray = new int[numberOfRoads];                                          // Initializing the number of row positions for the roads on the map
         for (int z = 0; z < numberOfRoads; z++) {                                                   // For every position of the road in the array
-            positionsOnTheArray[z] = this.randomGenerator(1, 20, 0);          // Choose the rows where the roads will be located through the random method
+            positionsOnTheArray[z] = this.randomGenerator(1, 20, 0);      // Choose the rows where the roads will be located through the random method
         }
         for (int j = 0; j < 20; j++) {                                                                  // For every row
             for (int i = 0; i < 23; i++) {                                                              // And column of the array of int
@@ -168,7 +163,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         for (int h = 0; h < numberOfRoads; h++) {                                                   // For every row that corresponds to the one that should be a road
             for (int k = 0; k < 23; k++) {                                                          // Turn every column of that own row
                 this.mapArrayTile[positionsOnTheArray[h]][k].setTileType(2);                        // Into a road
-                this.mapArrayTile[positionsOnTheArray[h]][k].setSprite(this.guiController.getTileTypeReturnImage(2));   // Setting the sprite
+                this.mapArrayTile[positionsOnTheArray[h]][k].setSprite(this.guiController.getTileTypeReturnImage(2));   // Setting the sprite into a road
             }
         }
     }
@@ -179,20 +174,20 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
 
         for (int i = 0; i <= this.nOfEnemies; i++) {                                       // For every enemy
-            int enemyType = this.randomGenerator(0, 3, 1);           // Generate a value representing the type of enemy that will appear in the game
+            int enemyType = this.randomGenerator(0, 3, 1);       // Generate a value representing the type of enemy that will appear in the game
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length, 0);   // Generate the index for the roads for the enemies to appear on
 
-            if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper
-                this.lvlEnemies.add(new Reaper(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));   // And its sprite animations
+            if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper and its sprite animations
+                this.lvlEnemies.add(new Reaper(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));
             }
-            else if (enemyType == 1) {                                                       // If the generated type number is 1, add a skeleton
-                this.lvlEnemies.add(new Skeleton(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), (this.positionsOnTheArray[indexRoad] * 32) - 5));  // And its sprite animations
+            else if (enemyType == 1) {                                                       // If the generated type number is 1, add a skeleton and its sprite animations
+                this.lvlEnemies.add(new Skeleton(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), (this.positionsOnTheArray[indexRoad] * 32) - 5));
             }
-            else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie
-                this.lvlEnemies.add(new Zombie(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 30));     // And its sprite animations
+            else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie and its sprite animations
+                this.lvlEnemies.add(new Zombie(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 30));
             }
-            else {
-                this.lvlEnemies.add(new Reaper(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));   // And its sprite animations
+            else {                                                                            // Else as default add a reaper and its sprite animations
+                this.lvlEnemies.add(new Reaper(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));
             }
         }
 
@@ -201,14 +196,14 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.attackingAnimationIndex = 0;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
-        this.gold = (this.lvlEnemies.size() * 50);
+        this.gold = (this.lvlEnemies.size() * 50);          // Reset the gold resources
     }
 
     /** Drawing the level method **/
     private void drawLevel(Graphics g) {
 
-        for (int i = 0; i < 20; i++) {                                                                                                             // For every row
-            for (int j = 0; j < 23; j++) {                                                                                                         // And column
+        for (int i = 0; i < 20; i++) {                                                                // For every row
+            for (int j = 0; j < 23; j++) {                                                            // And column
                 g.drawImage(this.mapArrayTile[i][j].getSprite(), 32 * j, (32 * i), null);  // Draw the right tile image
             }
         }
@@ -216,10 +211,10 @@ public class RandomGame extends GameSceneBase implements Playable {
 
     /** Drawing the enemies method **/
     private void drawEnemies(Graphics g) {
-        for (Fightable e : this.lvlEnemies) {
-            if (e.isWalking() && e.isAlive() ) {
+        for (Fightable e : this.lvlEnemies) {                   // For every enemy in the list of enemies
+            if (e.isWalking() && e.isAlive() ) {                // If the enemy is walking and alive, draw it walking
                 g.drawImage(e.getWalkingImages()[this.walkingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
-            } else if (e.isAttacking() && e.isAlive()) {
+            } else if (e.isAttacking() && e.isAlive()) {        // Else draw it attacking
                 g.drawImage(e.getAttackingImages()[this.attackingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
             }
         }
@@ -228,22 +223,22 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Draw the towers method **/
     private void drawTowers(Graphics g) {
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {                      // For every row and column of the array of tiles of the lvl
             for (int j = 0; j < 23; j++) {
 
-                if (this.mapArrayTile[i][j].isHasTower()) {
-                    if (this.mapArrayTile[i][j].getTower().isStanding()) {
-                        BufferedImage[] standingImages = this.mapArrayTile[i][j].getTower().getStandingImages();
-                        if (standingImages != null && standingImages.length > 0) {
-                            int index = Math.min(this.standingAnimationIndex, standingImages.length - 1);
-                            g.drawImage(standingImages[index], 32 * j, 32 * i, 32, 32, null);
+                if (this.mapArrayTile[i][j].isHasTower()) {                                                             // If a tile has a tower
+                    if (this.mapArrayTile[i][j].getTower().isStanding()) {                                              // And the tower is in the standing phase
+                        BufferedImage[] standingImages = this.mapArrayTile[i][j].getTower().getStandingImages();        // Get the standing images
+                        if (standingImages != null && standingImages.length > 0) {                                      // If the standing images are not null and more than 0
+                            int index = Math.min(this.standingAnimationIndex, standingImages.length - 1);               // Get the index for the animations
+                            g.drawImage(standingImages[index], 32 * j, 32 * i, 32, 32, null);  // Draw the animation images
                         }
                     }
-                    else if (this.mapArrayTile[i][j].getTower().isShooting()) {
-                        BufferedImage[] shootingImages = this.mapArrayTile[i][j].getTower().getShootingImages();
-                        if (shootingImages != null && shootingImages.length > 0) {
-                            int index = Math.min(this.shootingAnimationIndex, shootingImages.length - 1);
-                            g.drawImage(shootingImages[index], 32 * j, 32 * i, 32, 32, null);
+                    else if (this.mapArrayTile[i][j].getTower().isShooting()) {                                         // Else if it's in the shooting phase
+                        BufferedImage[] shootingImages = this.mapArrayTile[i][j].getTower().getShootingImages();        // Get the shooting images
+                        if (shootingImages != null && shootingImages.length > 0) {                                      // If the shooting images are not null and more than 0
+                            int index = Math.min(this.shootingAnimationIndex, shootingImages.length - 1);               // Get the index for the animations
+                            g.drawImage(shootingImages[index], 32 * j, 32 * i, 32, 32, null);  // Draw the animation images
                         }
                     }
                 }
@@ -268,11 +263,10 @@ public class RandomGame extends GameSceneBase implements Playable {
             if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
                 selectedTile.setHasTower(true);                                         // Set the tile as having a tower
                 this.towerToAdd.setyPosition(y);                                        // Set the y coordinate for the tower's reference
-                this.towerToAdd.setxPosition(x);                                        // Set the x coordinate for the tower's reference
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
                 this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
-                this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);
-                this.gold -= this.towerToAdd.getCost();
+                this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);             // Set the tower's y coordinate
+                this.gold -= this.towerToAdd.getCost();                                 // Subtract the tower's cost from the resources
 
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
                 this.towerToAdd = null;                                                 // Reset the selected tower variable to false
@@ -290,13 +284,13 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Random method to select the number of roads and other tiles and also for the enemies **/
     private int randomGenerator(int lowerBound, int upperBound, int index) {
 
-        switch (index) {
-            case 0:
+        switch (index) {                                                 // Depending on the index requestd
+            case 0:                                                      // Index 0
                 return this.random.nextInt(lowerBound, upperBound);      // Returning the generated value
-            case 1:
+            case 1:                                                      // Index 1
                 return this.random.nextInt(upperBound - lowerBound + 1) + lowerBound;  // Ensuring the range includes both bounds (for the enemies generation)
-            default:
-                return 0;
+            default:                                                     // Default index
+                return 0;                                                // Return a 0
         }
     }
 
@@ -311,8 +305,8 @@ public class RandomGame extends GameSceneBase implements Playable {
         if (y >= 640) {                             // If the mouse click is located inside the bottom game action bar bounds
             this.bottomBar.mouseClicked(x, y);      // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
         }
-        else {
-            this.addTowerToTile(x, y);
+        else {                                      // Else
+            this.addTowerToTile(x, y);              // Add the chosen tower to the tile through the coordinates
         }
     }
 
@@ -347,17 +341,18 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
 
-        // Do nothing for now
+        // Not required
     }
 
+    /** Reset towers method **/
     public void resetTowers() {
 
-        for (int i = 0; i < 20; i ++) {
+        for (int i = 0; i < 20; i ++) {                     // For every tile of the array of tiles of the lvl
             for (int j = 0; j < 23; j++) {
-                this.mapArrayTile[i][j].resetTower();
+                this.mapArrayTile[i][j].resetTower();       // Reset every tile's tower
             }
         }
-        this.lvlTowers.clear();
+        this.lvlTowers.clear();                                     // Clear the towers arrayList
 
         // Reset animation fields when initializing new towers
         this.standingAnimationIndex = 0;
@@ -366,16 +361,20 @@ public class RandomGame extends GameSceneBase implements Playable {
         this.timer = 0;
     }
 
+    /** BottomBar setter **/
+    public void setBottomBar(Playable bottomBar) {
+        this.bottomBar = bottomBar;
+    }
+
+
+    /** Not required methods (got from the interface) **/
+    /** Gold getter (not required) **/
     public int getGold() {
         return this.gold;
     }
 
-    @Override
+    /** Wave getter (not required) **/
     public int getWave() {
         return 0;
-    }
-
-    public void setBottomBar(Playable bottomBar) {
-        this.bottomBar = bottomBar;
     }
 }

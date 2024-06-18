@@ -1,6 +1,5 @@
 package model.tower;
 
-import view.gameScenes.RandomGame;
 import view.imageUtilities.SpriteUtilities;
 
 /***** Subclass of the parent class Tower *****/
@@ -17,7 +16,7 @@ public class MachineGun extends Tower implements Placeable {
     /**** Constructors ****/
     /** Using the superclass constructor **/
     public MachineGun() {
-        super(1500, 0.8f, 1, 0, 0, 43, 2, 50);
+        super(1500, 1, 0, 0, 43, 2, 50);
         super.setStandingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.machineGunStandingPath), 4, 72, 46));
         super.setFiringImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.machineGunShootingPath), 4, 83, 43));
     }

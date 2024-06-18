@@ -7,7 +7,7 @@ import java.awt.*;
 public class Render {
 
     /**** Fields ****/
-    private MainFrame mainFrame;
+    private MainFrame mainFrame;                    // Object reference to the mainframe
 
 
 
@@ -25,25 +25,26 @@ public class Render {
     public void render(Graphics g) {
 
         switch (GameScenes.gameScenes) {                    // According to what game scene is needed
-            case MENU:
+            case MENU:                                      // Case menu
                 this.mainFrame.getMenu().render(g);         // Render and paint the components of the menu page
                 break;
-            case PLAY:
-                this.mainFrame.getRandomGame().render(g);         // Render and paint the components of the play page
+            case PLAY:                                      // Case play
+                this.mainFrame.getRandomGame().render(g);   // Render and paint the components of the play page
                 break;
-            case EDIT_MAP:
+            case EDIT_MAP:                                  // Case edit map
                 this.mainFrame.getEdit().render(g);         // Render and paint the components of the edit page
                 break;
-            case SAVED_GAME:
+            case SAVED_MAPS:                                // Case saved maps
+                this.mainFrame.getSavedMaps().render(g);    // Render and paint the components of the edit page
                 break;
-            case ENDLESS_WAVES:
+            case ENDLESS_WAVES:                             // Case endless waves
                 this.mainFrame.getEndlessWaves().render(g); // Render and paint the components of the endless waves page
                 break;
-            case GAME_OVER:
+            case GAME_OVER:                                 // Case game over
                 this.mainFrame.getGameOver().render(g);     // Render and paint the components of the game over page
                 break;
-            case GAME_WON:
-                this.mainFrame.getGameWon().render(g);     // Render and paint the components of the game won page
+            case GAME_WON:                                  // Case game won
+                this.mainFrame.getGameWon().render(g);      // Render and paint the components of the game won page
                 break;
         }
     }

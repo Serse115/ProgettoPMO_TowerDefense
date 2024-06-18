@@ -7,8 +7,7 @@ import java.awt.image.BufferedImage;
 public class Tile {
 
     /**** Fields ****/
-    private BufferedImage sprite;           // Sprite that forms the tile
-    private int id;                            // Tile id
+    private BufferedImage sprite;              // Sprite that forms the tile
     private int tileType;                      // Type of the tile
     private boolean hasTower;                  // Has tower variable to define if the tile already has a tower located in it
     private Placeable tower;                   // Object reference to the tower in the tile
@@ -17,18 +16,16 @@ public class Tile {
 
     /**** Constructors ****/
     /** Main constructor for the static sprites (land/road) **/
-    public Tile(BufferedImage sprite, int id, int tileType) {
+    public Tile(BufferedImage sprite, int tileType) {
         this.sprite = sprite;
-        this.id = id;
         this.tileType = tileType;
         this.hasTower = false;
         this.tower = null;
     }
 
-    /** Secondary default constructor **/
+    /** Secondary default constructor for later initialization through the setter **/
     public Tile() {
         this.sprite = null;
-        this.id = 0;
         this.tileType = 0;
         this.hasTower = false;
         this.tower = null;
@@ -36,8 +33,9 @@ public class Tile {
 
 
 
+
     /**** Methods ****/
-    /** Single sprite getter **/
+    /** Sprite getter **/
     public BufferedImage getSprite() {
         return this.sprite;
     }
@@ -45,11 +43,6 @@ public class Tile {
     /** Set sprite method **/
     public void setSprite(BufferedImage img) {
         this.sprite = img;
-    }
-
-    /** Id getter **/
-    public int getId() {
-        return this.id;
     }
 
     /** Tile type getter **/
@@ -62,12 +55,12 @@ public class Tile {
         this.tileType = tileType;
     }
 
-    /** Has tower getter **/
+    /** Has tower variable check getter **/
     public boolean isHasTower() {
         return this.hasTower;
     }
 
-    /** Has tower setter **/
+    /** Has tower variable check setter **/
     public void setHasTower(boolean hasTower) {
         this.hasTower = hasTower;
     }
@@ -82,31 +75,30 @@ public class Tile {
         this.tower = null;
         this.hasTower = false;
     }
-    /** Tower setter **/
+    /** Add tower method **/
     public void addTower(Placeable newTower) {
 
-
-        switch (newTower.getTowerType()) {
-            case 0:
-                this.tower = new Turret();
+        switch (newTower.getTowerType()) {          // Depending on the tower type of the chosen tower to place
+            case 0:                                 // Tower type 0
+                this.tower = new Turret();          // Place a turret
                 break;
-            case 1:
-                this.tower = new Cannon();
+            case 1:                                 // Tower type 1
+                this.tower = new Cannon();          // Place a cannon
                 break;
-            case 2:
-                this.tower = new MachineGun();
+            case 2:                                 // Tower type 2
+                this.tower = new MachineGun();      // Place a machinegun
                 break;
-            case 3:
-                this.tower = new Wall();
+            case 3:                                 // Tower type 3
+                this.tower = new Wall();            // Place a wall
                 break;
         }
     }
 
     /** Check the tower life points **/
     public void checkTowerLife() {
-        if (this.tower.getLifePoints() < 0) {
-            this.hasTower = false;
-            this.tower = null;
+        if (this.tower.getLifePoints() < 0) {           // If the tower's life points are below 0
+            this.hasTower = false;                      // Set the tower presence variable check as false
+            this.tower = null;                          // Set the tower in the tile as null
         }
     }
 }

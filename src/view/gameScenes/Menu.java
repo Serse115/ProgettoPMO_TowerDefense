@@ -1,7 +1,5 @@
 package view.gameScenes;
 
-import controller.GameLoopController;
-import controller.ModelController;
 import model.tower.Tower;
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
@@ -22,7 +20,7 @@ public class Menu extends GameSceneBase implements Playable {
 
 
     /**** Constructors ****/
-    /** Main constructor to create the temporary menu to give time to the other components to be generated **/
+    /** Main constructor **/
     public Menu(MainFrame mainFrame) {
         super(mainFrame);
         this.bPlay = new MyButton("Random Map", 300, 150, 150, 50);
@@ -45,21 +43,6 @@ public class Menu extends GameSceneBase implements Playable {
         this.bQuit.draw(g);             // Draw the quit button
     }
 
-    @Override
-    public void update() {
-
-    }
-
-    /** Initialize map method **/
-    public void initializeMap() {
-        // Not required, handled in the randomGame class and the endlessWaves class
-    }
-
-    /** Initialize enemies method **/
-    public void initializeEnemies() {
-        // Not required, handled in the randomGame class and the endlessWaves class
-    }
-
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
         if (this.bPlay.getButtonBounds().contains(x, y)) {      // If it's clicked within the play button's boundaries
@@ -69,7 +52,7 @@ public class Menu extends GameSceneBase implements Playable {
             GameScenes.setGameScene(EDIT_MAP);                      // Set the game scene as the map edit one
         }
         else if (this.bSavedGame.getButtonBounds().contains(x, y)) {  // If it's clicked within the saved games button
-            GameScenes.setGameScene(SAVED_GAME);                      // Set the game scene as the saved games one
+            GameScenes.setGameScene(SAVED_MAPS);                      // Set the game scene as the saved games one
         }
         else if (this.bEndlessWaves.getButtonBounds().contains(x, y)) {  // If it's clicked within the endless waves button
             GameScenes.setGameScene(ENDLESS_WAVES);                      // Set the game scene as the endless waves one
@@ -81,11 +64,11 @@ public class Menu extends GameSceneBase implements Playable {
 
     /** Mouse moved method **/
     public void mouseMoved(int x, int y) {
-        this.bPlay.setMouseOver(false);         // Set the mouse over for the play button as false
-        this.bEditMap.setMouseOver(false);      // Set the mouse over for the edit map button as false
-        this.bSavedGame.setMouseOver(false);    // Set the mouse over for the saved games button as false
-        this.bEndlessWaves.setMouseOver(false); // Set the mouse over for the endless waves button as false
-        this.bQuit.setMouseOver(false);         // Set the mouse over for the quit button as false
+        this.bPlay.setMouseOver(false);             // Set the mouse over for the play button as false
+        this.bEditMap.setMouseOver(false);          // Set the mouse over for the edit map button as false
+        this.bSavedGame.setMouseOver(false);        // Set the mouse over for the saved games button as false
+        this.bEndlessWaves.setMouseOver(false);     // Set the mouse over for the endless waves button as false
+        this.bQuit.setMouseOver(false);             // Set the mouse over for the quit button as false
 
         if (this.bPlay.getButtonBounds().contains(x, y)) {  // If it's moved over within the play button
             this.bPlay.setMouseOver(true);                  // Set the mouse over as true to trigger the visive effect
@@ -125,11 +108,11 @@ public class Menu extends GameSceneBase implements Playable {
 
     /** Mouse released method **/
     public void mouseReleased(int x, int y) {
-        this.bPlay.resetBooleans();
-        this.bEditMap.resetBooleans();
-        this.bSavedGame.resetBooleans();
-        this.bEndlessWaves.resetBooleans();
-        this.bQuit.resetBooleans();
+        this.bPlay.resetBooleans();             // Reset the booleans for the button
+        this.bEditMap.resetBooleans();          // Reset the booleans for the button
+        this.bSavedGame.resetBooleans();        // Reset the booleans for the button
+        this.bEndlessWaves.resetBooleans();     // Reset the booleans for the button
+        this.bQuit.resetBooleans();             // Reset the booleans for the button
     }
 
     /** Mouse dragged method **/
@@ -137,28 +120,44 @@ public class Menu extends GameSceneBase implements Playable {
         // Not necessary
     }
 
-    @Override
+    /** Not required methods (got from the interface) **/
+    /** Selected tower setter (not required) **/
     public void setSelectedTower(Tower tower) {
-
+        // Not required
     }
 
-    @Override
+    /** Initialize map method (not required) **/
+    public void initializeMap() {
+        // Not required
+    }
+
+    /** Initialize enemies method (not required) **/
+    public void initializeEnemies() {
+        // Not required
+    }
+
+    /** Update method (not required) **/
+    public void update() {
+        // Not required
+    }
+
+    /** Reset towers method (not required) **/
     public void resetTowers() {
-
+        // Not required
     }
 
-    @Override
+    /** Gold getter (not required) **/
     public int getGold() {
         return 0;
     }
 
-    @Override
+    /** Wave getter (not required) **/
     public int getWave() {
         return 0;
     }
 
-    @Override
+    /** BottomBar setter (not required) **/
     public void setBottomBar(Playable bottomBar) {
-
+        // Not required
     }
 }

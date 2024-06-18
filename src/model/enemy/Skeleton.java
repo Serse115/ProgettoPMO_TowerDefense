@@ -17,8 +17,8 @@ public class Skeleton extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Skeleton(int enIndex, Tile[] tiles, int y) {
-        super(1750, 0.15f, 3, enIndex, 13, 18, 15, tiles, 0, y, 43, 37);
+    public Skeleton(Tile[] tiles, int y) {
+        super(1750, 0.15f, 3, 13, 18, tiles, 0, y, 43, 37);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.skeletonWalkingPath), 13, 22, 33));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.skeletonAttackingPath), 18, 43, 37));
     }
@@ -26,16 +26,7 @@ public class Skeleton extends Enemy implements Fightable {
 
 
     /**** Methods ****/
-    /** Move method **/
-    public void move() {
-        super.move();
-    }
-
-    /** Hit method **/
-    public void hit(Tile t) {
-        super.hit(t);
-    }
-
+    // Most methods except for the overrides are inherited from parentclass
     /** Get line of fire method override **/
     public int getLineOfFire() {
         return (super.getyPosition() + 22);

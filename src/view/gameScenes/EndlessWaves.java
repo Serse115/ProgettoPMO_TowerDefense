@@ -20,13 +20,13 @@ import java.util.Random;
 public class EndlessWaves extends GameSceneBase implements Playable {
 
     /**** Fields ****/
-    private Playable bottomBar;                    // Game action bar at the bottom of the screen
+    private Playable bottomBar;                         // Game action bar at the bottom of the screen
     private GUIController guiController;                // GUI controller object for the map generating and tiles
     private int[][] mapArrayInt;                        // Array of ints for the map initialization
     private Tile[][] mapArrayTile;                      // Array of tiles for the map
     private int[] positionsOnTheArray;                  // Array positions for the roads
-    private ArrayList <Fightable> lvlEnemies;            // ArrayList of enemies in the level
-    private ArrayList <Placeable> lvlTowers;        // ArrayLiat of the towers in the level
+    private ArrayList <Fightable> lvlEnemies;           // ArrayList of enemies in the level
+    private ArrayList <Placeable> lvlTowers;            // ArrayList of the towers in the level
     private int nOfeEnemiesPerWave;                     // Number of enemies per every wave
     private int walkingAnimationIndex;                  // Animation index int for the walking animation frames
     private int attackingAnimationIndex;                // Animation index int for the attacking animation frames
@@ -56,7 +56,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
         this.mapArrayTile = new Tile[20][23];
         this.nOfeEnemiesPerWave = 5;
         this.lvlTowers = new ArrayList<>();
-        this.lvlEnemies = new ArrayList<>();                                          // Initializing the list of enemies with the number of enemies generated prior
+        this.lvlEnemies = new ArrayList<>();
         this.initializeMap();
         this.initializeEnemies();
         this.walkingAnimationIndex = 0;
@@ -66,7 +66,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
         this.animationSpeed = 125;
         this.lastTime = System.currentTimeMillis();
         this.timer = 0;
-        this.gold = 1500;
+        this.gold = 1300;
         this.towerToAdd = null;
         this.towerToDraw = false;
         this.xMouseCoord = 0;
@@ -81,14 +81,13 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     /**** Methods ****/
     /** Render method **/
     public void render(Graphics g) {
-        this.drawLevel(g);
-        this.drawEnemies(g);
-        this.drawTowers(g);
-        if (this.bottomBar != null) {
-            this.bottomBar.render(g);
+        this.drawLevel(g);                  // Draw the level
+        this.drawEnemies(g);                // Draw the enemies
+        this.drawTowers(g);                 // Draw the towers
+        if (this.bottomBar != null) {       // If the bottomBar is not null and it's initialized
+            this.bottomBar.render(g);       // Draw it
         }
-        this.drawSelectedTileTower(g);
-
+        this.drawSelectedTileTower(g);      // Draw the preview of the chosen tower (if chosen)
     }
 
     /** Update method **/
@@ -103,20 +102,19 @@ public class EndlessWaves extends GameSceneBase implements Playable {
                 this.walkingAnimationIndex++;                                       // Increase the walking animation index variable
                 this.attackingAnimationIndex++;                                     // Increase the attacking animation index variable
                 this.standingAnimationIndex++;                                      // Increase the standing animation index variable
-                this.shootingAnimationIndex++;
-
+                this.shootingAnimationIndex++;                                      // Increase the shooting animation index variable
                 this.timer = 0;                                                     // And reset the time variable
 
                 for (Fightable enemy : this.lvlEnemies) {                                    // For every enemy in the array of enemies
                     if (this.walkingAnimationIndex >= enemy.getWalkingImages().length) {     // If the animation index is over the length of the walking images array
-                        this.walkingAnimationIndex = 0;                                             // Reset the animation index
+                        this.walkingAnimationIndex = 0;                                      // Reset the animation index
                     }
                     if (this.attackingAnimationIndex >= enemy.getAttackingImages().length) {        // If the animation index is over the length of the attacking images array
                         this.attackingAnimationIndex = 0;                                           // Reset the animation index
                     }
                 }
 
-                for (Placeable tower : this.lvlTowers) {
+                for (Placeable tower : this.lvlTowers) {                                            // For every tower in the array of towers
                     if (this.standingAnimationIndex >= tower.getStandingImages().length) {          // If the animation index is over the length of the standing images array
                         this.standingAnimationIndex = 0;                                            // Reset the animation index
                     }
@@ -128,31 +126,28 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
 
             Iterator<Fightable> iterator = this.lvlEnemies.iterator();              // Iterator for the list of enemies
-            while (iterator.hasNext()) {
-                Fightable enemy = iterator.next();
-                if (enemy.isAlive()) {
+            while (iterator.hasNext()) {                                            // While there are still more enemies to check
+                Fightable enemy = iterator.next();                                  // Assign the next enemy to the variable used to check the items
+                if (enemy.isAlive()) {                                              // If the enemy item is still alive
                     enemy.enemyLogic();                                             // Start the enemy logic
-                } else {
+                } else {                                                            // Or else
                     iterator.remove();                                              // Remove the enemy
                 }
             }
 
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 20; i++) {                                                                      // For every row and column of the array of tiles of the lvl
                 for (int j = 0; j < 23; j++) {
-                    if (this.mapArrayTile[i][j].isHasTower() && this.mapArrayTile[i][j].getTower() != null) {
-                        this.mapArrayTile[i][j].getTower().towerLogic(this.lvlEnemies);
+                    if (this.mapArrayTile[i][j].isHasTower() && this.mapArrayTile[i][j].getTower() != null) {   // If the tile has a tower and the tower is not null
+                        this.mapArrayTile[i][j].getTower().towerLogic(this.lvlEnemies);                         // Start the tower logic passing it the list of enemies
                     }
                 }
             }
 
-            if (this.lvlEnemies.isEmpty()) {
-                this.waveCounter++;
-                this.gold += 250;
-                this.initializeEnemies();
-
+            if (this.lvlEnemies.isEmpty()) {                                          // If the list of enemies of the lvl is empty
+                this.waveCounter++;                                                   // Upgrade the wave counter
+                this.gold += 250;                                                     // Add 250 gold as a reward for the survived wave
+                this.initializeEnemies();                                             // Initialize the enemies for the next wave
             }
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -161,15 +156,15 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     /** Initialize the map method **/
     public void initializeMap() {
 
-        this.mapArrayInt = LevelUtilities.getLvlData("resources/levels/EndlessWavesMap.txt");     // Initialize the map array tiles layout with the data from the chosen txt file
-        this.positionsOnTheArray = new int[]{2, 5, 8, 11, 14, 17};          // Positions on the tiles array where roads are
+        this.mapArrayInt = LevelUtilities.getLvlData("resources/levels/EndlessWavesMap.txt");  // Initialize the map array tiles layout with the data from the chosen txt file
+        this.positionsOnTheArray = new int[]{2, 5, 8, 11, 14, 17};                                   // Positions on the tiles array where roads are
 
         try {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 20; i++) {                                                // For every row and column of the array of tiles of the lvl
                 for (int j = 0; j < 23; j++) {
-                    this.mapArrayTile[i][j] = new Tile();
-                    this.mapArrayTile[i][j].setTileType(this.mapArrayInt[i][j]);
-                    this.mapArrayTile[i][j].setSprite(this.guiController.getTileTypeReturnImage(this.mapArrayTile[i][j].getTileType()));
+                    this.mapArrayTile[i][j] = new Tile();                                 // Initialize every tile by default
+                    this.mapArrayTile[i][j].setTileType(this.mapArrayInt[i][j]);          // Initialize then the tile types through the setter and the values of the array of ints
+                    this.mapArrayTile[i][j].setSprite(this.guiController.getTileTypeReturnImage(this.mapArrayTile[i][j].getTileType()));  // Set the tile sprites through the types
                 }
             }
         }
@@ -181,24 +176,24 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     /** Initialize enemies method **/
     public void initializeEnemies() {
 
-        this.nOfeEnemiesPerWave += (this.waveCounter + this.randomGenerator(5, 15));
-        this.lvlEnemies = new ArrayList<>();
+        this.nOfeEnemiesPerWave += 5;                                                   // Adding enemies to the number of enemies per wave
+        this.lvlEnemies = new ArrayList<>();                                            // Initializing the arrayList of enemies
 
-        for (int i = 0; i < this.nOfeEnemiesPerWave; i++) {                                       // For every enemy
+        for (int i = 0; i < this.nOfeEnemiesPerWave; i++) {                           // For every enemy
             int enemyType = this.randomGenerator(0, 3);           // Generate a value representing the type of enemy that will appear in the game
             int indexRoad = this.randomGenerator(0, this.positionsOnTheArray.length);   // Generate the index for the roads for the enemies to appear on
 
-            if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper
-                this.lvlEnemies.add(new Reaper(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));   // And its sprite animations
+            if (enemyType == 0) {                                                       // If the generated type number is 0, add a reaper and its sprite animations
+                this.lvlEnemies.add(new Reaper(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));
             }
-            else if (enemyType == 1) {                                                       // If the generated type number is 1, add a skeleton
-                this.lvlEnemies.add(new Skeleton(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), (this.positionsOnTheArray[indexRoad] * 32) - 5));  // And its sprite animations
+            else if (enemyType == 1) {                                                       // If the generated type number is 1, add a skeleton and its sprite animations
+                this.lvlEnemies.add(new Skeleton(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]), (this.positionsOnTheArray[indexRoad] * 32) - 5));
             }
-            else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie
-                this.lvlEnemies.add(new Zombie(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 30));     // And its sprite animations
+            else if (enemyType == 2) {                                                       // If the generated type number is 2, add a zombie and its sprite animations
+                this.lvlEnemies.add(new Zombie(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 30));
             }
-            else {
-                this.lvlEnemies.add(new Reaper(i, this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));   // And its sprite animations
+            else {                                                                          // Else by default add a reaper and its sprite animations
+                this.lvlEnemies.add(new Reaper(this.getRoadArrayLine(this.positionsOnTheArray[indexRoad]),(this.positionsOnTheArray[indexRoad] * 32) - 10));
             }
         }
 
@@ -214,17 +209,17 @@ public class EndlessWaves extends GameSceneBase implements Playable {
 
         for (int i = 0; i < 20; i++) {                                                                             // For every row
             for (int j = 0; j < 23; j++) {                                                                         // And column
-                g.drawImage(this.mapArrayTile[i][j].getSprite(), 32 * j, (32 * i), null);               // Draw the right tile image
+                g.drawImage(this.mapArrayTile[i][j].getSprite(), 32 * j, (32 * i), null);               // Draw the tile image sprite
             }
         }
     }
 
     /** Drawing the enemies method **/
     private void drawEnemies(Graphics g) {
-        for (Fightable e : this.lvlEnemies) {
-            if (e.isWalking() && e.isAlive() ) {
+        for (Fightable e : this.lvlEnemies) {                                   // For every enemy in the list of enemies
+            if (e.isWalking() && e.isAlive() ) {                                // If it's alive and in the walking status, draw it walking
                 g.drawImage(e.getWalkingImages()[this.walkingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(),null);
-            } else if (e.isAttacking() && e.isAlive()) {
+            } else if (e.isAttacking() && e.isAlive()) {                        // Else draw it attacking
                 g.drawImage(e.getAttackingImages()[this.attackingAnimationIndex], (int) e.getxPosition() - e.getRectangleWidth(), e.getyPosition(), null);
             }
         }
@@ -233,22 +228,22 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     /** Draw the towers method **/
     private void drawTowers(Graphics g) {
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {                                          // For every row and column of the array of tiles of the lvl
             for (int j = 0; j < 23; j++) {
 
-                if (this.mapArrayTile[i][j].isHasTower()) {
-                    if (this.mapArrayTile[i][j].getTower().isStanding()) {
-                        BufferedImage[] standingImages = this.mapArrayTile[i][j].getTower().getStandingImages();
-                        if (standingImages != null && standingImages.length > 0) {
-                            int index = Math.min(this.standingAnimationIndex, standingImages.length - 1);
-                            g.drawImage(standingImages[index], 32 * j, 32 * i, 32, 32, null);
+                if (this.mapArrayTile[i][j].isHasTower()) {                                                             // If a tile has a tower
+                    if (this.mapArrayTile[i][j].getTower().isStanding()) {                                              // And if the tower is in the standing phase
+                        BufferedImage[] standingImages = this.mapArrayTile[i][j].getTower().getStandingImages();        // Get the standing images
+                        if (standingImages != null && standingImages.length > 0) {                                      // If the standing images are not null and more than 0
+                            int index = Math.min(this.standingAnimationIndex, standingImages.length - 1);               // Select an index for the animations
+                            g.drawImage(standingImages[index], 32 * j, 32 * i, 32, 32, null);  // Draw the animation images
                         }
                     }
-                    else if (this.mapArrayTile[i][j].getTower().isShooting()) {
-                        BufferedImage[] shootingImages = this.mapArrayTile[i][j].getTower().getShootingImages();
-                        if (shootingImages != null && shootingImages.length > 0) {
-                            int index = Math.min(this.shootingAnimationIndex, shootingImages.length - 1);
-                            g.drawImage(shootingImages[index], 32 * j, 32 * i, 32, 32, null);
+                    else if (this.mapArrayTile[i][j].getTower().isShooting()) {                                         // Else if it's in shooting phase
+                        BufferedImage[] shootingImages = this.mapArrayTile[i][j].getTower().getShootingImages();        // Get the shooting images
+                        if (shootingImages != null && shootingImages.length > 0) {                                      // If the shooting images are not null and more than 0
+                            int index = Math.min(this.shootingAnimationIndex, shootingImages.length - 1);               // Select an index for the animations
+                            g.drawImage(shootingImages[index], 32 * j, 32 * i, 32, 32, null);  // // Draw the animation images
                         }
                     }
                 }
@@ -269,15 +264,14 @@ public class EndlessWaves extends GameSceneBase implements Playable {
             int tileX = x / 32;                                 // X position of the tile to change
             int tileY = y / 32;                                 // Y position of the tile to change
 
-            Tile selectedTile = this.mapArrayTile[tileY][tileX];        // Selected tile to change
+            Tile selectedTile = this.mapArrayTile[tileY][tileX];                        // Selected tile to change
             if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
                 selectedTile.setHasTower(true);                                         // Set the tile as having a tower
                 this.towerToAdd.setyPosition(y);                                        // Set the y coordinate for the tower's reference
-                this.towerToAdd.setxPosition(x);                                        // Set the x coordinate for the tower's reference
                 selectedTile.addTower(this.towerToAdd);                                 // Set the tower on the tile
                 this.lvlTowers.add(this.towerToAdd);                                    // Adding the tower to the arrayList of towers of the game
-                this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);
-                this.gold -= this.towerToAdd.getCost();
+                this.mapArrayTile[tileY][tileX].getTower().setyPosition(y);             // Set the position y of the tower in the chosen tile of the array of tiles
+                this.gold -= this.towerToAdd.getCost();                                 // Subtract the cost of the tower from the resources
 
                 this.towerToDraw = false;                                               // Reset the tower drawing variable to false
                 this.towerToAdd = null;                                                 // Reset the selected tower variable to false
@@ -301,8 +295,31 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     private int randomGenerator(int lowerBound, int upperBound) {
 
         Random random = new Random();                       // Creating the random object
-
         return random.nextInt(lowerBound, upperBound);      // Returning the generated value
+    }
+
+    /** Reset the towers method **/
+    public void resetTowers() {
+
+        for (int i = 0; i < 20; i ++) {                     // For every row and column of the array of tiles of the lvl
+            for (int j = 0; j < 23; j++) {
+                this.mapArrayTile[i][j].resetTower();       // Reset every tile
+            }
+        }
+        this.lvlTowers.clear();                             // Clear the arrayList of towers
+
+        // Reset animation fields when initializing new towers
+        this.standingAnimationIndex = 0;
+        this.shootingAnimationIndex = 0;
+        this.lastTime = System.currentTimeMillis();
+        this.timer = 0;
+        this.waveCounter = 1;                               // Resetting the waves counter
+        this.resetGold();                                   // Resetting the gold resources
+    }
+
+    /** Reset the gold method **/
+    private void resetGold() {
+        this.gold = 1300;                           // Reset the gold to 1500
     }
 
     /** Mouse clicked method **/
@@ -311,8 +328,8 @@ public class EndlessWaves extends GameSceneBase implements Playable {
         if (y >= 640) {                             // If the mouse click is located inside the bottom game action bar bounds
             this.bottomBar.mouseClicked(x, y);      // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
         }
-        else {
-            this.addTowerToTile(x, y);
+        else {                                      // Else
+            this.addTowerToTile(x, y);              // Add the tower to the chosen tile
         }
     }
 
@@ -337,50 +354,29 @@ public class EndlessWaves extends GameSceneBase implements Playable {
         }
     }
 
-    @Override
+    /** Mouse released method **/
     public void mouseReleased(int x, int y) {
 
         this.bottomBar.mouseReleased(x, y);         // Use the mouse released method from the bottom game action bar object
     }
 
-    @Override
+    /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
 
         // Do nothing for now
     }
 
-    public void resetTowers() {
-
-        for (int i = 0; i < 20; i ++) {
-            for (int j = 0; j < 23; j++) {
-                this.mapArrayTile[i][j].resetTower();
-            }
-        }
-        this.lvlTowers.clear();
-
-        // Reset animation fields when initializing new towers
-        this.standingAnimationIndex = 0;
-        this.shootingAnimationIndex = 0;
-        this.lastTime = System.currentTimeMillis();
-        this.timer = 0;
-        this.waveCounter = 1;
-        this.resetGold();
-    }
-
-    @Override
+    /** Gold getter **/
     public int getGold() {
         return this.gold;
     }
 
-    private void resetGold() {
-        this.gold = 1500;
-    }
-
-    @Override
+    /** Wave getter **/
     public int getWave() {
         return this.waveCounter;
     }
 
+    /** BottomBar setter **/
     public void setBottomBar(Playable bottomBar) {
         this.bottomBar = bottomBar;
     }

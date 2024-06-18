@@ -21,6 +21,7 @@ public class MainFrame extends JFrame implements Runnable {
     private Playable actionBar;                                       // ActionBar
     private Playable gameOver;                                        // Game over scene
     private Playable gameWon;                                         // Game won scene
+    private Playable savedMaps;                                       // Saved maps scene
     private boolean running;                                          // Thread status variable
 
 
@@ -43,19 +44,22 @@ public class MainFrame extends JFrame implements Runnable {
         this.randomGame = new RandomGame(this); // Initializing the play game scene object
         this.edit = new EditMap(this);                                // Initializing the edit game scene object
         this.endlessWaves = new EndlessWaves(this);  // Initializing the real endless waves game scene object
-        this.actionBar = new GameActionBar(0, 640, 736, 160, this.randomGame, this.endlessWaves);
-        this.randomGame.setBottomBar(this.actionBar);
-        this.endlessWaves.setBottomBar(this.actionBar);
+        this.actionBar = new GameActionBar(0, 640, 736, 160, this.randomGame, this.endlessWaves);   // Initializing the actionBar
+
+        this.randomGame.setBottomBar(this.actionBar);                           // Setting the bottomBar for the randomGame object
+        this.endlessWaves.setBottomBar(this.actionBar);                         // Setting the bottomBar for the endless waves object
 
         this.gameOver = new GameOver(this);                           // Initializing the game over scene object
         this.gameWon = new GameWon(this);                             // Initializing the game won scene object
+
+        this.savedMaps = new SavedMaps(this);                         // Initializing the saved maps scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
         super.addMouseMotionListener(this.mouseInputListener);                 // Adding the mouse input listener as a mouse motion listener
         super.requestFocus();                                                  // Requesting the focus
 
-        this.running = true;
+        this.running = true;                                                    // Running flag variable started
 
         super.pack();                                                          // Packing the components
         super.setVisible(true);                                                // Visibility of the JFrame to true
@@ -65,16 +69,6 @@ public class MainFrame extends JFrame implements Runnable {
 
 
     /**** Methods ****/
-    /** Class MainFrame getter **/
-    public JFrame getFrame() {
-        return this;
-    }
-
-    /** GameScreen JPanel getter **/
-    public GameScreen getGameScreen() {
-        return this.gameScreen;
-    }
-
     /** Update game method **/
     private void updateGame() {
         switch (GameScenes.gameScenes) {
@@ -86,6 +80,7 @@ public class MainFrame extends JFrame implements Runnable {
                 break;
             case ENDLESS_WAVES:
                 this.endlessWaves.update();
+                break;
             default:
                 break;
         }
@@ -119,10 +114,10 @@ public class MainFrame extends JFrame implements Runnable {
             }
 
             // Update part
-            if (now - lastTimeUPS >= timePerUpdate) {             // Handle the updates, if every update happens for the correct amount of time
-                this.updateGame();
+            if (now - lastTimeUPS >= timePerUpdate) {             // Handle the updates, if it's time for a new update
+                this.updateGame();                                // Update the mainframe
                 lastTimeUPS = now;                                // Reset
-                updates++;                                        // and update
+                updates++;                                        // and increase the updates
 
             }
 
@@ -138,8 +133,8 @@ public class MainFrame extends JFrame implements Runnable {
 
     /** Starting method for the game loop **/
     public void start() {
-        this.gameThread = new Thread(this);
-        this.gameThread.start();
+        this.gameThread = new Thread(this);                 // New thread initialization
+        this.gameThread.start();                                  // Starting the thread
     }
 
     /** Render getter **/
@@ -180,5 +175,10 @@ public class MainFrame extends JFrame implements Runnable {
     /** Game won getter **/
     public Playable getGameWon() {
         return this.gameWon;
+    }
+
+    /** Saved maps getter **/
+    public Playable getSavedMaps() {
+        return this.savedMaps;
     }
 }

@@ -17,8 +17,8 @@ public class Zombie extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor) **/
-    public Zombie(int enIndex, Tile[] tiles, int y) {
-        super(950, 0.35f, 1, enIndex, 8, 12, 5, tiles, 0, y, 96, 95);
+    public Zombie(Tile[] tiles, int y) {
+        super(1100, 0.35f, 8, 12, 5, tiles, 0, y, 96, 95);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.zombieWalkingPath), 8, 96, 56));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.zombieAttackingPath), 12, 95, 62));
     }
@@ -26,16 +26,7 @@ public class Zombie extends Enemy implements Fightable {
 
 
     /**** Methods ****/
-    /** Move method **/
-    public void move() {
-        super.move();
-    }
-
-    /** Hit method **/
-    public void hit(Tile t) {
-        super.hit(t);
-    }
-
+    // Most methods except for the overrides are inherited from parentclass
     /** Get line of fire method override **/
     public int getLineOfFire() {
         return (super.getyPosition() + 42);

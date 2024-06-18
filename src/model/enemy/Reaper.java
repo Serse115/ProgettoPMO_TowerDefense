@@ -17,8 +17,8 @@ public class Reaper extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor and sets the images) **/
-    public Reaper(int enIndex, Tile[] tiles, int y) {
-        super(1550, 0.25f, 2, enIndex, 8, 10, 10, tiles, 0, y, 48, 48);
+    public Reaper(Tile[] tiles, int y) {
+        super(1450, 0.25f, 2, 8, 10, tiles, 0, y, 48, 48);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperWalkingPath), 8, 48, 48));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperAttackingPath), 10, 48, 48));
     }
@@ -26,16 +26,7 @@ public class Reaper extends Enemy implements Fightable {
 
 
     /**** Methods ****/
-    /** Move method **/
-    public void move() {
-        super.move();
-    }
-
-    /** Hit method **/
-    public void hit(Tile t) {
-        super.hit(t);
-    }
-
+    // Most methods except for the overrides are inherited from parentclass
     /** Get line of fire method override **/
     public int getLineOfFire() {
         return (super.getyPosition() + 22);

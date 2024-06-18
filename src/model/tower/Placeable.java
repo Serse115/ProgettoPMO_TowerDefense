@@ -1,8 +1,6 @@
 package model.tower;
 
 import model.enemy.Fightable;
-
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -10,33 +8,36 @@ import java.util.ArrayList;
 public interface Placeable {
 
     /**** Methods ****/
+    /** Get tower type method **/
     int getTowerType();
 
+    /** Main tower logic method **/
     void towerLogic(ArrayList<Fightable> enemies);
 
+    /** Get standing images method **/
     BufferedImage[] getStandingImages();
 
-    public BufferedImage[] getShootingImages();
+    /** Get shooting images method **/
+    BufferedImage[] getShootingImages();
 
+    /** Get tower's life points method **/
     int getLifePoints();
 
-    int getxPosition();
-
-    int getyPosition();
-
+    /** Set tower's life points method **/
     void setLifePoints(int lifePoints);
 
-    void shoot(Fightable enemy);
-
+    /** Set the y coordinate position **/
     void setyPosition(int yPosition);
 
-    void setxPosition(int yPosition);
-
+    /** Is standing variable check getter **/
     boolean isStanding();
 
+    /** Is shooting variable check getter **/
     boolean isShooting();
 
+    /** Get the first standing image of the standing images array for the preview of the tower add **/
     BufferedImage getFirstStandingImage();
 
+    /** Get the cost method **/
     int getCost();
 }

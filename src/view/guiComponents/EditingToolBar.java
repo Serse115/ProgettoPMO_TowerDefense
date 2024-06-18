@@ -1,7 +1,5 @@
 package view.guiComponents;
 
-import controller.GameLoopController;
-import controller.ModelController;
 import model.tower.Tower;
 import view.gameScenes.EditMap;
 import view.gameScenes.GameScenes;
@@ -45,35 +43,21 @@ public class EditingToolBar extends Bar implements Playable {
     public void render(Graphics g) {
 
         // Body of the action bar
-        g.setColor(new Color(220, 123, 15));
-        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        g.setColor(new Color(220, 123, 15));                                    // Set color
+        g.fillRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());    // Draw filled rectangle
 
         // Background of the action bar
-        g.setColor(Color.BLACK);
-        g.drawRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());
+        g.setColor(Color.BLACK);                                                        // Set color
+        g.drawRect(super.getX(), super.getY(), super.getWidth(), super.getHeight());    // Draw border rectangle
 
         // Buttons
-        this.bGrass.draw(g, this.bGrass.getbImage());
-        this.bWater.draw(g, this.bWater.getbImage());
-        this.bRoad.draw(g, this.bRoad.getbImage());
-        this.bMenu.draw(g);
-        this.bSave.draw(g);
+        this.bGrass.draw(g, this.bGrass.getbImage());                                   // Draw the button grass
+        this.bWater.draw(g, this.bWater.getbImage());                                   // Draw the button water
+        this.bRoad.draw(g, this.bRoad.getbImage());                                     // Draw the button road
+        this.bMenu.draw(g);                                                             // Draw the menu button
+        this.bSave.draw(g);                                                             // Draw the save button
     }
 
-    /** Update method **/
-    public void update() {
-        // Not required
-    }
-
-    /** Initialize map method **/
-    public void initializeMap() {
-        // Not required, handled in the randomGame class and the Endless waves class
-    }
-
-    /** Initialize the enemies method **/
-    public void initializeEnemies() {
-        // Not required, handled in the randomGame class and the Endless waves class
-    }
 
     /** Method to convert the lvl in a 2d array of ints (the tile types of the level itself) **/
     private int[][] get2DArrFromLvl() {
@@ -174,33 +158,44 @@ public class EditingToolBar extends Bar implements Playable {
         // Do nothing for now
     }
 
-    /** Get game loop method (not needed) **/
-    public GameLoopController getGameLoopController() {
-        return null;
+    /** Not required methods (got from the interface) **/
+    /** Update method (not required) **/
+    public void update() {
+        // Not required
     }
 
-    @Override
+    /** Initialize map method (not required) **/
+    public void initializeMap() {
+        // Not required
+    }
+
+    /** Initialize the enemies method (not required) **/
+    public void initializeEnemies() {
+        // Not required
+    }
+
+    /** Selected tower setter **/
     public void setSelectedTower(Tower tower) {
-
+        // Not required
     }
 
-    @Override
+    /** Reset towers method (not required) **/
     public void resetTowers() {
-
+        // Not required
     }
 
-    @Override
+    /** Gold getter (not required) **/
     public int getGold() {
         return 0;
     }
 
-    @Override
+    /** Wave getter (not required) **/
     public int getWave() {
         return 0;
     }
 
-    @Override
+    /** BottomBar setter (not required) **/
     public void setBottomBar(Playable bottomBar) {
-
+        // Not required
     }
 }

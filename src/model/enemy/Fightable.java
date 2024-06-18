@@ -1,31 +1,27 @@
 package model.enemy;
 
-import view.guiComponents.Tile;
-
 import java.awt.image.BufferedImage;
 
-/**** Interface for the Enemy subclasses ****/
+/**** Interface for the Enemy parentclass and subclasses ****/
 public interface Fightable {
 
     /**** Methods ****/
-    /** Move method **/
-    void move();
-
-    /** Hit method **/
-    void hit(Tile t);
-
     /** Is alive method **/
     boolean isAlive();
 
+    /** Main enemy logic method **/
     void enemyLogic();
 
+    /** Is walking boolean status getter **/
     boolean isWalking();
 
+    /** Is attacking boolean status getter **/
     boolean isAttacking();
 
     /** Get walking images method **/
     BufferedImage[] getWalkingImages();
 
+    /** Get attacking images method **/
     BufferedImage[] getAttackingImages();
 
     /** Set walking images method **/
@@ -49,5 +45,6 @@ public interface Fightable {
     /** Get the life points method **/
     int getLifePoints();
 
+    /** Get the line of fire method **/
     int getLineOfFire();
 }

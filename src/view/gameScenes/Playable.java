@@ -1,8 +1,6 @@
 package view.gameScenes;
 
-import controller.ModelController;
 import model.tower.Tower;
-
 import java.awt.*;
 
 /**** Interface for the GameScenes subclasses ****/
@@ -36,13 +34,18 @@ public interface Playable {
     /** Mouse Dragged method **/
     void mouseDragged(int x, int y);
 
+    /** Set the selected tower method **/
     void setSelectedTower(Tower tower);
 
+    /** Reset the towers method **/
     void resetTowers();
 
+    /** Gold getter **/
     int getGold();
 
+    /** Wave getter **/
     int getWave();
 
+    /** Set the bottomBar method **/
     void setBottomBar(Playable bottomBar);
 }

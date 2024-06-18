@@ -11,5 +11,5 @@ public class Main {
     }
 }
 
-// craftpix.net and itch.io ad sprite-resource.com for enemies and turrets sources
+// craftpix.net and itch.io and sprite-resource.com for enemies and turrets sources
 //

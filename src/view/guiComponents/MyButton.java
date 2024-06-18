@@ -105,8 +105,8 @@ public class MyButton implements Clickable {
     /** Reset the boolean variables **/
     public void resetBooleans() {
 
-        this.mouseOver = false;
-        this.mousePressed = false;
+        this.mouseOver = false;                 // Resetting both the mouse over
+        this.mousePressed = false;              // And mouse pressed to false
     }
 
     /** Getters and setters **/
@@ -128,31 +128,6 @@ public class MyButton implements Clickable {
     /** Height getter **/
     public int getHeight() {
         return this.height;
-    }
-
-    /** Text getter **/
-    public String getText() {
-        return this.text;
-    }
-
-    /** Text setter **/
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    /** Id getter **/
-    public int getId() {
-        return 0;
-    }
-
-    /** Id setter **/
-    public void setId(int id) {
-    //    this.id = id;
-    }
-
-    /** Mouse over getter **/
-    public boolean isMouseOver() {
-        return this.mouseOver;
     }
 
     /** Mouse over setter **/

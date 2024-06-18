@@ -7,41 +7,49 @@ import view.guiComponents.MyButton;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
-/**** Class for the game won scene ****/
-public class GameWon extends GameSceneBase implements Playable {
+/***** Saved maps gameScene class *****/
+public class SavedMaps extends GameSceneBase implements Playable {
 
     /**** Fields ****/
-    private Clickable bMenu;                    // Menu button
+    private Clickable bMenu;                                        // Menu button
 
 
 
-
-    /**** Constructors ****/
-    /** Main constructor **/
-    public GameWon(MainFrame mainFrame) {
+    /**** Constructor ****/
+    public SavedMaps(MainFrame mainFrame) {
         super(mainFrame);
-        this.bMenu = new MyButton("Menu", 300, 350, 150, 100);
+        this.bMenu = new MyButton("Menu", 300, 710, 100, 50);
     }
-
 
 
 
     /**** Methods ****/
-    /** Render the Game over page **/
+    /** Render method **/
     public void render(Graphics g) {
-        this.bMenu.draw(g);                                               // Draw the button menu
-        Font font = new Font("Arial", Font.BOLD, 45);           // Changing the font and size of the string
-        g.setFont(font);                                                  // Set the font
-        g.drawString("YOU HAVE WON! :) ", 150, 150);            // Draw the string on the scene
+        this.drawBottomBar(g);              // Draw the bottomBar
+        this.bMenu.draw(g);                 // Draw the menu button
+        this.drawPanel(g);                  // Draw the information panel
+    }
+
+    /** Draw bottom bar method **/
+    private void drawBottomBar(Graphics g) {
+        g.setColor(Color.GRAY);                             // Set the color
+        g.fillRect(0, 700, 736, 100);     // Draw the filled rectangle
+        g.setColor(Color.BLACK);                            // Set the color
+        g.drawRect(0, 700, 736, 100);     // Draw the border rectangle
+    }
+
+    /** Draw the info panel method **/
+    private void drawPanel(Graphics g) {
+        Font font = new Font("Arial", Font.BOLD, 15);           // Changing the font and size of the string
+        g.setFont(font);                                                  // Setting the font
+        g.drawString("Coming soon!", 325, 150);                  // Draw the string
     }
 
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
-        if (this.bMenu.getButtonBounds().contains(x, y)) {          // If it's clicked within the menu button's boundaries
-            GameScenes.setGameScene(MENU);                          // Set the game scene as the menu one
-            super.getMainFrame().getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
-            super.getMainFrame().getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
-            super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the random game
+        if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's clicked within the menu button's boundaries
+            GameScenes.setGameScene(MENU);                      // Set the game scene as the menu one
         }
     }
 
@@ -71,18 +79,18 @@ public class GameWon extends GameSceneBase implements Playable {
         // Not required
     }
 
-    /** Not required methods (got from the interface) **/
+    /** Not required methods (got from the interface)* */
     /** Update method (not required) **/
     public void update() {
         // Not required
     }
 
-    /** Initialize map (not required) **/
+    /** Initialize map method (not required) **/
     public void initializeMap() {
         // Not required
     }
 
-    /** Initialize enemies (not required) **/
+    /** Initialize enemies method (not required) **/
     public void initializeEnemies() {
         // Not required
     }
@@ -92,7 +100,7 @@ public class GameWon extends GameSceneBase implements Playable {
         // Not required
     }
 
-    /** Reset towers (not required) **/
+    /** Reset the towers method (not required) **/
     public void resetTowers() {
         // Not required
     }

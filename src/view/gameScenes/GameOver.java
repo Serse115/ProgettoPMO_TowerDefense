@@ -29,46 +29,30 @@ public class GameOver extends GameSceneBase implements Playable {
     /**** Methods ****/
     /** Render the Game over page **/
     public void render(Graphics g) {
-        this.bMenu.draw(g);
+        this.bMenu.draw(g);                                               // Draw the button menu
         Font font = new Font("Arial", Font.BOLD, 45);           // Changing the font and size of the string
-        g.setFont(font);
-        g.drawString("YOU HAVE LOST! ;-;", 150, 150);
-
+        g.setFont(font);                                                  // Set the font
+        g.drawString("YOU HAVE LOST! ;-;", 150, 150);            // Draw the string on the scene
     }
 
-    /** Update method (not required) **/
-    public void update() {
-        // Not required
-    }
-
-    @Override
-    public void initializeMap() {
-
-    }
-
-    @Override
-    public void initializeEnemies() {
-
-    }
-
-    @Override
+    /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
-        if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's clicked within the menu button's boundaries
+        if (this.bMenu.getButtonBounds().contains(x, y)) {           // If it's clicked within the menu button's boundaries
             if (this.bMenu.getButtonBounds().contains(x, y)) {       // If it's clicked within the menu button's boundaries
 
                 GameScenes.setGameScene(MENU);                                                           // Set the game scene back to the menu
                 super.getMainFrame().getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
                 super.getMainFrame().getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
-                super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the game
+                super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the random game
 
                 super.getMainFrame().getEndlessWaves().initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
                 super.getMainFrame().getEndlessWaves().initializeEnemies();                              // Reset the game set of enemies for the new endless waves game
-                super.getMainFrame().getEndlessWaves().resetTowers();                                    // Reset the towers in the game
+                super.getMainFrame().getEndlessWaves().resetTowers();                                    // Reset the towers in the endless waves game
             }
         }
     }
 
-    @Override
+    /** Mouse moved method **/
     public void mouseMoved(int x, int y) {
         this.bMenu.setMouseOver(false);                     // Set the mouse over by default as false
 
@@ -77,46 +61,61 @@ public class GameOver extends GameSceneBase implements Playable {
         }
     }
 
-    @Override
+    /** Mouse pressed method **/
     public void mousePressed(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {     // If it's pressed within the menu button's bounds
             this.bMenu.setMousePressed(true);                  // Set the mouse over as true to trigger the visive effect
         }
-
     }
 
-    @Override
+    /** Mouse released method **/
     public void mouseReleased(int x, int y) {
         this.bMenu.resetBooleans();
     }
 
-    @Override
+    /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
-
+        // Not required
     }
 
-    @Override
+    /** Not required methods (got from the interface) **/
+    /** Update method (not required) **/
+    public void update() {
+        // Not required
+    }
+
+    /** Initialize map (not required) **/
+    public void initializeMap() {
+        // Not required
+    }
+
+    /** Initialize enemies (not required) **/
+    public void initializeEnemies() {
+        // Not required
+    }
+
+    /** Initialize enemies (not required) **/
     public void setSelectedTower(Tower tower) {
-
+        // Not required
     }
 
-    @Override
+    /** Reset towers (not required) **/
     public void resetTowers() {
-
+        // Not required
     }
 
-    @Override
+    /** Gold getter (not required) **/
     public int getGold() {
         return 0;
     }
 
-    @Override
+    /** Wave getter (not required) **/
     public int getWave() {
         return 0;
     }
 
-    @Override
+    /** BottomBar setter (not required) **/
     public void setBottomBar(Playable bottomBar) {
-
+        // Not required
     }
 }

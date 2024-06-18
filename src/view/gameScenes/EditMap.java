@@ -1,9 +1,8 @@
 package view.gameScenes;
 
 import controller.GUIController;
-import controller.GameLoopController;
-import controller.ModelController;
 import model.tower.Tower;
+import view.guiComponents.Clickable;
 import view.guiComponents.EditingToolBar;
 import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
@@ -16,7 +15,7 @@ public class EditMap extends GameSceneBase implements Playable {
 
     /**** Fields ****/
     private EditingToolBar editingToolBar;                  // Editing toolbar for the editing game scene
-    private BufferedImage grassImg;                         // Img to paint grass
+    private BufferedImage grassImg;                         // Img to paint grass by default
     private Tile[][] lvLArray;                              // Default level array for the edit menu
     private Tile selectedTileToPaint;                       // Tile selected for painting in case the map needs to be repainted
     private GUIController guiController;                    // GUI controller object for the map editing and the tiles
@@ -53,9 +52,147 @@ public class EditMap extends GameSceneBase implements Playable {
     /**** Methods ****/
     /** Render method **/
     public void render(Graphics g) {
-        this.drawLevel(g);
-        this.editingToolBar.render(g);
-        this.drawSelectedTile(g);
+        this.drawLevel(g);                  // Draw the level
+        this.editingToolBar.render(g);      // Draw the editing bar
+        this.drawSelectedTile(g);           // Draw the preview of the chosen tile (if chosen)
+    }
+
+    /** Drawing the default level method**/
+    private void drawLevel(Graphics g) {
+
+        if (this.grassImg != null) {
+            for (int j = 0; j < this.lvLArray.length; j++) {                             // For all the rows and columns of the 2d array composing the map
+                for (int i = 0; i < this.lvLArray[j].length; i++) {
+                    g.drawImage(this.lvLArray[j][i].getSprite(), 32 * i, (32 * j), null);   // Draw the corresponding image (grass in this case since it's a default map)
+                }
+            }
+        }
+    }
+
+    /** Default level tiles' loader (set all the tiles of the lvl array by default to grass ones) **/
+    public void defaultLvLTilesLoader() {
+        for (int j = 0; j < this.lvLArray.length; j++) {                        // For every row and column of the 2d array that forms the level
+            for (int i = 0; i < this.lvLArray[j].length; i++) {
+                this.lvLArray[j][i] = this.getGuiController().getGrass();       // Set every tile of the level as grass tiles as a default
+            }
+        }
+    }
+
+    /** Tile change method **/
+    private void changeTile(int x, int y) {
+
+        if (this.selectedTileToPaint != null) {                 // If the selected tile to paint has been chosen
+
+            int tileX = x / 32;                                 // X position of the tile to change
+            int tileY = y / 32;                                 // Y position of the tile to change
+
+            if (this.selectedTileToPaint.getTileType() >= 0 && this.selectedTileToPaint.getTileType() <= 2) {    // If the tile type is a field layout type (grass, water, road)
+
+                if (this.lastTileX == tileX && this.lastTileY == tileY && this.lastTileType == this.selectedTileToPaint.getTileType()) {    // If the tile chosen has the
+                    return;                                      // Same type of the tile that is going to be added and repainted, then do nothing and return
+                }
+                else {                                                              // Else
+                    this.lastTileX = x;                                             // Update the last tile position coord x to the current x
+                    this.lastTileY = y;                                             // Update the last tile position coord y to the current y
+                    this.lastTileType = this.selectedTileToPaint.getTileType();     // Update the last tile type to the current one selected to paint
+                    this.lvLArray[tileY][tileX] = this.selectedTileToPaint;         // Set the tile of the array through the coordinates as the chosen tile to paint
+                }
+            }
+        }
+    }
+
+    /** Draw the selected tile method **/
+    private void drawSelectedTile(Graphics g) {
+        if (this.selectedTileToPaint != null && this.drawSelectedTile) {            // If the tile to paint is chosen and the change tile option is active
+            g.drawImage(this.selectedTileToPaint.getSprite(), this.xMouseCoord, this.yMouseCoord, 32, 32, null);        // Draw the tile preview
+        }
+    }
+
+    /** Selected tile setter **/
+    public void setSelectedTileToPaint(Tile selectedTileToPaint) {
+        this.selectedTileToPaint = selectedTileToPaint;                 // Giving the selected tile to paint the value of the chosen one
+        this.drawSelectedTile = true;                                   // Change the possibility of the selected tile to be needed to be repainted
+    }
+
+    /** Mouse clicked method **/
+    public void mouseClicked(int x, int y) {
+
+        if (y >= 640) {                                     // If the mouse click is located inside the bottom game action bar bounds
+            this.editingToolBar.mouseClicked(x, y);         // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
+        }
+        else {                                                      // Else
+            this.changeTile(this.xMouseCoord, this.yMouseCoord);    // Use the change tile method to repaint the tile to change at the given coordinates
+        }
+    }
+
+    /** Mouse moved method **/
+    public void mouseMoved(int x, int y) {
+
+        if (y >= 640) {                                  // If the mouse moved position is located inside the bottom game action bar bounds
+            this.editingToolBar.mouseMoved(x, y);        // Use the bottom bar's mouse moved method passing it the coordinates of where its clicked
+            this.drawSelectedTile = false;               // No need for any selected tile to be focused on or painted since the mouse is on the toolbar
+        }
+        else {
+            this.drawSelectedTile = true;                // Now there's need to focus on a tile to eventually paint since the mouse is not on the toolbar
+            this.xMouseCoord = (x / 32) * 32;            // Giving the coordinate of x divided and then multiplied to get the closest value to 32 multipliers (to obtain coords)
+            this.yMouseCoord = (y / 32) * 32;            // Giving the coordinate of y divided and then multiplied to get the closest value to 32 multipliers (to obtain coords)
+        }
+    }
+
+    /** Mouse pressed method **/
+    public void mousePressed(int x, int y) {
+
+        if (y >= 640) {                                  // If the mouse pressed position is located inside the bottom game action bar bounds
+            this.editingToolBar.mousePressed(x, y);      // Use the bottom bar's mouse pressed method passing it the coordinates of where its clicked
+        }
+    }
+
+    /** Mouse released method **/
+    public void mouseReleased(int x, int y) {
+
+        this.editingToolBar.mouseReleased(x, y);         // Use the mouse released method from the bottom game action bar object
+    }
+
+    /** Mouse dragged method **/
+    public void mouseDragged(int x, int y) {
+        // Not required
+    }
+
+    /** Level array getter **/
+    public Tile[][] getLvLArray() {
+        return this.lvLArray;
+    }
+
+    /** GUI controller getter **/
+    public GUIController getGuiController() {
+        return this.guiController;
+    }
+
+
+    /** Not required methods gotten from the interface **/
+    /** Set the selected tower **/
+    public void setSelectedTower(Tower tower) {
+        // Not required
+    }
+
+    /** Reset the towers **/
+    public void resetTowers() {
+        // Not required
+    }
+
+    /** Get the gold method **/
+    public int getGold() {
+        return 0;
+    }
+
+    /** Get the wave method **/
+    public int getWave() {
+        return 0;
+    }
+
+    /** Set the bottomBarr **/
+    public void setBottomBar(Playable bottomBar) {
+        // Not required
     }
 
     /** Update method **/
@@ -71,152 +208,5 @@ public class EditMap extends GameSceneBase implements Playable {
     /** Initialize the enemies method **/
     public void initializeEnemies() {
         // Not required
-    }
-
-    /** Drawing the default level method**/
-    private void drawLevel(Graphics g) {
-
-        if (this.grassImg != null) {
-            for (int j = 0; j < this.lvLArray.length; j++) {                             // For all the rows and columns of the 2d array composing the map
-                for (int i = 0; i < this.lvLArray[j].length; i++) {
-                    g.drawImage(this.lvLArray[j][i].getSprite(), 32 * i, (32 * j), null);       // Draw the corresponding image (grass in this case since it's a default map)
-                }
-            }
-        }
-    }
-
-    /** Default level tiles' loader (set all the tiles of the lvl array by default to grass ones) **/
-    public void defaultLvLTilesLoader() {
-        for (int j = 0; j < this.lvLArray.length; j++) {
-            for (int i = 0; i < this.lvLArray[j].length; i++) {
-                this.lvLArray[j][i] = this.getGuiController().getGrass();
-            }
-        }
-    }
-
-    /** Tile change method **/
-    private void changeTile(int x, int y) {
-
-        if (this.selectedTileToPaint != null) {                 // If the selected tile to paint has been chosen
-
-            int tileX = x / 32;                                 // X position of the tile to change
-            int tileY = y / 32;                                 // Y position of the tile to change
-
-            if (this.selectedTileToPaint.getTileType() >= 0 && this.selectedTileToPaint.getTileType() <= 2) {      // If the tile type is a field layout type
-
-                if (this.lastTileX == tileX && this.lastTileY == tileY && this.lastTileType == this.selectedTileToPaint.getTileType()) {    // If the tile highlighted has the
-                    return;                                      // Same type of the one who is going to be repainted, then do nothing and return
-                }
-                else {                                                              // Else
-                    this.lastTileX = x;                                             // Update the last tile position coord x to the current x
-                    this.lastTileY = y;                                             // Update the last tile position coord y to the current y
-                    this.lastTileType = this.selectedTileToPaint.getTileType();     // Update the last tile type to the current one selected to paint
-                    this.lvLArray[tileY][tileX] = this.selectedTileToPaint;
-                }
-            }
-        }
-    }
-
-    /** Draw the selected tile method **/
-    private void drawSelectedTile(Graphics g) {
-        if (this.selectedTileToPaint != null && this.drawSelectedTile) {            // If the tile to paint is chosen and the change tile option is active
-            g.drawImage(this.selectedTileToPaint.getSprite(), this.xMouseCoord, this.yMouseCoord, 32, 32, null);        // Draw the tile
-        }
-    }
-
-    /** Mouse clicked method **/
-    public void mouseClicked(int x, int y) {
-
-        if (y >= 640) {                             // If the mouse click is located inside the bottom game action bar bounds
-            this.editingToolBar.mouseClicked(x, y);      // Use the bottom bar's mouse clicked method passing it the coordinates of where its clicked
-        }
-        else {
-            this.changeTile(this.xMouseCoord, this.yMouseCoord);
-        }
-    }
-
-    /** Mouse moved method **/
-    public void mouseMoved(int x, int y) {
-
-        if (y >= 640) {                             // If the mouse moved position is located inside the bottom game action bar bounds
-            this.editingToolBar.mouseMoved(x, y);        // Use the bottom bar's mouse moved method passing it the coordinates of where its clicked
-            this.drawSelectedTile = false;               // No need for any selected tile to be focused on or painted since the mouse is on the toolbar
-        }
-        else {
-            this.drawSelectedTile = true;                // Now there's need to focus on a tile to eventually paint since the mouse is not on the toolbar
-            this.xMouseCoord = (x / 32) * 32;            // Giving the coordinate of x divided and then multiplied to assure the closest value to 32 multipliers
-            this.yMouseCoord = (y / 32) * 32;            // Giving the coordinate of y divided and then multiplied to assure the closest value to 32 multipliers
-        }
-    }
-
-    /** Mouse pressed method **/
-    public void mousePressed(int x, int y) {
-
-        if (y >= 640) {                             // If the mouse pressed position is located inside the bottom game action bar bounds
-            this.editingToolBar.mousePressed(x, y);      // Use the bottom bar's mouse pressed method passing it the coordinates of where its clicked
-        }
-    }
-
-    /** Mouse released method **/
-    public void mouseReleased(int x, int y) {
-
-        this.editingToolBar.mouseReleased(x, y);         // Use the mouse released method from the bottom game action bar object
-    }
-
-    /** Mouse dragged method **/
-    public void mouseDragged(int x, int y) {
-
-        // Do nothing for now
-    }
-
-    /** Get game loop controller method (not needed) **/
-    public GameLoopController getGameLoopController() {
-        return null;
-    }
-
-    @Override
-    public void setSelectedTower(Tower tower) {
-
-    }
-
-    @Override
-    public void resetTowers() {
-
-    }
-
-    @Override
-    public int getGold() {
-        return 0;
-    }
-
-    @Override
-    public int getWave() {
-        return 0;
-    }
-
-    @Override
-    public void setBottomBar(Playable bottomBar) {
-
-    }
-
-    /** Level getter **/
-    public Tile[][] getLvLArray() {
-        return this.lvLArray;
-    }
-
-    /** Selected tile getter **/
-    public Tile getSelectedTileToPaint() {
-        return this.selectedTileToPaint;
-    }
-
-    /** Selected tile setter **/
-    public void setSelectedTileToPaint(Tile selectedTileToPaint) {
-        this.selectedTileToPaint = selectedTileToPaint;                 // Giving the selected tile to paint value to the chosen one
-        this.drawSelectedTile = true;                                   // Change the possibility of the selected tile to be needed to be repainted
-    }
-
-    /** GUI controller getter **/
-    public GUIController getGuiController() {
-        return this.guiController;
     }
 }

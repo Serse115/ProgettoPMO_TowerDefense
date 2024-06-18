@@ -1,16 +1,12 @@
 package view.gameScenes;
 
 import view.guiComponents.MainFrame;
-import javax.swing.*;
 
 /**** Parent class for the game scenes ****/
 public class GameSceneBase {
 
     /**** Fields ****/
-    private MainFrame mainFrame;        // Link to the mainFrame object
-    private int animationIndex;         // Index of the animation frames
-    private int animationSpeed;         // Animation speed value
-    private int tick;                   // Tick variable to keep check of the current frame
+    private MainFrame mainFrame;        // Object reference to the mainFrame
 
 
 
@@ -27,10 +23,5 @@ public class GameSceneBase {
     /** Get the mainFrame method **/
     public MainFrame getMainFrame() {
         return this.mainFrame;
-    }
-
-    /** Update the animation tick **/
-    public void updateTick() {
-
     }
 }
