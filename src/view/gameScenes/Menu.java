@@ -21,8 +21,8 @@ public class Menu extends GameSceneBase implements Playable {
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Menu(MainFrame mainFrame) {
-        super(mainFrame);
+    public Menu() {
+        super();
         this.bPlay = new MyButton("Random Map", 300, 150, 150, 50);
         this.bEditMap = new MyButton("Edit Map", 300, 250, 150, 50);
         this.bSavedGame = new MyButton("Saved Maps", 300, 350, 150, 50);
@@ -154,6 +154,11 @@ public class Menu extends GameSceneBase implements Playable {
     /** Wave getter (not required) **/
     public int getWave() {
         return 0;
+    }
+
+    /** Wave counter setter (not required) **/
+    public void setWaveCounter(int waveCounter) {
+        // Not required
     }
 
     /** BottomBar setter (not required) **/

@@ -2,16 +2,15 @@ package view.gameScenes;
 
 import controller.GUIController;
 import model.tower.Tower;
-import view.guiComponents.Clickable;
 import view.guiComponents.EditingToolBar;
-import view.guiComponents.MainFrame;
+import view.guiComponents.GameActionBar;
 import view.guiComponents.Tile;
 import view.imageUtilities.SpriteUtilities;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/***** Class for the editing game scene *****/
-public class EditMap extends GameSceneBase implements Playable {
+/***** Class for the editing scene *****/
+public class EditMap implements Playable {
 
     /**** Fields ****/
     private EditingToolBar editingToolBar;                  // Editing toolbar for the editing game scene
@@ -30,8 +29,7 @@ public class EditMap extends GameSceneBase implements Playable {
 
 
     /**** Constructors ****/
-    public EditMap(MainFrame mainFrame) {
-        super(mainFrame);
+    public EditMap() {
         this.editingToolBar = new EditingToolBar(0, 640, 736, 160, this);
         this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");
         this.lvLArray = new Tile[20][23];
@@ -89,7 +87,7 @@ public class EditMap extends GameSceneBase implements Playable {
             if (this.selectedTileToPaint.getTileType() >= 0 && this.selectedTileToPaint.getTileType() <= 2) {    // If the tile type is a field layout type (grass, water, road)
 
                 if (this.lastTileX == tileX && this.lastTileY == tileY && this.lastTileType == this.selectedTileToPaint.getTileType()) {    // If the tile chosen has the
-                    return;                                      // Same type of the tile that is going to be added and repainted, then do nothing and return
+                    return;                                                         // Same type of the tile that is going to be added and repainted, then do nothing and return
                 }
                 else {                                                              // Else
                     this.lastTileX = x;                                             // Update the last tile position coord x to the current x
@@ -190,23 +188,39 @@ public class EditMap extends GameSceneBase implements Playable {
         return 0;
     }
 
-    /** Set the bottomBarr **/
-    public void setBottomBar(Playable bottomBar) {
+    /** Set the action bar (not required) **/
+    public void setBottomBar(GameActionBar bottomBar) {
         // Not required
     }
 
-    /** Update method **/
+    /** Number of enemies getter override because not needed here **/
+    public int getnOfEnemies() {
+        return 0;
+    }
+
+    /** Not required methods (got from the interface) **/
+    /** Update method (Not required) **/
     public void update() {
         // Not required
     }
 
-    /** Initialize map method **/
+    /** Initialize map method (Not required) **/
     public void initializeMap() {
         // Not required
     }
 
-    /** Initialize the enemies method **/
+    /** Initialize the enemies method (Not required) **/
     public void initializeEnemies() {
+        // Not required
+    }
+
+    /** Number of enemies setter (Not required) **/
+    public void setnOfEnemies(int nOfEnemies) {
+        // Not required
+    }
+
+    /** Wave counter setter (Not required) **/
+    public void setWaveCounter(int waveCounter) {
         // Not required
     }
 }

@@ -10,7 +10,7 @@ import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
 /***** Class for the gui component editing toolbar to customize maps *****/
-public class EditingToolBar extends Bar implements Playable {
+public class EditingToolBar extends Bar {
 
     /**** Fields ****/
     private EditMap editMap;                 // Object reference to the Editing game scene
@@ -156,46 +156,5 @@ public class EditingToolBar extends Bar implements Playable {
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
         // Do nothing for now
-    }
-
-    /** Not required methods (got from the interface) **/
-    /** Update method (not required) **/
-    public void update() {
-        // Not required
-    }
-
-    /** Initialize map method (not required) **/
-    public void initializeMap() {
-        // Not required
-    }
-
-    /** Initialize the enemies method (not required) **/
-    public void initializeEnemies() {
-        // Not required
-    }
-
-    /** Selected tower setter **/
-    public void setSelectedTower(Tower tower) {
-        // Not required
-    }
-
-    /** Reset towers method (not required) **/
-    public void resetTowers() {
-        // Not required
-    }
-
-    /** Gold getter (not required) **/
-    public int getGold() {
-        return 0;
-    }
-
-    /** Wave getter (not required) **/
-    public int getWave() {
-        return 0;
-    }
-
-    /** BottomBar setter (not required) **/
-    public void setBottomBar(Playable bottomBar) {
-        // Not required
     }
 }

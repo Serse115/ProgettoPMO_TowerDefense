@@ -2,7 +2,6 @@ package view.gameScenes;
 
 import model.tower.Tower;
 import view.guiComponents.Clickable;
-import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
@@ -16,8 +15,8 @@ public class SavedMaps extends GameSceneBase implements Playable {
 
 
     /**** Constructor ****/
-    public SavedMaps(MainFrame mainFrame) {
-        super(mainFrame);
+    public SavedMaps() {
+        super();
         this.bMenu = new MyButton("Menu", 300, 710, 100, 50);
     }
 
@@ -113,6 +112,11 @@ public class SavedMaps extends GameSceneBase implements Playable {
     /** Wave getter (not required) **/
     public int getWave() {
         return 0;
+    }
+
+    /** Wave counter setter (not required) **/
+    public void setWaveCounter(int waveCounter) {
+        // Not required
     }
 
     /** BottomBar setter (not required) **/

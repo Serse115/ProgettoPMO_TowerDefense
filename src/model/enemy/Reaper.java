@@ -17,8 +17,8 @@ public class Reaper extends Enemy implements Fightable {
 
     /**** Constructors ****/
     /** Main constructor (uses the superclass constructor and sets the images) **/
-    public Reaper(Tile[] tiles, int y) {
-        super(1450, 0.25f, 2, 8, 10, tiles, 0, y, 48, 48);
+    public Reaper(Tile[] tiles, int x, int y) {
+        super(1500, 0.25f, 2, 8, 10, tiles, x, y, 48, 48);
         super.setWalkingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperWalkingPath), 8, 48, 48));
         super.setAttackingImages(SpriteUtilities.getAniSprites(0, 0, SpriteUtilities.getSpriteAtlas(this.reaperAttackingPath), 10, 48, 48));
     }

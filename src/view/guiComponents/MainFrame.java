@@ -18,9 +18,9 @@ public class MainFrame extends JFrame implements Runnable {
     private Playable randomGame;                                      // RandomGame game scene
     private Playable edit;                                            // Edit game scene
     private Playable endlessWaves;                                    // Endless waves scene
-    private Playable actionBar;                                       // ActionBar
-    private Playable gameOver;                                        // Game over scene
-    private Playable gameWon;                                         // Game won scene
+    private GameActionBar actionBar;                                  // ActionBar
+    private GameOver gameOver;                                        // Game over scene
+    private GameWon gameWon;                                          // Game won scene
     private Playable savedMaps;                                       // Saved maps scene
     private boolean running;                                          // Thread status variable
 
@@ -40,10 +40,10 @@ public class MainFrame extends JFrame implements Runnable {
         this.gameScreen = new GameScreen(this);                       // Initializing the game screen
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
-        this.menu = new Menu(this);                                   // Initializing the temporary menu game scene object
-        this.randomGame = new RandomGame(this); // Initializing the play game scene object
-        this.edit = new EditMap(this);                                // Initializing the edit game scene object
-        this.endlessWaves = new EndlessWaves(this);  // Initializing the real endless waves game scene object
+        this.menu = new Menu();                                   // Initializing the temporary menu game scene object
+        this.randomGame = new RandomGame(); // Initializing the play game scene object
+        this.edit = new EditMap();                                // Initializing the edit game scene object
+        this.endlessWaves = new EndlessWaves();  // Initializing the real endless waves game scene object
         this.actionBar = new GameActionBar(0, 640, 736, 160, this.randomGame, this.endlessWaves);   // Initializing the actionBar
 
         this.randomGame.setBottomBar(this.actionBar);                           // Setting the bottomBar for the randomGame object
@@ -52,7 +52,7 @@ public class MainFrame extends JFrame implements Runnable {
         this.gameOver = new GameOver(this);                           // Initializing the game over scene object
         this.gameWon = new GameWon(this);                             // Initializing the game won scene object
 
-        this.savedMaps = new SavedMaps(this);                         // Initializing the saved maps scene object
+        this.savedMaps = new SavedMaps();                         // Initializing the saved maps scene object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -168,12 +168,12 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     /** Game over getter **/
-    public Playable getGameOver() {
+    public GameOver getGameOver() {
         return this.gameOver;
     }
 
     /** Game won getter **/
-    public Playable getGameWon() {
+    public GameWon getGameWon() {
         return this.gameWon;
     }
 

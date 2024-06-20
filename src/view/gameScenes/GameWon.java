@@ -1,6 +1,5 @@
 package view.gameScenes;
 
-import model.tower.Tower;
 import view.guiComponents.Clickable;
 import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
@@ -8,9 +7,10 @@ import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
 /**** Class for the game won scene ****/
-public class GameWon extends GameSceneBase implements Playable {
+public class GameWon {
 
     /**** Fields ****/
+    private MainFrame mainFrame;                // Mainframe reference object
     private Clickable bMenu;                    // Menu button
 
 
@@ -19,7 +19,7 @@ public class GameWon extends GameSceneBase implements Playable {
     /**** Constructors ****/
     /** Main constructor **/
     public GameWon(MainFrame mainFrame) {
-        super(mainFrame);
+        this.mainFrame = mainFrame;
         this.bMenu = new MyButton("Menu", 300, 350, 150, 100);
     }
 
@@ -39,9 +39,9 @@ public class GameWon extends GameSceneBase implements Playable {
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {          // If it's clicked within the menu button's boundaries
             GameScenes.setGameScene(MENU);                          // Set the game scene as the menu one
-            super.getMainFrame().getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
-            super.getMainFrame().getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
-            super.getMainFrame().getRandomgame().resetTowers();                                      // Reset the towers in the random game
+            this.mainFrame.getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
+            this.mainFrame.getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
+            this.mainFrame.getRandomgame().resetTowers();                                      // Reset the towers in the random game
         }
     }
 
@@ -68,47 +68,6 @@ public class GameWon extends GameSceneBase implements Playable {
 
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
-        // Not required
-    }
-
-    /** Not required methods (got from the interface) **/
-    /** Update method (not required) **/
-    public void update() {
-        // Not required
-    }
-
-    /** Initialize map (not required) **/
-    public void initializeMap() {
-        // Not required
-    }
-
-    /** Initialize enemies (not required) **/
-    public void initializeEnemies() {
-        // Not required
-    }
-
-    /** Selected tower setter (not required) **/
-    public void setSelectedTower(Tower tower) {
-        // Not required
-    }
-
-    /** Reset towers (not required) **/
-    public void resetTowers() {
-        // Not required
-    }
-
-    /** Gold getter (not required) **/
-    public int getGold() {
-        return 0;
-    }
-
-    /** Wave getter (not required) **/
-    public int getWave() {
-        return 0;
-    }
-
-    /** BottomBar setter (not required) **/
-    public void setBottomBar(Playable bottomBar) {
         // Not required
     }
 }

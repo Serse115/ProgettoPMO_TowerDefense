@@ -1,6 +1,8 @@
 package view.gameScenes;
 
 import model.tower.Tower;
+import view.guiComponents.GameActionBar;
+
 import java.awt.*;
 
 /**** Interface for the GameScenes subclasses ****/
@@ -47,5 +49,14 @@ public interface Playable {
     int getWave();
 
     /** Set the bottomBar method **/
-    void setBottomBar(Playable bottomBar);
+    void setBottomBar(GameActionBar bottomBar);
+
+    /** Number of enemies getter **/
+    int getnOfEnemies();
+
+    /** Number of enemies setter **/
+    void setnOfEnemies(int nOfEnemies);
+
+    /** Wave counter setter **/
+    void setWaveCounter(int waveCounter);
 }

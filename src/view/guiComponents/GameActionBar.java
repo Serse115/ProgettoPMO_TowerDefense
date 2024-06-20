@@ -8,7 +8,7 @@ import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
 /**** Class for the action bar in the Play game scene ****/
-public class GameActionBar extends Bar implements Playable {
+public class GameActionBar extends Bar {
 
     /**** Fields ****/
     private Playable randomGame;            // Object reference to the "Random Game" game scene
@@ -59,6 +59,32 @@ public class GameActionBar extends Bar implements Playable {
         this.bMachineGun.draw(g, this.bMachineGun.getbImage());         // Draw the machinegun button
         this.bWall.draw(g, this.bWall.getbImage());                     // Draw the wall button
         this.drawGoldDisplayBar(g);                                     // Draw the bottom display bar
+        this.drawTowersCost(g);
+    }
+
+    /** Draw the towers cost method **/
+    private void drawTowersCost(Graphics g) {
+
+        this.drawTheBoxesAndStrings(g, this.bTurret.getX(), this.bTurret.getY(), 75);               // Turret cost box
+        this.drawTheBoxesAndStrings(g, this.bCannon.getX(), this.bCannon.getY(), 100);              // Cannon cost box
+        this.drawTheBoxesAndStrings(g, this.bMachineGun.getX(), this.bMachineGun.getY(), 50);       // MachineGun cost box
+        this.drawTheBoxesAndStrings(g, this.bWall.getX(), this.bWall.getY(), 70);                   // Wall cost box
+    }
+
+    /** Draw the cost boxes and strings above the turret buttons method **/
+    private void drawTheBoxesAndStrings(Graphics g, int x, int y, int goldRequired) {
+
+        // Little rectangles for the towers cost string
+        int yHeightOffset = 30;                                            // Offset y to draw the rectangle
+        int xOffset = 5;                                                   // Offset x to draw the string
+        int yOffset = 20;                                                  // Offset y to draw the string
+        Font font = new Font("Arial", Font.BOLD, 10);            // Changing the font and size of the string
+        g.setFont(font);
+        g.setColor(Color.GRAY);
+        g.fillRect(x, y - yHeightOffset, 56, 30);                         // Rectangle showing the tower's cost
+        g.setColor(Color.BLACK);                                                         // Resetting the color to draw the string
+        g.drawRect(x, y - yHeightOffset, 56, 30);
+        g.drawString("Gold: " + goldRequired, x + xOffset, (y - yHeightOffset) + yOffset);        // Displaying the turret's cost
     }
 
     /** Draw the bar to display the current gold **/
@@ -75,13 +101,14 @@ public class GameActionBar extends Bar implements Playable {
         Font font = new Font("Arial", Font.BOLD, 10);           // Changing the font and size of the string
         g.setFont(font);
 
-        switch (GameScenes.gameScenes) {                                                            // Depending on the current gamescene
-            case PLAY:                                                                              // Case random game
-                g.drawString("Available gold: " + this.randomGame.getGold(), 580, 675);    // Draw the gold only
+        switch (GameScenes.gameScenes) {                                                                    // Depending on the current gamescene
+            case PLAY:                                                                                      // Case random game
+                g.drawString("Available gold: " + this.randomGame.getGold(), 580, 675);            // Draw the gold
+                g.drawString("Enemies left: " + this.randomGame.getnOfEnemies(), 580, 700);        // Draw the enemies left
                 break;
-            case ENDLESS_WAVES:                                                                     // Case endless waves
-                g.drawString("Available gold: " + this.endlessWaves.getGold(), 580, 675);  // Draw gold
-                g.drawString("Wave : " + this.endlessWaves.getWave(), 580, 725);           // Draw current wave
+            case ENDLESS_WAVES:                                                                              // Case endless waves
+                g.drawString("Available gold: " + this.endlessWaves.getGold(), 580, 675);           // Draw gold
+                g.drawString("Wave: " + this.endlessWaves.getWave(), 580, 725);                     // Draw current wave
                 break;
         }
     }
@@ -99,8 +126,10 @@ public class GameActionBar extends Bar implements Playable {
                 case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
                     GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
                     this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
-                    this.endlessWaves.initializeEnemies();                                // Reset the game set of enemies for the new random game
-                    this.endlessWaves.resetTowers();                                      // Reset the towers in the game
+                    this.endlessWaves.initializeEnemies();                              // Reset the game set of enemies for the new random game
+                    this.endlessWaves.setnOfEnemies(1);                                 // Reset the number of enemies
+                    this.endlessWaves.setWaveCounter(1);                                // Reset the wave counter to 1
+                    this.endlessWaves.resetTowers();                                    // Reset the towers in the game
                     break;
             }
         }
@@ -207,47 +236,6 @@ public class GameActionBar extends Bar implements Playable {
 
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
-        // Not required
-    }
-
-    /** Not required methods (got from the interface) **/
-    /** Update method (not required) **/
-    public void update() {
-        // Not required
-    }
-
-    /** Initialize map (not required) **/
-    public void initializeMap() {
-        // Not required
-    }
-
-    /** Initialize enemies (not required) **/
-    public void initializeEnemies() {
-        // Not required
-    }
-
-    /** Selected tower setter (not required) **/
-    public void setSelectedTower(Tower tower) {
-        // Not required
-    }
-
-    /** Reset tower method (not required) **/
-    public void resetTowers() {
-        // Not required
-    }
-
-    /** Gold getter (not required) **/
-    public int getGold() {
-        return 0;
-    }
-
-    /** Wave getter (not required) **/
-    public int getWave() {
-        return 0;
-    }
-
-    /** BottomBar setter (not required) **/
-    public void setBottomBar(Playable bottomBar) {
         // Not required
     }
 }
