@@ -8,6 +8,7 @@ public enum GameScenes {
     MENU,
     EDIT_MAP,
     SAVED_MAPS,
+    SAVED_MAPS_GAME,
     ENDLESS_WAVES,
     GAME_OVER,
     GAME_WON;

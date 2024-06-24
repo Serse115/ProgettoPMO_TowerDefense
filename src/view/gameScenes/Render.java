@@ -37,6 +37,9 @@ public class Render {
             case SAVED_MAPS:                                // Case saved maps
                 this.mainFrame.getSavedMaps().render(g);    // Render and paint the components of the edit page
                 break;
+            case SAVED_MAPS_GAME:                           // Case saved maps game
+                this.mainFrame.getSavedMapGame().render(g); // Render and paint the components of the saved maps game page
+                break;
             case ENDLESS_WAVES:                             // Case endless waves
                 this.mainFrame.getEndlessWaves().render(g); // Render and paint the components of the endless waves page
                 break;

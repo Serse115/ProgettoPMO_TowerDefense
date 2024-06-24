@@ -8,7 +8,6 @@ import model.enemy.Zombie;
 import model.tower.Placeable;
 import model.tower.Tower;
 import view.guiComponents.GameActionBar;
-import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -32,7 +31,7 @@ public class GameSceneBase {
     private int attackingAnimationIndex;            // Animation index int for the attacking animation frames
     private int standingAnimationIndex;             // Animation index int for the standing animation frames
     private int shootingAnimationIndex;             // Animation index int for the standing animation frames
-    private int animationSpeed;                     // Animation speed int for the animation frames in milliseconds
+    private final int animationSpeed;               // Animation speed int for the animation frames in milliseconds
     private long lastTime;                          // Loop time variable
     private long timer;                             // Other loop time variable
     private int gold;                               // Gold resource for placing towers

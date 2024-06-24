@@ -3,8 +3,9 @@ package view.gameScenes;
 import controller.GUIController;
 import model.tower.Tower;
 import view.guiComponents.GameActionBar;
-import view.guiComponents.MainFrame;
 import view.guiComponents.Tile;
+import view.imageUtilities.LevelUtilities;
+
 import java.awt.*;
 
 /**** Class for the random game scene ****/
@@ -26,6 +27,7 @@ public class RandomGame extends GameSceneBase implements Playable {
 
 
     /**** Methods ****/
+    /** Render method **/
     public void render(Graphics g) {
         super.render(g);                    // Using the SuperClass method
     }
@@ -52,7 +54,7 @@ public class RandomGame extends GameSceneBase implements Playable {
     // Specialization of the empty method of the superclass
     public void initializeMap() {
 
-        int numberOfRoads = super.randomGenerator(1, 8);              // Generate the number of roads possible in the level
+        int numberOfRoads = super.randomGenerator(1, 8);                       // Generate the number of roads possible in the level
         super.setNumberOfRoads(numberOfRoads);                                                     // Set the number of roads
         int[] positionsOnTheArray = new int[numberOfRoads];                                        // Initialize positions array for roads
 
@@ -145,5 +147,10 @@ public class RandomGame extends GameSceneBase implements Playable {
     /** Wave counter setter (not required) **/
     public void setWaveCounter(int waveCounter) {
         // Not required
+    }
+
+    /** Saved map to load as game setter (not required) **/
+    public void setSavedMapPath(String savedMapPath) {
+        // Not necessary
     }
 }

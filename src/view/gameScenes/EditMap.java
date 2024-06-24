@@ -223,4 +223,14 @@ public class EditMap implements Playable {
     public void setWaveCounter(int waveCounter) {
         // Not required
     }
+
+    /** Gold setter (Not required) **/
+    public void setGold(int gold) {
+        // Not required
+    }
+
+    /** Saved map to load to game path (Not required) **/
+    public void setSavedMapPath(String savedMapPath) {
+        // Not required
+    }
 }

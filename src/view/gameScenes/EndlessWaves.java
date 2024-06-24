@@ -21,7 +21,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public EndlessWaves() {
         super();
         this.waveCounter = 1;                    // Starting wave
-        super.setGold(500);                      // Starting gold
+        super.setGold(750);                      // Starting gold
         this.setnOfEnemies(1);                   // Starting number of enemies
     }
 
@@ -47,8 +47,6 @@ public class EndlessWaves extends GameSceneBase implements Playable {
                 this.waveCounter++;                                     // Upgrade the wave counter
                 super.setGold(super.getGold() + 250);                   // Add 250 gold as a reward for the survived wave
                 super.setnOfEnemies(super.getnOfEnemies() + 5);         // Increasing the number of enemies for the next wave
-
-                System.out.println("Wave: " + this.waveCounter + ", Number of Enemies: " + super.getnOfEnemies()); // Debugging line
                 super.initializeEnemies();                              // Initialize the enemies for the next wave
             }
 
@@ -94,6 +92,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public void resetTowers() {
 
         super.resetTowers();                                // Using the superClass method
+        super.getLvlEnemies().clear();
         this.waveCounter = 1;                               // Resetting the waves counter
         super.setGold(1000);                                // Resetting the gold resources
     }
@@ -151,5 +150,15 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     /** Wave counter setter **/
     public void setWaveCounter(int waveCounter) {
         this.waveCounter = waveCounter;
+    }
+
+    /** Gold setter **/
+    public void setGold(int gold) {
+        super.setGold(gold);
+    }
+
+    /** Saved map to load in game path (Not necessary) **/
+    public void setSavedMapPath(String savedMapPath) {
+
     }
 }

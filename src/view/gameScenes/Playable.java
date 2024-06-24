@@ -59,4 +59,10 @@ public interface Playable {
 
     /** Wave counter setter **/
     void setWaveCounter(int waveCounter);
+
+    /** Gold setter **/
+    void setGold(int gold);
+
+    /** Saved map to load as game path **/
+    void setSavedMapPath(String savedMapPath);
 }

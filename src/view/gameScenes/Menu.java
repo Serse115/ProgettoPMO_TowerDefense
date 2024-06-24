@@ -2,7 +2,6 @@ package view.gameScenes;
 
 import model.tower.Tower;
 import view.guiComponents.Clickable;
-import view.guiComponents.MainFrame;
 import view.guiComponents.MyButton;
 import java.awt.*;
 import static view.gameScenes.GameScenes.*;
@@ -161,8 +160,8 @@ public class Menu extends GameSceneBase implements Playable {
         // Not required
     }
 
-    /** BottomBar setter (not required) **/
-    public void setBottomBar(Playable bottomBar) {
+    /** Saved map math setter (not required) **/
+    public void setSavedMapPath(String savedMapPath) {
         // Not required
     }
 }

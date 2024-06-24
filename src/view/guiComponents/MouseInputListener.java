@@ -42,6 +42,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 case SAVED_MAPS:                                                                     // If it's saved maps
                     this.mainFrame.getSavedMaps().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse clicked methods to do things depending on the position of the clicks
                     break;
+                case SAVED_MAPS_GAME:
+                    this.mainFrame.getSavedMapGame().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse clicked methods to do things depending on the position of the clicks
+                    break;
                 case ENDLESS_WAVES:                                                                     // If it's endless waves
                     this.mainFrame.getEndlessWaves().mouseClicked(e.getX() - 5, e.getY() - 30);   // Call the endless waves mouse clicked methods to do things depending on the position of the click
                     break;
@@ -71,6 +74,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case SAVED_MAPS:                                                                     // If it's saved maps
                 this.mainFrame.getSavedMaps().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the clicks
                 break;
+            case SAVED_MAPS_GAME:
+                this.mainFrame.getSavedMapGame().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the clicks
+                break;
             case ENDLESS_WAVES:                                                                   // If it's endless waves
                 this.mainFrame.getEndlessWaves().mouseMoved(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse moved methods to do things depending on the position of the click
                 break;
@@ -99,6 +105,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
             case SAVED_MAPS:                                                                     // If it's saved maps
                 this.mainFrame.getSavedMaps().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the clicks
                 break;
+            case SAVED_MAPS_GAME:
+                this.mainFrame.getSavedMapGame().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the clicks
+                break;
             case ENDLESS_WAVES:                                                                     // If it's endless waves
                 this.mainFrame.getEndlessWaves().mousePressed(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse pressed methods to do things depending on the position of the click
                 break;
@@ -126,6 +135,9 @@ public class MouseInputListener implements MouseListener, MouseMotionListener {
                 break;
             case SAVED_MAPS:                                                                     // If it's saved maps
                 this.mainFrame.getSavedMaps().mouseReleased(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse released methods to do things depending on the position of the clicks
+                break;
+            case SAVED_MAPS_GAME:
+                this.mainFrame.getSavedMapGame().mouseReleased(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse released methods to do things depending on the position of the clicks
                 break;
             case ENDLESS_WAVES:                                                                      // If it's endless waves
                 this.mainFrame.getEndlessWaves().mouseReleased(e.getX() - 5, e.getY() - 30);   // Call the edit's mouse released methods to do things depending on the position of the click

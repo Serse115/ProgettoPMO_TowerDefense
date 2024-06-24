@@ -46,8 +46,15 @@ public class GameOver {
                 this.mainFrame.getRandomgame().resetTowers();                                      // Reset the towers in the random game
 
                 this.mainFrame.getEndlessWaves().initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
-                this.mainFrame.getEndlessWaves().initializeEnemies();                              // Reset the game set of enemies for the new endless waves game
                 this.mainFrame.getEndlessWaves().resetTowers();                                    // Reset the towers in the endless waves game
+                this.mainFrame.getEndlessWaves().setnOfEnemies(1);                                 // Reset the number of enemies
+                this.mainFrame.getEndlessWaves().setWaveCounter(1);                                // Reset the wave counter to 1
+                this.mainFrame.getEndlessWaves().setGold(750);                                     // Reset the initial gold
+                this.mainFrame.getEndlessWaves().initializeEnemies();                              // Reset the game set of enemies for the new endless waves game
+
+                this.mainFrame.getSavedMapGame().initializeMap();                                  // Reset the game map to a new saved map one when back into the menu
+                this.mainFrame.getSavedMapGame().initializeEnemies();                              // Reset the game set of enemies for the saved map game
+                this.mainFrame.getSavedMapGame().resetTowers();                                    // Reset the towers in the saved map game
             }
         }
     }

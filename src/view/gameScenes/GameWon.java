@@ -42,6 +42,10 @@ public class GameWon {
             this.mainFrame.getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
             this.mainFrame.getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
             this.mainFrame.getRandomgame().resetTowers();                                      // Reset the towers in the random game
+
+            this.mainFrame.getSavedMapGame().initializeMap();                                  // Reset the game map to a new saved map one when back into the menu
+            this.mainFrame.getSavedMapGame().initializeEnemies();                              // Reset the game set of enemies for the saved map game
+            this.mainFrame.getSavedMapGame().resetTowers();                                    // Reset the towers in the saved map game
         }
     }
 

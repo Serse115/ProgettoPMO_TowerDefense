@@ -13,6 +13,7 @@ public class GameActionBar extends Bar {
     /**** Fields ****/
     private Playable randomGame;            // Object reference to the "Random Game" game scene
     private Playable endlessWaves;          // Object reference to the "Endless waves" game scene
+    private Playable savedMapsGame;
     private Clickable bMenu;                // Go back to the menu button
     private Clickable bTurret;              // Defense turret button
     private Clickable bCannon;              // Defense cannon button
@@ -24,10 +25,11 @@ public class GameActionBar extends Bar {
 
     /**** Constructors ****/
     /** Main constructor for the Random maps and Endless waves game modes **/
-    public GameActionBar(int x, int y, int width, int height, Playable randomGame, Playable endlessWaves) {
+    public GameActionBar(int x, int y, int width, int height, Playable randomGame, Playable endlessWaves, Playable savedMapsGame) {
         super(x, y, width, height);             // Using the superclass constructor
         this.randomGame = randomGame;
         this.endlessWaves = endlessWaves;
+        this.savedMapsGame = savedMapsGame;
         this.bMenu = new MyButton("Menu", 10, 680, 100, 56);
         this.bTurret = new MyButton("Turret", 155, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_turret/turret_icon.png"));
         this.bCannon = new MyButton("Cannon", 220, 680, 56, 56, SpriteUtilities.getSpriteAtlas("tower_cannon/cannon_icon.png"));
@@ -92,9 +94,9 @@ public class GameActionBar extends Bar {
 
         // Space for the gold stats
         g.setColor(Color.BLACK);
-        g.drawRect(540, 640, 200, 149);
+        g.drawRect(580, 640, 180, 149);
         g.setColor(Color.GRAY);
-        g.fillRect(541, 641, 200, 148);
+        g.fillRect(581, 641, 180, 148);
 
         // Displaying the available gold
         g.setColor(Color.BLACK);
@@ -103,12 +105,17 @@ public class GameActionBar extends Bar {
 
         switch (GameScenes.gameScenes) {                                                                    // Depending on the current gamescene
             case PLAY:                                                                                      // Case random game
-                g.drawString("Available gold: " + this.randomGame.getGold(), 580, 675);            // Draw the gold
-                g.drawString("Enemies left: " + this.randomGame.getnOfEnemies(), 580, 700);        // Draw the enemies left
+                g.drawString("Available gold: " + this.randomGame.getGold(), 610, 675);            // Draw the gold
+                g.drawString("Enemies left: " + this.randomGame.getnOfEnemies(), 610, 700);        // Draw the enemies left
                 break;
             case ENDLESS_WAVES:                                                                              // Case endless waves
-                g.drawString("Available gold: " + this.endlessWaves.getGold(), 580, 675);           // Draw gold
-                g.drawString("Wave: " + this.endlessWaves.getWave(), 580, 725);                     // Draw current wave
+                g.drawString("Available gold: " + this.endlessWaves.getGold(), 610, 675);           // Draw gold
+                g.drawString("Enemies per wave: " + this.endlessWaves.getnOfEnemies(), 610, 700);   // Draw the enemies left
+                g.drawString("Wave: " + this.endlessWaves.getWave(), 610, 725);                     // Draw current wave
+                break;
+            case SAVED_MAPS_GAME:
+                g.drawString("Available gold: " + this.savedMapsGame.getGold(), 610, 675);            // Draw the gold
+                g.drawString("Enemies left: " + this.savedMapsGame.getnOfEnemies(), 610, 700);        // Draw the enemies left
                 break;
         }
     }
@@ -126,10 +133,17 @@ public class GameActionBar extends Bar {
                 case ENDLESS_WAVES:                              // If the gameScene is the endless waves one
                     GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
                     this.endlessWaves.initializeMap();                                  // Reset the endless waves game map to the standard layout when back into the menu
-                    this.endlessWaves.initializeEnemies();                              // Reset the game set of enemies for the new random game
+                    this.endlessWaves.resetTowers();                                    // Reset the towers in the game
                     this.endlessWaves.setnOfEnemies(1);                                 // Reset the number of enemies
                     this.endlessWaves.setWaveCounter(1);                                // Reset the wave counter to 1
-                    this.endlessWaves.resetTowers();                                    // Reset the towers in the game
+                    this.endlessWaves.setGold(750);                                     // Reset the initial goal
+                    this.endlessWaves.initializeEnemies();                              // Reset the game set of enemies for the new random game
+                    break;
+                case SAVED_MAPS_GAME:
+                    GameScenes.setGameScene(MENU);                                      // Set the game scene back to the menu
+                    this.savedMapsGame.initializeMap();                                    // Reset the game map to a new random one when back into the menu
+                    this.savedMapsGame.initializeEnemies();                                // Reset the game set of enemies for the new random game
+                    this.savedMapsGame.resetTowers();                                      // Reset the towers in the game
                     break;
             }
         }
@@ -141,6 +155,9 @@ public class GameActionBar extends Bar {
                 case ENDLESS_WAVES:
                     this.endlessWaves.setSelectedTower(new Turret());       // Set the turret as the selected tower
                     break;
+                case SAVED_MAPS_GAME:
+                    this.savedMapsGame.setSelectedTower(new Turret());       // Set the turret as the selected tower
+                    break;
             }
         }
         else if (this.bCannon.getButtonBounds().contains(x, y)) {   // If it's clicked within the cannon tower button's boundaries
@@ -150,6 +167,9 @@ public class GameActionBar extends Bar {
                     break;
                 case ENDLESS_WAVES:
                     this.endlessWaves.setSelectedTower(new Cannon());       // Set the cannon as the selected tower
+                    break;
+                case SAVED_MAPS_GAME:
+                    this.savedMapsGame.setSelectedTower(new Cannon());       // Set the cannon as the selected tower
                     break;
             }
         }
@@ -161,6 +181,9 @@ public class GameActionBar extends Bar {
                 case ENDLESS_WAVES:
                     this.endlessWaves.setSelectedTower(new MachineGun());         // Set the machinegun as the selected tower
                     break;
+                case SAVED_MAPS_GAME:
+                    this.savedMapsGame.setSelectedTower(new MachineGun());       // Set the machinegun as the selected tower
+                    break;
             }
         }
         else if (this.bWall.getButtonBounds().contains(x, y)) {     // If it's clicked within the cannon tower button's boundaries
@@ -170,6 +193,9 @@ public class GameActionBar extends Bar {
                     break;
                 case ENDLESS_WAVES:
                     this.endlessWaves.setSelectedTower(new Wall());           // Set the wall as the selected tower
+                    break;
+                case SAVED_MAPS_GAME:
+                    this.savedMapsGame.setSelectedTower(new Wall());       // Set the turret as the selected tower
                     break;
             }
         }

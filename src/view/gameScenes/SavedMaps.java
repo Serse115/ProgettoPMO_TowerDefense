@@ -1,23 +1,27 @@
 package view.gameScenes;
 
-import model.tower.Tower;
 import view.guiComponents.Clickable;
 import view.guiComponents.MyButton;
+import view.guiComponents.SaveFileBar;
 import java.awt.*;
 import static view.gameScenes.GameScenes.MENU;
 
 /***** Saved maps gameScene class *****/
-public class SavedMaps extends GameSceneBase implements Playable {
+public class SavedMaps {
 
     /**** Fields ****/
     private Clickable bMenu;                                        // Menu button
+    private SaveFileBar[] saveFileBar;
 
 
 
     /**** Constructor ****/
     public SavedMaps() {
-        super();
         this.bMenu = new MyButton("Menu", 300, 710, 100, 50);
+        this.saveFileBar = new SaveFileBar[5];
+        for (int i = 0; i < 5; i++) {
+            this.saveFileBar[i] = new SaveFileBar(10, i);
+        }
     }
 
 
@@ -27,7 +31,11 @@ public class SavedMaps extends GameSceneBase implements Playable {
     public void render(Graphics g) {
         this.drawBottomBar(g);              // Draw the bottomBar
         this.bMenu.draw(g);                 // Draw the menu button
-        this.drawPanel(g);                  // Draw the information panel
+        for (int i = 0; i < 5; i++) {
+            this.saveFileBar[i].render(g);
+        }
+
+        //this.drawPanel(g);                  // Draw the information panel
     }
 
     /** Draw bottom bar method **/
@@ -75,52 +83,6 @@ public class SavedMaps extends GameSceneBase implements Playable {
 
     /** Mouse dragged method **/
     public void mouseDragged(int x, int y) {
-        // Not required
-    }
-
-    /** Not required methods (got from the interface)* */
-    /** Update method (not required) **/
-    public void update() {
-        // Not required
-    }
-
-    /** Initialize map method (not required) **/
-    public void initializeMap() {
-        // Not required
-    }
-
-    /** Initialize enemies method (not required) **/
-    public void initializeEnemies() {
-        // Not required
-    }
-
-    /** Selected tower setter (not required) **/
-    public void setSelectedTower(Tower tower) {
-        // Not required
-    }
-
-    /** Reset the towers method (not required) **/
-    public void resetTowers() {
-        // Not required
-    }
-
-    /** Gold getter (not required) **/
-    public int getGold() {
-        return 0;
-    }
-
-    /** Wave getter (not required) **/
-    public int getWave() {
-        return 0;
-    }
-
-    /** Wave counter setter (not required) **/
-    public void setWaveCounter(int waveCounter) {
-        // Not required
-    }
-
-    /** BottomBar setter (not required) **/
-    public void setBottomBar(Playable bottomBar) {
         // Not required
     }
 }
