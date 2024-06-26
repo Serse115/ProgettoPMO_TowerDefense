@@ -65,4 +65,7 @@ public interface Playable {
 
     /** Saved map to load as game path **/
     void setSavedMapPath(String savedMapPath);
+
+    /** Map initializer for the saved map games modes **/
+    void initializeRealMap();
 }

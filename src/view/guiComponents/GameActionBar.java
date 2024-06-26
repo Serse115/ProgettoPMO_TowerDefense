@@ -26,7 +26,7 @@ public class GameActionBar extends Bar {
     /**** Constructors ****/
     /** Main constructor for the Random maps and Endless waves game modes **/
     public GameActionBar(int x, int y, int width, int height, Playable randomGame, Playable endlessWaves, Playable savedMapsGame) {
-        super(x, y, width, height);             // Using the superclass constructor
+        super(x, y, width, height);                                         // Using the superclass constructor
         this.randomGame = randomGame;
         this.endlessWaves = endlessWaves;
         this.savedMapsGame = savedMapsGame;
@@ -106,16 +106,16 @@ public class GameActionBar extends Bar {
         switch (GameScenes.gameScenes) {                                                                    // Depending on the current gamescene
             case PLAY:                                                                                      // Case random game
                 g.drawString("Available gold: " + this.randomGame.getGold(), 610, 675);            // Draw the gold
-                g.drawString("Enemies left: " + this.randomGame.getnOfEnemies(), 610, 700);        // Draw the enemies left
+                g.drawString("Enemies in wave: " + this.randomGame.getnOfEnemies(), 610, 700);     // Draw the enemies left
                 break;
             case ENDLESS_WAVES:                                                                              // Case endless waves
                 g.drawString("Available gold: " + this.endlessWaves.getGold(), 610, 675);           // Draw gold
-                g.drawString("Enemies per wave: " + this.endlessWaves.getnOfEnemies(), 610, 700);   // Draw the enemies left
+                g.drawString("Enemies in wave: " + this.endlessWaves.getnOfEnemies(), 610, 700);    // Draw the enemies left
                 g.drawString("Wave: " + this.endlessWaves.getWave(), 610, 725);                     // Draw current wave
                 break;
             case SAVED_MAPS_GAME:
                 g.drawString("Available gold: " + this.savedMapsGame.getGold(), 610, 675);            // Draw the gold
-                g.drawString("Enemies left: " + this.savedMapsGame.getnOfEnemies(), 610, 700);        // Draw the enemies left
+                g.drawString("Enemies in wave: " + this.savedMapsGame.getnOfEnemies(), 610, 700);     // Draw the enemies left
                 break;
         }
     }

@@ -161,4 +161,9 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public void setSavedMapPath(String savedMapPath) {
 
     }
+
+    /** Map initializer (not required) **/
+    public void initializeRealMap() {
+        // Not required
+    }
 }

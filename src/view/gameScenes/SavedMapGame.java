@@ -21,7 +21,7 @@ public class SavedMapGame extends RandomGame implements Playable {
     /**** Constructors ****/
     public SavedMapGame() {
         super();
-        this.savedMapPath = "resources/levels/CustomMaps/customLvl_5.txt";
+        this.savedMapPath = "";
     }
 
 
@@ -38,15 +38,29 @@ public class SavedMapGame extends RandomGame implements Playable {
         super.update();                               // Using the SuperClass method
     }
 
-    /** Initialize map method **/
-    // Specialization of the superclass method
+    /** Initialize the real saved game map method **/
     public void initializeRealMap() {
+
+        int[][] mapArrayInt = LevelUtilities.getLvlData(this.savedMapPath);             // Initialize the map array tiles layout with the data from the chosen txt file
+        ArrayList<Integer> roadsNumber = this.roadsCounter(mapArrayInt);                // ArrayList of integers for the roads positions
+        int[] roadsNumberArray = new int[roadsNumber.size()];                           // Array of ints for the positions of the roads on the map
+
+
+        Iterator<Integer> iterator = roadsNumber.iterator();                    // Iterator for the list of integers representing the positions of roads
+        int k = 0;                                                              // Counter for the array
+        while (iterator.hasNext()) {                                            // While there are values in the list
+            int index = iterator.next();                                        // Index that keeps track of the position on the array of ints to fill
+            roadsNumberArray[k] = index;                                        // Passing the value of the road index on the map to the array
+            k++;
+        }
+
+        super.setPositionsOnTheArray(roadsNumberArray);                         // Setting the positions on the tiles array where roads are
 
         try {
             for (int i = 0; i < 20; i++) {                                                // For every row and column of the array of tiles of the lvl
                 for (int j = 0; j < 23; j++) {
-                    super.getMapArrayTile()[i][j] = new Tile();                           // Initialize every tile by default
-                    super.getMapArrayTile()[i][j].setTileType(1);                         // Initialize then the tile types through the setter and grass tile type
+                    super.getMapArrayTile()[i][j] = new Tile();                            // Initialize every tile by default
+                    super.getMapArrayTile()[i][j].setTileType(mapArrayInt[i][j]);          // Initialize then the tile types through the setter and the values of the array of ints
                     super.getMapArrayTile()[i][j].setSprite(super.getGuiController().getTileTypeReturnImage(super.getMapArrayTile()[i][j].getTileType()));  // Set the tile sprites through the types
                 }
             }
@@ -54,6 +68,8 @@ public class SavedMapGame extends RandomGame implements Playable {
         catch (NullPointerException e) {
             e.printStackTrace();
         }
+
+        this.initializeEnemies();
     }
 
     /** Map roads analyzer sub-method **/
@@ -80,7 +96,8 @@ public class SavedMapGame extends RandomGame implements Playable {
     /** Initialize the map with a default layout method **/
     /** Load saved game map layout method **/
     public void initializeMap() {
-        int[][] mapArrayInt = LevelUtilities.getLvlData("resources/levels/CustomMaps/customLvl_5.txt");             // Initialize the map array tiles layout with the data from the chosen txt file
+
+        int[][] mapArrayInt = LevelUtilities.getLvlData("resources/levels/DefaultCustomMap.txt");             // Initialize the map array tiles layout with the data from the chosen txt file
         ArrayList<Integer> roadsNumber = this.roadsCounter(mapArrayInt);                // ArrayList of integers for the roads positions
         int[] roadsNumberArray = new int[roadsNumber.size()];                           // Array of ints for the positions of the roads on the map
 
@@ -112,7 +129,12 @@ public class SavedMapGame extends RandomGame implements Playable {
     /** Initialize the number of enemies for the map **/
     public void initializeEnemies() {
 
-        super.initializeEnemies();                      // Using the SuperClass method
+        try {
+            super.initializeEnemies();                      // Using the SuperClass method
+        }
+        catch (Exception e) {
+
+        }
     }
 
     /** Set the selected tower as the one chosen **/

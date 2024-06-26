@@ -164,4 +164,9 @@ public class Menu extends GameSceneBase implements Playable {
     public void setSavedMapPath(String savedMapPath) {
         // Not required
     }
+
+    /** Map initializer (not required) **/
+    public void initializeRealMap() {
+        // Not required
+    }
 }

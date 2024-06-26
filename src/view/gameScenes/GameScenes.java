@@ -9,6 +9,7 @@ public enum GameScenes {
     EDIT_MAP,
     SAVED_MAPS,
     SAVED_MAPS_GAME,
+    ERROR_SAVED_MAPS,
     ENDLESS_WAVES,
     GAME_OVER,
     GAME_WON;

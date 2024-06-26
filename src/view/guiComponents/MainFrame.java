@@ -23,6 +23,7 @@ public class MainFrame extends JFrame implements Runnable {
     private GameOver gameOver;                                        // Game over scene
     private GameWon gameWon;                                          // Game won scene
     private SavedMaps savedMaps;                                      // Saved maps scene
+    private ErrorLoadSavedMap errorLoadSavedMap;                      // Error in case the custom map loading fails
     private boolean running;                                          // Thread status variable
 
 
@@ -45,7 +46,7 @@ public class MainFrame extends JFrame implements Runnable {
         this.randomGame = new RandomGame(); // Initializing the play game scene object
         this.edit = new EditMap();                                // Initializing the edit game scene object
         this.endlessWaves = new EndlessWaves();  // Initializing the endless waves game scene object
-        this.savedMaps = new SavedMaps();                         // Initializing the saved maps scene object
+        this.savedMaps = new SavedMaps(this);                         // Initializing the saved maps scene object
         this.savedMapGame = new SavedMapGame();        // Initializing the saved maps game scene object
         this.actionBar = new GameActionBar(0, 640, 736, 160, this.randomGame, this.endlessWaves, this.savedMapGame);   // Initializing the actionBar
 
@@ -55,8 +56,7 @@ public class MainFrame extends JFrame implements Runnable {
 
         this.gameOver = new GameOver(this);                           // Initializing the game over scene object
         this.gameWon = new GameWon(this);                             // Initializing the game won scene object
-
-
+        this.errorLoadSavedMap = new ErrorLoadSavedMap(this);         // Initializing the error load save map object
 
         this.mouseInputListener = new MouseInputListener(this);       // Initializing the mouse input listener
         super.addMouseListener(this.mouseInputListener);                       // Adding the mouse input listener as a mouse listener
@@ -192,5 +192,10 @@ public class MainFrame extends JFrame implements Runnable {
     /** Saved maps game getter **/
     public Playable getSavedMapGame() {
         return this.savedMapGame;
+    }
+
+    /** Error saved maps game getter **/
+    public ErrorLoadSavedMap getErrorLoadSavedMap() {
+        return this.errorLoadSavedMap;
     }
 }

@@ -4,8 +4,6 @@ import controller.GUIController;
 import model.tower.Tower;
 import view.guiComponents.GameActionBar;
 import view.guiComponents.Tile;
-import view.imageUtilities.LevelUtilities;
-
 import java.awt.*;
 
 /**** Class for the random game scene ****/
@@ -41,7 +39,14 @@ public class RandomGame extends GameSceneBase implements Playable {
 
             // Specialization
             if (super.getLvlEnemies().isEmpty()) {                      // If the list of enemies is empty and there are no more enemies
-                GameScenes.setGameScene(GameScenes.GAME_WON);           // Set the game scene as the victory one
+                switch (GameScenes.gameScenes) {                        // Depending on the
+                    case PLAY:
+                        GameScenes.setGameScene(GameScenes.GAME_WON);           // Set the game scene as the victory one
+                        break;
+                    case SAVED_MAPS_GAME:
+                        GameScenes.setGameScene(GameScenes.ERROR_SAVED_MAPS);
+                        break;
+                }
             }
 
         } catch (Exception e) {
@@ -151,6 +156,11 @@ public class RandomGame extends GameSceneBase implements Playable {
 
     /** Saved map to load as game setter (not required) **/
     public void setSavedMapPath(String savedMapPath) {
-        // Not necessary
+        // Not required
+    }
+
+    /** Map initializer (not required) **/
+    public void initializeRealMap() {
+        // Not required
     }
 }
