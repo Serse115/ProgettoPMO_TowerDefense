@@ -23,5 +23,10 @@ public class Wall extends Tower implements Placeable {
 
 
     /**** Methods ****/
-    // Inherited from upperclass
+    // Mostly inherited from upperclass
+
+    /** Repair the tower **/
+    public void repairTower() {
+        super.setLifePoints(super.getLifePoints() + (9000 - super.getLifePoints()));
+    }
 }

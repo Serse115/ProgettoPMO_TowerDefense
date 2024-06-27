@@ -238,4 +238,9 @@ public class EditMap implements Playable {
     public void initializeRealMap() {
         // Not required
     }
+
+    /** Bottom-bar getter (not required) **/
+    public GameActionBar getBottomBar() {
+        return null;
+    }
 }

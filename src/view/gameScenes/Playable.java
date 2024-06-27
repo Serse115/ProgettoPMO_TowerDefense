@@ -68,4 +68,7 @@ public interface Playable {
 
     /** Map initializer for the saved map games modes **/
     void initializeRealMap();
+
+    /** Bottom-bar getter **/
+    GameActionBar getBottomBar();
 }

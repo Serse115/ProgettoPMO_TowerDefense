@@ -21,7 +21,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
     public EndlessWaves() {
         super();
         this.waveCounter = 1;                    // Starting wave
-        super.setGold(750);                      // Starting gold
+        super.setGold(500);                      // Starting gold
         this.setnOfEnemies(1);                   // Starting number of enemies
     }
 
@@ -94,7 +94,7 @@ public class EndlessWaves extends GameSceneBase implements Playable {
         super.resetTowers();                                // Using the superClass method
         super.getLvlEnemies().clear();
         this.waveCounter = 1;                               // Resetting the waves counter
-        super.setGold(1000);                                // Resetting the gold resources
+        super.setGold(500);                                // Resetting the gold resources
     }
 
     /** Mouse clicked method **/

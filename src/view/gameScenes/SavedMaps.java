@@ -38,8 +38,6 @@ public class SavedMaps {
         for (int i = 0; i < this.nOfFilesToDisplay; i++) {
             this.saveFileBar[i].render(g);
         }
-
-        //this.drawPanel(g);                  // Draw the information panel
     }
 
     /** Draw bottom bar method **/

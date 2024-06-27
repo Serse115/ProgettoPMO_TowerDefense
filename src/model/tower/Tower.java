@@ -70,6 +70,17 @@ public class Tower implements Placeable {
         }
     }
 
+    /** Set the dmg power **/
+    public void upgradeDmgPower() {
+        this.dmgPower *= 2;
+        this.lifePoints *= 1.5;
+    }
+
+    /** Repair the tower **/
+    // Implemented in each sub-class
+    public void repairTower() {
+
+    }
 
     /** Life points getter **/
     public int getLifePoints() {
@@ -139,5 +150,10 @@ public class Tower implements Placeable {
     /** Get the tower's cost method **/
     public int getCost(){
         return this.cost;
+    }
+
+    /** Get the tower's damage **/
+    public int getDmgPower() {
+        return this.dmgPower;
     }
 }

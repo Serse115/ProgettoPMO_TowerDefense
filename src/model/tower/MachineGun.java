@@ -24,5 +24,10 @@ public class MachineGun extends Tower implements Placeable {
 
 
     /**** Methods ****/
-    // Inherited from superclass
+    // Mostly inherited from superclass
+
+    /** Repair the tower **/
+    public void repairTower() {
+        super.setLifePoints(super.getLifePoints() + (1500 - super.getLifePoints()));
+    }
 }

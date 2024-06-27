@@ -47,4 +47,7 @@ public interface Fightable {
 
     /** Get the line of fire method **/
     int getLineOfFire();
+
+    /** Get the gold reward method **/
+    int getGold();
 }

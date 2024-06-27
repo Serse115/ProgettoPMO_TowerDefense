@@ -126,6 +126,7 @@ public class GameSceneBase {
                     enemy.enemyLogic();                                             // Start the enemy logic
                 } else {                                                            // Or else
                     iterator.remove();                                              // Remove the enemy
+                    this.gold += enemy.getGold();                                   // Increment the gold resources by the gold reward of the enemy
                 }
             }
 
@@ -298,6 +299,7 @@ public class GameSceneBase {
         }
         else {                                      // Else
             this.addTowerToTile(x, y);              // Add the chosen tower to the tile through the coordinates
+            this.checkTowerToUpgrade(x, y);
         }
     }
 
@@ -337,6 +339,20 @@ public class GameSceneBase {
     public void mouseDragged(int x, int y) {
 
         // Not required
+    }
+
+    /** Check if the tile clicked has a tower **/
+    private void checkTowerToUpgrade(int x, int y) {
+
+        int tileX = x / 32;
+        int tileY = y / 32;
+
+        if (this.mapArrayTile[tileY][tileX].isHasTower()) {
+            this.bottomBar.setTowerToDisplay(this.mapArrayTile[tileY][tileX].getTower());
+        }
+        else {
+            this.bottomBar.setTowerToDisplay(null);
+        }
     }
 
     /** Reset towers method **/
@@ -427,5 +443,11 @@ public class GameSceneBase {
     // General implementation here that works for every subclass too
     public void setTowerToAdd(Placeable towerToAdd) {
         this.towerToAdd = towerToAdd;
+    }
+
+    /** Bottom-bar getter **/
+    // General implementation here that works for every subclass too
+    public GameActionBar getBottomBar() {
+        return bottomBar;
     }
 }

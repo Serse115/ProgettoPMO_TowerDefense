@@ -40,4 +40,13 @@ public interface Placeable {
 
     /** Get the cost method **/
     int getCost();
+
+    /** Get the tower's damage **/
+    int getDmgPower();
+
+    /** Set the dmg power **/
+    void upgradeDmgPower();
+
+    /** Repair the tower **/
+    void repairTower();
 }

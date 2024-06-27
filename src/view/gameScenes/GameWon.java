@@ -37,12 +37,14 @@ public class GameWon {
 
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
-        if (this.bMenu.getButtonBounds().contains(x, y)) {          // If it's clicked within the menu button's boundaries
-            GameScenes.setGameScene(MENU);                          // Set the game scene as the menu one
+        if (this.bMenu.getButtonBounds().contains(x, y)) {                          // If it's clicked within the menu button's boundaries
+            GameScenes.setGameScene(MENU);                                          // Set the game scene as the menu one
+            this.mainFrame.getRandomgame().getBottomBar().setTowerToDisplay(null);  // Reset the tower to display to null
             this.mainFrame.getRandomgame().initializeMap();                                    // Reset the game map to a new random one when back into the menu
             this.mainFrame.getRandomgame().initializeEnemies();                                // Reset the game set of enemies for the new random game
             this.mainFrame.getRandomgame().resetTowers();                                      // Reset the towers in the random game
 
+            this.mainFrame.getSavedMapGame().getBottomBar().setTowerToDisplay(null);           // Reset the tower to display to null
             this.mainFrame.getSavedMapGame().initializeMap();                                  // Reset the game map to a new saved map one when back into the menu
             this.mainFrame.getSavedMapGame().initializeEnemies();                              // Reset the game set of enemies for the saved map game
             this.mainFrame.getSavedMapGame().resetTowers();                                    // Reset the towers in the saved map game

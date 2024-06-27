@@ -21,13 +21,14 @@ public class Enemy implements Fightable {
     private Tile[] nextTiles;                     // Tile object reference to check if the next tile is a tower to attack
     private Tile currentTile;                     // Tile where the enemy eventually stops to fight with the tower
     private Rectangle bounds;                     // Hitbox and bounds of the enemy
+    private int goldReward;                       // Gold reward for the killing of the enemy
 
 
 
 
     /**** Constructors ****/
     /** Main constructor **/
-    public Enemy(int lifePoints, float speed, int hitPower, int walkingLength, int attackingLength, Tile[] nextTiles, float x, int y, int width, int height) {
+    public Enemy(int lifePoints, float speed, int hitPower, int walkingLength, int attackingLength, Tile[] nextTiles, float x, int y, int width, int height, int gold) {
         this.lifePoints = lifePoints;
         this.speed = speed;
         this.hitPower = hitPower;
@@ -39,6 +40,7 @@ public class Enemy implements Fightable {
         this.attackingImages = new BufferedImage[attackingLength];
         this.nextTiles = nextTiles;
         this.bounds = new Rectangle((int) x, y, width, height);
+        this.goldReward = gold;
     }
 
 
@@ -161,5 +163,10 @@ public class Enemy implements Fightable {
     /** Return the line of fire of the tile **/
     public int getLineOfFire() {
         return this.yPosition / 32;
+    }
+
+    /** Return the gold as a reward for killing this enemy **/
+    public int getGold() {
+        return this.goldReward;
     }
 }
