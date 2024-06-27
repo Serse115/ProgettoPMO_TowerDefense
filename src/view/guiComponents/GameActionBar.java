@@ -136,7 +136,7 @@ public class GameActionBar extends Bar {
             g.setColor(Color.GRAY);
             g.fillRect(421, 641, 139, 148);
 
-            // Displaying the available gold
+            // Displaying the towers info
             g.setColor(Color.BLACK);
             Font font = new Font("Arial", Font.BOLD, 10);           // Changing the font and size of the string
             g.setFont(font);
@@ -144,6 +144,7 @@ public class GameActionBar extends Bar {
             g.drawString("Life points: " + this.towerToDisplay.getLifePoints(), 470, 655);
             g.drawString("Damage: " + this.towerToDisplay.getDmgPower(), 470, 675);
 
+            // Draw buttons
             this.bUpgrade.draw(g);
             this.bRepair.draw(g);
         }

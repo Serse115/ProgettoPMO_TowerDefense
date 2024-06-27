@@ -48,13 +48,6 @@ public class SavedMaps {
         g.drawRect(0, 700, 736, 100);     // Draw the border rectangle
     }
 
-    /** Draw the info panel method **/
-    private void drawPanel(Graphics g) {
-        Font font = new Font("Arial", Font.BOLD, 15);           // Changing the font and size of the string
-        g.setFont(font);                                                  // Setting the font
-        g.drawString("Coming soon!", 325, 150);                  // Draw the string
-    }
-
     /** Mouse clicked method **/
     public void mouseClicked(int x, int y) {
         if (this.bMenu.getButtonBounds().contains(x, y)) {      // If it's clicked within the menu button's boundaries
