@@ -51,7 +51,7 @@ public class MyButton implements Clickable {
         this.drawButtonText(g);             // Button's text
     }
 
-    /** Draw the button method  (for tiles buttons (grass, water, road) **/
+    /** Draw the button method 2 (for tiles buttons (grass, water, road) **/
     public void draw(Graphics g, BufferedImage bImg) {
 
         this.drawButtonInside(g, bImg);           // Button's inside
@@ -87,9 +87,9 @@ public class MyButton implements Clickable {
     private void drawButtonInside(Graphics g, BufferedImage tileImg) {
 
         g.drawImage(tileImg, this.getX() + 1, this.getY() + 1, this.getWidth() - 1, this.getHeight() - 1, null);      // Paint the button's inside
-        if (this.mouseOver) {           // If the mouse is over the button's bounds
-            g.setColor(Color.WHITE);     // Paint the inside borders as white to give it an effect
-            g.drawRect(this.getX() + 1, this.getY() + 2, this.getWidth() - 3, this.getHeight() - 3);    // Paint the button's effect
+        if (this.mouseOver) {                                                                                          // If the mouse is over the button's bounds
+            g.setColor(Color.WHITE);                                                                                   // Paint the inside borders as white to give it an effect
+            g.drawRect(this.getX() + 1, this.getY() + 2, this.getWidth() - 3, this.getHeight() - 3); // Paint the button's effect
         }
     }
 

@@ -21,7 +21,7 @@ public class GameScreen extends JPanel {
         super.setPreferredSize(size);                                       // Setting the preferred size for the panel
         super.setMaximumSize(size);                                         // Setting the maximum size for the panel
 
-        this.mainFrame = mainFrame;
+        this.mainFrame = mainFrame;                                         // Setting the mainframe object reference
     }
 
 

@@ -24,6 +24,7 @@ public class Tower implements Placeable {
 
 
     /**** Constructors ****/
+    /** Main constructor **/
     public Tower(int lifePoints, int dmgPower, int x, int y, int height, int towerType, int cost) {
         this.lifePoints = lifePoints;
         this.dmgPower = dmgPower;
@@ -40,17 +41,20 @@ public class Tower implements Placeable {
 
     /**** Methods ****/
     /** Shoot method **/
+    // General implementation here that works for every subclass too
     private void shoot(Fightable enemyInRange) {
         enemyInRange.setLifePoints(enemyInRange.getLifePoints() - this.dmgPower);
     }
 
     /** Method to check if the enemy is in range of the tower with a slight offset tolerance **/
+    // General implementation here that works for every subclass too
     private boolean isInRange(Fightable enemy) {
         return ((-15 <= (this.yPosition - enemy.getLineOfFire())) && ((this.yPosition - enemy.getLineOfFire()) <= 15));
     }
 
 
     /** Tower logic method to handle all the situations the tower may be in **/
+    // General implementation here that works for every subclass too
     public void towerLogic(ArrayList<Fightable> enemies) {
 
         boolean foundEnemyInRange = false;                  // Local variable to keep in check if the enemy in range
@@ -70,7 +74,8 @@ public class Tower implements Placeable {
         }
     }
 
-    /** Set the dmg power **/
+    /** Upgrade the dmg power **/
+    // General implementation here that works for every subclass too
     public void upgradeDmgPower() {
         this.dmgPower *= 2;
         this.lifePoints *= 1.5;
@@ -82,6 +87,7 @@ public class Tower implements Placeable {
 
     }
 
+    /*** Getters and setters ***/
     /** Life points getter **/
     public int getLifePoints() {
         return lifePoints;

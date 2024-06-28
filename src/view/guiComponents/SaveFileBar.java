@@ -20,8 +20,8 @@ public class SaveFileBar {
     public SaveFileBar(int baseY, int index, MainFrame mainFrame) {
         this.y = baseY + index * 100;                                                       // Set the y coordinate based on the base position and index
         this.bPlay = new MyButton("Play", 650, this.y + 30, 60, 40);  // Set the y coordinate for the play button
-        this.fileIndex = index;
-        this.mainFrame = mainFrame;
+        this.fileIndex = index;                                                             // Set the file index
+        this.mainFrame = mainFrame;                                                         // Set the mainframe object reference
     }
 
 
@@ -45,9 +45,9 @@ public class SaveFileBar {
     public void mouseClicked(int x, int y) {
         if (this.bPlay.getButtonBounds().contains(x, y)) {      // If it's clicked within the menu button's boundaries
 
-            this.mainFrame.getSavedMapGame().setSavedMapPath("resources/levels/CustomMaps/customLvl_" + (this.fileIndex + 1) + ".txt");
-            this.mainFrame.getSavedMapGame().initializeRealMap();
-            GameScenes.setGameScene(SAVED_MAPS_GAME);                      // Set the game scene as the menu one
+            this.mainFrame.getSavedMapGame().setSavedMapPath("resources/levels/CustomMaps/customLvl_" + (this.fileIndex + 1) + ".txt"); // Set the saved map path to load the game
+            this.mainFrame.getSavedMapGame().initializeRealMap();                                                                       // Re-initialize the map with the new path
+            GameScenes.setGameScene(SAVED_MAPS_GAME);                      // Set the game scene as the saved maps game one
         }
     }
 

@@ -29,6 +29,7 @@ public class EditMap implements Playable {
 
 
     /**** Constructors ****/
+    /** Main constructor **/
     public EditMap() {
         this.editingToolBar = new EditingToolBar(0, 640, 736, 160, this);
         this.grassImg = SpriteUtilities.getSpriteAtlas("layout_atlas/grass_atlas.png");

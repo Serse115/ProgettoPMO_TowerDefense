@@ -10,8 +10,8 @@ public class SpriteUtilities {
 
     /**** Methods ****/
     /** Get the whole requested sprite atlas from the resources folder and return it **/
-    public static BufferedImage getSpriteAtlas(String neededAtlasPath) {                           // Uses a string to identify the requested atlas path to return
-        BufferedImage img = null;
+    public static BufferedImage getSpriteAtlas(String neededAtlasPath) {                            // Uses a string to identify the requested atlas path to return
+        BufferedImage img = null;                                                                        // Set the buffered image by default to null
         InputStream is = SpriteUtilities.class.getClassLoader().getResourceAsStream(neededAtlasPath);         // Getting the requested atlas as an input stream of bytes
 
         try {

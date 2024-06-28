@@ -168,7 +168,7 @@ public class GameActionBar extends Bar {
                     this.endlessWaves.resetTowers();                                    // Reset the towers in the game
                     this.endlessWaves.setnOfEnemies(1);                                 // Reset the number of enemies
                     this.endlessWaves.setWaveCounter(1);                                // Reset the wave counter to 1
-                    this.endlessWaves.setGold(750);                                     // Reset the initial goal
+                    this.endlessWaves.setGold(500);                                     // Reset the initial goal
                     this.endlessWaves.initializeEnemies();                              // Reset the game set of enemies for the new random game
                     break;
                 case SAVED_MAPS_GAME:                              // If the gameScene is the saved maps game one

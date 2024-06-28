@@ -254,7 +254,7 @@ public class GameSceneBase {
             int tileX = x / 32;                                 // X position of the tile to change
             int tileY = y / 32;                                 // Y position of the tile to change
 
-            Tile selectedTile = this.mapArrayTile[tileY][tileX];        // Selected tile to change
+            Tile selectedTile = this.mapArrayTile[tileY][tileX];                        // Selected tile to change
             if (selectedTile.getTileType() == 2 && !selectedTile.isHasTower()) {        // Ensure tile is a road and does not already have a tower
                 selectedTile.setHasTower(true);                                         // Set the tile as having a tower
                 this.towerToAdd.setyPosition(y);                                        // Set the y coordinate for the tower's reference
@@ -299,7 +299,7 @@ public class GameSceneBase {
         }
         else {                                      // Else
             this.addTowerToTile(x, y);              // Add the chosen tower to the tile through the coordinates
-            this.checkTowerToUpgrade(x, y);
+            this.checkTowerToUpgrade(x, y);         // Check the chosen tower and show the info
         }
     }
 
@@ -342,16 +342,17 @@ public class GameSceneBase {
     }
 
     /** Check if the tile clicked has a tower **/
+    // General implementation here that works for every subclass too
     private void checkTowerToUpgrade(int x, int y) {
 
-        int tileX = x / 32;
-        int tileY = y / 32;
+        int tileX = x / 32;                                                                 // Divide the coordinate to get the specific position tile
+        int tileY = y / 32;                                                                 // Divide the other coordinate to get the other specific position tile
 
-        if (this.mapArrayTile[tileY][tileX].isHasTower()) {
-            this.bottomBar.setTowerToDisplay(this.mapArrayTile[tileY][tileX].getTower());
+        if (this.mapArrayTile[tileY][tileX].isHasTower()) {                                   // If the tile at the position of the specific tiles chosen has a tower
+            this.bottomBar.setTowerToDisplay(this.mapArrayTile[tileY][tileX].getTower());     // Set the bottom bar's tower to display with the tower in the specific position
         }
         else {
-            this.bottomBar.setTowerToDisplay(null);
+            this.bottomBar.setTowerToDisplay(null);                                           // Else set the bottom bar's tower to display to null
         }
     }
 

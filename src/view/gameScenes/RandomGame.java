@@ -39,12 +39,12 @@ public class RandomGame extends GameSceneBase implements Playable {
 
             // Specialization
             if (super.getLvlEnemies().isEmpty()) {                      // If the list of enemies is empty and there are no more enemies
-                switch (GameScenes.gameScenes) {                        // Depending on the
+                switch (GameScenes.gameScenes) {                        // Depending on the case of the gamescene
                     case PLAY:
                         GameScenes.setGameScene(GameScenes.GAME_WON);           // Set the game scene as the victory one
                         break;
-                    case SAVED_MAPS_GAME:
-                        GameScenes.setGameScene(GameScenes.ERROR_SAVED_MAPS);
+                    case SAVED_MAPS_GAME:                                       // Depending on the case of the gamescene
+                        GameScenes.setGameScene(GameScenes.ERROR_SAVED_MAPS);   // Set the game scene as the error saved maps/eventual victory of the saved maps gamescene
                         break;
                 }
             }
@@ -74,7 +74,7 @@ public class RandomGame extends GameSceneBase implements Playable {
         for (int j = 0; j < 20; j++) {                                                                                  // For every row
             for (int i = 0; i < 23; i++) {                                                                              // And column of the array of int
                 mapArrayTile[j][i] = new Tile();                                                                        // Default constructor for the 2d array of tiles
-                mapArrayTile[j][i].setTileType(super.randomGenerator(0, 2));               // Generate the tile type value with the random function
+                mapArrayTile[j][i].setTileType(super.randomGenerator(0, 2));                        // Generate the tile type value with the random function
                 mapArrayTile[j][i].setSprite(guiController.getTileTypeReturnImage(mapArrayTile[j][i].getTileType()));   // Setting the sprite
             }
         }

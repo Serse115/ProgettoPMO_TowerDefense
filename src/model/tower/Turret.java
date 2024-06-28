@@ -22,10 +22,12 @@ public class Turret extends Tower implements Placeable {
 
 
 
+
     /**** Methods ****/
     // Mostly inherited from superclass
 
     /** Repair the tower **/
+    // Specialization of the superclass method
     public void repairTower() {
         super.setLifePoints(super.getLifePoints() + (1700 - super.getLifePoints()));
     }

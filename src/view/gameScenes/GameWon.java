@@ -32,7 +32,7 @@ public class GameWon {
         this.bMenu.draw(g);                                               // Draw the button menu
         Font font = new Font("Arial", Font.BOLD, 45);           // Changing the font and size of the string
         g.setFont(font);                                                  // Set the font
-        g.drawString("YOU HAVE WON! :) ", 150, 150);            // Draw the string on the scene
+        g.drawString("YOU HAVE WON! :) ", 150, 150);             // Draw the string on the scene
     }
 
     /** Mouse clicked method **/

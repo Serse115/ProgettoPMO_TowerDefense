@@ -23,10 +23,12 @@ public class Cannon extends Tower implements Placeable {
 
 
 
+
     /**** Methods ****/
     // Mostly inherited from superclass
 
     /** Repair the tower **/
+    // Specialization of the superclass method
     public void repairTower() {
         super.setLifePoints(super.getLifePoints() + (2100 - super.getLifePoints()));
     }

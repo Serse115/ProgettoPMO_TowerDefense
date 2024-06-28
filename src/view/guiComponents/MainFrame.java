@@ -37,17 +37,17 @@ public class MainFrame extends JFrame implements Runnable {
         super.setLocation(300, 0);                                        // JFrame's location on screen
         super.setResizable(false);                                              // JFrame's resizability as false
 
-        this.render = new Render(this);                              // Initializing the render object
+        this.render = new Render(this);                               // Initializing the render object
 
         this.gameScreen = new GameScreen(this);                       // Initializing the game screen
         this.add(gameScreen);                                                  // Adding the game screen to the JFrame
 
-        this.menu = new Menu();                                   // Initializing the temporary menu game scene object
-        this.randomGame = new RandomGame(); // Initializing the play game scene object
-        this.edit = new EditMap();                                // Initializing the edit game scene object
-        this.endlessWaves = new EndlessWaves();  // Initializing the endless waves game scene object
+        this.menu = new Menu();                                                 // Initializing the temporary menu game scene object
+        this.randomGame = new RandomGame();                                     // Initializing the play game scene object
+        this.edit = new EditMap();                                              // Initializing the edit game scene object
+        this.endlessWaves = new EndlessWaves();                                 // Initializing the endless waves game scene object
         this.savedMaps = new SavedMaps(this);                         // Initializing the saved maps scene object
-        this.savedMapGame = new SavedMapGame();        // Initializing the saved maps game scene object
+        this.savedMapGame = new SavedMapGame();                                 // Initializing the saved maps game scene object
         this.actionBar = new GameActionBar(0, 640, 736, 160, this.randomGame, this.endlessWaves, this.savedMapGame);   // Initializing the actionBar
 
         this.randomGame.setBottomBar(this.actionBar);                           // Setting the bottomBar for the randomGame object
@@ -75,18 +75,18 @@ public class MainFrame extends JFrame implements Runnable {
     /**** Methods ****/
     /** Update game method **/
     private void updateGame() {
-        switch (GameScenes.gameScenes) {
-            case MENU:
-                this.menu.update();
+        switch (GameScenes.gameScenes) {                        // According to the current game scene
+            case MENU:                                          // Case menu
+                this.menu.update();                             // Update through the menu method
                 break;
-            case PLAY:
-                this.randomGame.update();
+            case PLAY:                                          // Case randomGame
+                this.randomGame.update();                       // Update through the randomGame method
                 break;
-            case ENDLESS_WAVES:
-                this.endlessWaves.update();
+            case ENDLESS_WAVES:                                 // Case endless waves
+                this.endlessWaves.update();                     // Update through the endless waves method
                 break;
-            case SAVED_MAPS_GAME:
-                this.savedMapGame.update();
+            case SAVED_MAPS_GAME:                               // Case saved maps game
+                this.savedMapGame.update();                     // Update through the saved maps game method
                 break;
             default:
                 break;
@@ -94,7 +94,7 @@ public class MainFrame extends JFrame implements Runnable {
     }
 
     /** Override of the run method from the runnable interface (for the thread) **/
-    /** Takes care of the game loop part with rendering and updates, gets automatically called from the thread itself **/
+    /** Takes care of the game loop part with the updates, gets automatically called from the thread itself **/
     /** The game menu wouldn't work without it, it's necessary to start all the different game scenes and switch in between them all **/
     public void run() {
 

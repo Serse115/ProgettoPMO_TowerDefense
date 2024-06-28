@@ -6,7 +6,7 @@ import view.imageUtilities.SpriteUtilities;
 public class Wall extends Tower implements Placeable {
 
     /**** Fields ****/
-    private final String wallSpritePath = "tower_wall/defenseWall_sprite.png";
+    private final String wallSpritePath = "tower_wall/defenseWall_sprite.png";          // Wall standing path
 
 
 
@@ -26,6 +26,7 @@ public class Wall extends Tower implements Placeable {
     // Mostly inherited from upperclass
 
     /** Repair the tower **/
+    // Specialization of the superclass method
     public void repairTower() {
         super.setLifePoints(super.getLifePoints() + (9000 - super.getLifePoints()));
     }

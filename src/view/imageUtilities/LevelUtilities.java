@@ -1,7 +1,6 @@
 package view.imageUtilities;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 /***** Utility class for the level utilities operations: save, create and load levels *****/
@@ -91,7 +90,7 @@ public class LevelUtilities {
         File newLvl = new File("resources/levels/CustomMaps/customLvl_" + name + ".txt");          // File name and path
 
         if (newLvl.exists()) {
-            // Just do nothing and return
+            // Do nothing and return
         }
         else {
             try {

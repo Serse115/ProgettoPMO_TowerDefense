@@ -48,17 +48,20 @@ public class Enemy implements Fightable {
 
     /**** Methods ****/
     /** Move method **/
+    // General implementation here that works for every subclass too
     private void move() {
         this.xPosition += this.speed;                           // Increase the enemy x position by its speed
     }
 
     /** Hit method **/
+    // General implementation here that works for every subclass too
     private void hit(Tile t) {
         t.getTower().setLifePoints(t.getTower().getLifePoints() - this.hitPower);       // Decrease the life of the tower by the hitpower of the enemy
         t.checkTowerLife();                                                             // Check the tower's life points to in case destroy it
     }
 
     /** Update the current tile position method **/
+    // General implementation here that works for every subclass too
     private void updateTilePosition() {
 
         int tilePositionX = (int) this.xPosition / 32;                          // Calculate the tile position through the x position
@@ -71,6 +74,7 @@ public class Enemy implements Fightable {
     }
 
     /** Enemy logic method to handle all the situations the enemy may be in **/
+    // General implementation here that works for every subclass too
     public void enemyLogic() {
 
         if (this.isAlive()) {                                                   // If the enemy is still alive
@@ -88,7 +92,7 @@ public class Enemy implements Fightable {
                 }
             }
 
-            if (this.isAttacking) {                                   // If the attacking boolean check is true
+            if (this.isAttacking) {                                                                                         // If the attacking boolean check is true
                 if (this.currentTile != null && this.currentTile.isHasTower() && this.currentTile.getTower() != null) {     // If the current tile is not null,
                     this.hit(this.currentTile);                       // If the current tile has a tower and the tower is different from null, hit the tower in the tile
                 } else {

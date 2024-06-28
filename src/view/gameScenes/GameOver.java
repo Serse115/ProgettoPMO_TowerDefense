@@ -51,7 +51,6 @@ public class GameOver {
                 this.mainFrame.getEndlessWaves().resetTowers();                                    // Reset the towers in the endless waves game
                 this.mainFrame.getEndlessWaves().setnOfEnemies(1);                                 // Reset the number of enemies
                 this.mainFrame.getEndlessWaves().setWaveCounter(1);                                // Reset the wave counter to 1
-                //this.mainFrame.getEndlessWaves().setGold(500);                                     // Reset the initial gold
                 this.mainFrame.getEndlessWaves().initializeEnemies();                              // Reset the game set of enemies for the new endless waves game
 
                 this.mainFrame.getSavedMapGame().getBottomBar().setTowerToDisplay(null);           // Reset the tower to display to null
